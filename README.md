@@ -92,24 +92,23 @@ Strong success criteria let the LLM loop independently. Weak criteria ("make it 
 
 ## Install
 
-**Option A: CLAUDE.md (recommended)**
+**Option A: Skills CLI (recommended)**
+
+```bash
+npx skills add forrestchang/andrej-karpathy-skills
+```
+
+**Option B: CLAUDE.md**
 
 New project:
 ```bash
-curl -o CLAUDE.md https://raw.githubusercontent.com/forrestchang/andrej-karpthy-skills/main/CLAUDE.md
+curl -o CLAUDE.md https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md
 ```
 
 Existing project (append):
 ```bash
 echo "" >> CLAUDE.md
-curl https://raw.githubusercontent.com/forrestchang/andrej-karpthy-skills/main/CLAUDE.md >> CLAUDE.md
-```
-
-**Option B: Skills directory**
-
-```bash
-mkdir -p .claude/skills
-curl -o .claude/skills/karpathy-guidelines.md https://raw.githubusercontent.com/forrestchang/andrej-karpthy-skills/main/.claude/skills/karpathy-guidelines.md
+curl https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md >> CLAUDE.md
 ```
 
 ## Key Insight
