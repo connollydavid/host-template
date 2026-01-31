@@ -3,9 +3,9 @@
   "displayName": "Karpathy Coding Guidelines",
   "version": "1.0.0",
   "description": "Behavioral guidelines to reduce common LLM coding mistakes, derived from Andrej Karpathy's observations on LLM coding pitfalls",
-  "author": "jiayuan7",
+  "author": "forrestchang",
   "license": "MIT",
-  "repository": "https://github.com/jiayuan7/andrej-karpathy-skills",
+  "repository": "https://github.com/forrestchang/andrej-karpathy-skills",
   "skills": [
     "skills/karpathy-guidelines/SKILL.md"
   ]
