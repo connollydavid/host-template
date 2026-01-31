@@ -7,6 +7,6 @@
   "license": "MIT",
   "repository": "https://github.com/forrestchang/andrej-karpathy-skills",
   "skills": [
-    "../skills/karpathy-guidelines/SKILL.md"
+    "./skills/karpathy-guidelines/SKILL.md"
   ]
 }
