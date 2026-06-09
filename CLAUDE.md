@@ -63,14 +63,15 @@ For any task with more than one step, state a brief numbered plan before startin
 
 Strong success criteria (example: "test X passes") let you loop and self-correct without asking the user again. Weak success criteria (example: "make it work") force you to guess what "work" means. When success criteria are weak, ask the user to clarify before starting
 
-## 5. Audited PLAN.md and PHASEx.md
+## 5. Audited PLAN.md and milestone docs
 
-All changes to PLAN.md and PHASEx.md files MUST be committed and pushed immediately.
+All changes to PLAN.md and milestone docs MUST be committed and pushed immediately.
 
 Rules:
-- Every edit to PLAN.md or any PHASEx.md file (e.g. PHASE1.md, PHASE2.md) triggers a git commit and git push. Do not batch these with other changes.
+- Name milestones and their documents after content (e.g. BOOTSTRAP.md, CI-PIPELINE.md), never ordinals (PHASE1.md, M2) — ordinals name positions, and positions shift when plans are re-cut; names stay attached to their content. Do not degenerate to bare numerals ("3", "5.5") either. Encode sequence with SUMMARY.md order and named dependencies. If milestones are renamed, PLAN.md keeps a dictionary mapping retired names to current names, for reading history only.
+- Every edit to PLAN.md or any milestone doc triggers a git commit and git push. Do not batch these with other changes.
 - After completing a plan step in code, update the relevant plan file to reflect what was actually implemented, then commit and push that update as a separate commit.
-- PLAN.md and PHASEx.md files live in the top-level repository only. Never place plan files inside git submodules. Submodules contain the working codebase; planning documents are kept outside of them.
+- PLAN.md and milestone docs live in the host repo (top level or topic folders), never inside git submodules. Submodules contain the working codebase; planning documents are kept outside of them.
 
 ## 6. Maintain MEMORY.md
 
@@ -78,7 +79,7 @@ MEMORY.md is a persistent scratchpad that records key decisions, discovered cons
 
 Rules:
 - After completing a significant task, resolving a non-obvious bug, or discovering an unexpected constraint, add a short entry to MEMORY.md. Each entry should be one to three sentences describing what happened and why it matters.
-- Update MEMORY.md in a separate commit. Do not bundle MEMORY.md changes with code changes. Commit and push immediately, following the same rule as PLAN.md and PHASEx.md (see section 5).
+- Update MEMORY.md in a separate commit. Do not bundle MEMORY.md changes with code changes. Commit and push immediately, following the same rule as PLAN.md and milestone docs (see section 5).
 - Do not wait until the end of a session to update MEMORY.md. Write entries as you go. If you are unsure whether something is worth recording, record it. Too many entries is better than a missing entry that causes repeated mistakes.
 - MEMORY.md lives in the top-level repository alongside PLAN.md. Do not place it inside submodules.
 - Do not delete or rewrite old entries. MEMORY.md is append-only. If an earlier entry turns out to be wrong, add a new entry that corrects it and references the old one.
@@ -90,11 +91,11 @@ The purpose of MEMORY.md is: when a new session starts with no prior conversatio
 All markdown documentation in the repository is automatically built into a static website using mdBook and published to GitHub Pages. This creates a living, browsable record of the project.
 
 Rules:
-- A GitHub Actions workflow triggers on every push to the main branch. It builds all .md files (including PLAN.md, PHASEx.md, and any other documentation) into a static HTML site using mdBook.
+- A GitHub Actions workflow triggers on every push to the main branch. It builds all .md files (including PLAN.md, milestone docs, and any other documentation) into a static HTML site using mdBook.
 - The mdBook configuration file (book.toml) and the SUMMARY.md file MUST be committed to the repo. SUMMARY.md defines the sidebar navigation and must be updated whenever a new document is added. book.toml lives in the repository root.
 - The GitHub Actions workflow installs mdBook, runs `mdbook build`, and publishes the output directory to the gh-pages branch. GitHub Pages serves this branch automatically. Do not commit built HTML artifacts to the main branch.
 - The published site is the single source of truth for project status. Anyone with access to the repository can read current plans, completed phases, and design decisions by visiting the GitHub Pages URL — no local checkout required.
-- When a new PHASEx.md file is created or a new document is added, add an entry to SUMMARY.md in the same commit. If SUMMARY.md is not updated, the new document will not appear in the site navigation.
+- When a new milestone doc is created or a new document is added, add an entry to SUMMARY.md in the same commit. If SUMMARY.md is not updated, the new document will not appear in the site navigation.
 
 Style:
 - The site must be clean, beautiful, and minimalist. Use generous whitespace and avoid clutter, decorative elements, and unnecessary UI chrome. The content is the interface.
