@@ -101,7 +101,7 @@ From within Claude Code, first add the marketplace:
 
 Then install the plugin:
 ```
-/plugin install andrej-karpathy-skills@karpathy-skills
+/plugin install template-agentic-host@agentic-host
 ```
 
 This installs the guidelines as a Claude Code plugin, making the skill available across all your projects.
@@ -173,6 +173,12 @@ These guidelines bias toward **caution over speed**. For trivial tasks (simple t
 
 The goal is reducing costly mistakes on non-trivial work, not slowing down simple tasks.
 
+## Provenance
+
+Adapted from [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) (which stated MIT terms), itself derived from [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls.
+
+The guidelines in `CLAUDE.md` are released for unrestricted reuse — adopt them into any project with no license or attribution obligation. The [`LICENSE`](LICENSE) governs this template repository, not works built from it.
+
 ## License
 
-MIT
+[MIT](LICENSE) © 2026 David Connolly
