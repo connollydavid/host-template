@@ -219,6 +219,26 @@ Never push a host commit whose tool pointer or software pin is not yet pushed. I
 a push fails (no network, no auth), stop, tell the human which commits are
 unpushed, and do not start work that depends on them.
 
+**Worktree-absence coherence (`call/0005`).** The software worktree is absent
+until materialized — a fresh clone and CI do not have it. So **do not git-track an
+artifact that depends on the worktree existing** (a skill symlink into
+`<software>/`): gitignore it and recreate it after `software --materialize`. Where
+an automated context genuinely needs the software, it runs `software --materialize`
+first; otherwise it must tolerate the absence. `host-lifecycle software --check`
+flags a tracked symlink resolving into a worktree path as a `HAZARD`. And: an
+un-materialized CI job must exercise each runtime-critical artifact — "done" means
+the whole CI sweep is green, not one artifact built.
+
+## Upgrading
+
+Adopting is one event; the template moves on. To **upgrade**, re-apply the spine
+changes across the revision span *and* the structural migrations it introduced
+(re-embedding the software, bumping a tool) — a doc diff shows the prose but not
+the actions. `UPGRADING.md` is the ledger of those actions, one `[upgrade
+"<revision>"]` stanza each; `host-lifecycle upgrade <dir>` prints every entry
+newer than the repo's `.host` stamp. Fetch the template to the target
+revision, run it, apply the list, then re-stamp.
+
 ## Provenance
 
 The four working principles are rewritten, in our own words, from observations by
