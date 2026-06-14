@@ -87,10 +87,11 @@ adopted  = "YYYY-MM-DD"
 `host-lifecycle adopt <dir> <current-template-revision>` creates `cast/ plan/
 call/` (idempotently — existing rooms are left alone) and writes the stamp.
 
-Then embed your software in the *Where* slot as a **bare store with worktrees**:
-`<software>.git/` (the shared object store) plus the canonical worktree
-`<software>/` and any parallel worktrees `<software>.<line>/`. The host commits a
-recipe (`.host-software`: source URL, pinned canonical SHA, worktree set); the
+Then embed your software in the *Where* slot as a **bare store with worktrees** —
+one or more components: `<name>.git/` (the shared object store) plus the canonical
+worktree `<name>/` and any parallel worktrees `<name>.<line>/`. The host commits a
+recipe (`.host-software`) with one `[software "<name>"]` stanza per component
+(mirroring `.gitmodules`: source URL, pinned canonical SHA, worktree set); the
 trees themselves are gitignored and materialized by a setup step.
 
 **Converting an existing submodule.** If the software is already a gitlink

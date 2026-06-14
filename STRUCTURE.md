@@ -26,14 +26,15 @@ and wrap, never patch:
 `.claude/skills/` are symlinks into those submodules' skills — reference, not
 copy. Tool *outputs* are project-owned (see `call/0001`).
 
-The *Where* room is the software under test, embedded as a **bare store with
-worktrees**: `<software>.git/` is the shared object store, `<software>/` is the
-canonical worktree (the audited state, where CI runs), and `<software>.<line>/`
-are parallel worktrees — one per agent or live release branch. These trees are
-local and gitignored; the host commits a recipe (`.host-software`) recording the
-source URL, the pinned canonical SHA, and the worktree set, which a setup step
-materializes. The recorded pin replaces a submodule gitlink as the
-reproducibility anchor, so several branches stay materialized at once where a
+The *Where* room is the software under test — **one or more** components, each
+embedded as a **bare store with worktrees**: `<name>.git/` is the shared object
+store, `<name>/` is the canonical worktree (the audited state, where CI runs), and
+`<name>.<line>/` are parallel worktrees — one per agent or live release branch.
+These trees are local and gitignored; the host commits a recipe (`.host-software`)
+with **one `[software "<name>"]` stanza per component** (mirroring `.gitmodules`),
+each recording the source URL, the pinned canonical SHA, and the worktree set,
+which a setup step materializes. The recorded pin replaces a submodule gitlink as
+the reproducibility anchor, so several branches stay materialized at once where a
 single submodule tree could not.
 
 To instantiate: clone, `git submodule update --init` (the tools), replace the
