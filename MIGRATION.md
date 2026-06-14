@@ -64,7 +64,7 @@ adopted  = "YYYY-MM-DD"
 - `host-lint --log` → tells in **history** (informational; do not rewrite unless Deep).
 - From the output, write down the **rename map** (each ordinal-named file →
   its content-named home under `plan/`) and, for case (b), the **merge plan**.
-  Apply nothing yet.
+  The rename map becomes the `.host-remap` dictionary in step 4. Apply nothing yet.
 
 ### 1. Establish governance (by case)
 
@@ -99,16 +99,44 @@ tools/host-lint  tools/host-lifecycle  tools/allium  tools/specula
 Install the host-lint git hooks (`pre-commit` and `commit-msg`) so new commits
 are gated from here on.
 
-### 4. Audit and apply, in the chosen mode
+Apply the migration in two layers — the live files, and the append-only record.
 
-- **Live findings** (`host-lint --all`): fix them — rename each ordinal-named
-  file to its content-named home under `plan/`, and update every reference.
-  - *Shallow*: do it all in one PR.
-  - *Staged*: split it — governance first, tooling next, the bulk renames last.
+**Live layer — rename with the dictionary.** Turn the rename map into a
+`.host-remap` dictionary at the repo root, `old => new` per line: a milestone
+header (`Phase 4: Command Execution => Command Execution`), a path
+(`plan/PHASE4.md => plan/0004-command-execution/README.md`), a bare ordinal
+mention (`Phase 4 => Command Execution`). `git mv` each ordinal-named file to its
+content-named home, then let the tool rewrite the references deterministically:
+
+- `host-lifecycle remap --check <dir>` lists every tell that would *remain* after
+  the dictionary applies. Disposition each: add a dictionary entry, add a
+  `.host-lint-allow` entry (genuine vocabulary — version strings, release tags),
+  or confirm it sits in an excluded path (below). Iterate until it is clean.
+- Commit first (a clean git tree is the verbatim archive), then
+  `host-lifecycle remap --apply <dir>` writes the substitutions — only the
+  declared ones, so the rewrite is map-only by construction: nothing outside the
+  dictionary is touched, and there is nothing to invent. Commit the result, then
+  `git rm .host-remap` — the dictionary names the old concepts, so it does not
+  stay in the tree; its durable copy goes in the `call/` decision.
+  - *Shallow*: one PR. *Staged*: split governance → tooling → the bulk rename.
   - *Deep (human, opt-in)*: archive-first, then also rewrite history so blame and
     `log --follow` stay coherent; force-push with lease.
-- **History findings** (`host-lint --log`): acknowledge them. Do not rewrite
-  unless you are in Deep mode and the human opted in.
+
+**Record layer — exclude, don't rewrite.** The append-only record (`MEMORY.md`
+and the closed milestone bodies) is history; nothing re-scans it, so leave it
+verbatim and exclude it from the audit with a `.host-lintignore` at the repo root:
+
+```
+MEMORY.md
+plan/*/README.md
+```
+
+The renamed `plan/<NNNN-slug>/` folders are the old→new map a later reader needs.
+Rewrite the record only if a human asks — still map-only and archive-first; it is
+rarely worth the cost.
+
+**History findings** (`host-lint --log`): acknowledge them. Do not rewrite unless
+you are in Deep mode and the human opted in.
 
 ### 5. Stamp and record
 
@@ -119,8 +147,8 @@ entry. These make the migration auditable from a fresh session.
 ### 6. Verify
 
 - `host-lifecycle validate plan/` and `host-lifecycle validate call/` → `ok`.
-- `host-lint --all` → clean on live files (or the remaining findings are the
-  acknowledged baseline).
+- `host-lint --all` → clean on the live files (the record is excluded via
+  `.host-lintignore`).
 - Make a throwaway commit with a tell in its message → the hook blocks it.
 - If the repo ships an mdBook site, it builds.
 
@@ -129,6 +157,11 @@ entry. These make the migration auditable from a fresh session.
 - **Idempotent and resumable.** `adopt` skips rooms that exist; re-running the
   protocol is safe. If interrupted, re-run `classify` and continue.
 - **Token-free where mechanical.** `host-lifecycle` does the scaffolding,
-  numbering, and stamping; `host-lint` does the audit. Spend model effort only on
-  the judgment in establishing governance (the case-(b) merge, eliciting
-  case-(a) conventions) and the triage during the audit.
+  numbering, stamping, and the dictionary `remap`; `host-lint` does the audit.
+  Spend model effort only on the judgment: establishing governance (the case-(b)
+  merge, eliciting case-(a) conventions), naming each milestone, and the triage
+  during the audit. The substitution itself is deterministic.
+- **Repo-root config the tools read.** `.host-remap` (the rename dictionary,
+  transient), `.host-lint-allow` (sanctioned vocabulary the audit never flags),
+  and `.host-lintignore` (paths the audit excludes — the record). All are plain
+  line-oriented files.
