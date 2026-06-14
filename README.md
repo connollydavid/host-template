@@ -119,20 +119,20 @@ echo "" >> CLAUDE.md
 curl https://raw.githubusercontent.com/connollydavid/template-agentic-host/main/CLAUDE.md >> CLAUDE.md
 ```
 
-## Recommended: enforcement with no-phase
+## Recommended: enforcement with host-lint
 
 These guidelines are advisory — they shape how an agent works, but nothing
 *checks* the output. If you want the naming hygiene enforced mechanically —
 no `Phase N`-style ordinal labels leaking into commit messages, headers, or
-comments — pair this with **no-phase**, a standalone linter and git hook that
+comments — pair this with **host-lint**, a standalone linter and git hook that
 flags those tells:
 
-- Repo: https://github.com/connollydavid/no-phase-skill
-- Install (SKILL.md): https://github.com/connollydavid/no-phase-skill/blob/main/SKILL.md
-- Usage & details (README): https://github.com/connollydavid/no-phase-skill/blob/main/README.md
+- Repo: https://github.com/connollydavid/host-lint
+- Install (SKILL.md): https://github.com/connollydavid/host-lint/blob/main/SKILL.md
+- Usage & details (README): https://github.com/connollydavid/host-lint/blob/main/README.md
 
-It's optional and fully independent: no-phase needs nothing from this template,
-and this template assumes nothing about no-phase being present — add the
+It's optional and fully independent: host-lint needs nothing from this template,
+and this template assumes nothing about host-lint being present — add the
 guardrail if and when you want it. The install drops in a binary plus a
 pre-commit / commit-msg hook.
 

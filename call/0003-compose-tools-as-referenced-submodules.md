@@ -6,7 +6,7 @@
 ## Context and Problem Statement
 
 The three lanes (see decision 0002) are owned by tools under three different
-licenses: no-phase (Unlicense, ours), allium (MIT), and Specula (Apache-2.0).
+licenses: host-lint (Unlicense, ours), allium (MIT), and Specula (Apache-2.0).
 They must fit our milestone (decision-record) lifecycle and obligations model
 without contaminating our license posture, forcing us to maintain a fork, or
 turning a tool's internal workflow into a competing project axis.
@@ -34,7 +34,7 @@ edit.**
   pipeline runs inside one milestone to discharge that milestone's obligations;
   it is not a parallel milestone axis. Specula's steps are referred to by name
   (Code Analysis, Spec Generation, and so on), never as ordinal phases — keeping
-  our own no-phase convention.
+  our own host-lint convention.
 - **Lane choice is a decision.** Choosing a lane for a concern, or classifying a
   Specula target category, is itself an architectural decision and gets its own
   record.

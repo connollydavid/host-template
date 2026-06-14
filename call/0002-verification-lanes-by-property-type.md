@@ -22,7 +22,7 @@ Chosen option 2: **three lanes, one per property class.**
 
 | Lane | Property class | Tool | License |
 | --- | --- | --- | --- |
-| Hygiene | naming and process slop (agentic tells) | no-phase | Unlicense |
+| Hygiene | naming and process slop (agentic tells) | host-lint | Unlicense |
 | Requirements + property-based testing | functional and data invariants ("for all inputs") | allium | MIT |
 | Timing + concurrency | temporal, ordering, interleaving invariants ("for all interleavings"), via model checking | Specula / TLA+ | Apache-2.0 |
 

@@ -16,7 +16,7 @@ five W's.
 `tools/` are referenced submodules, each under its own license — we orchestrate
 and wrap, never patch:
 
-- `tools/no-phase-skill` (Unlicense) — hygiene / anti-slop.
+- `tools/host-lint` (Unlicense) — hygiene / anti-slop.
 - `tools/allium` (MIT, JUXT) — requirements + property-based testing.
 - `tools/specula` (Apache-2.0) — timing and concurrency via TLA+.
 

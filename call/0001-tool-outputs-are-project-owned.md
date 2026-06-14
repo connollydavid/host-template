@@ -6,7 +6,7 @@
 ## Context and Problem Statement
 
 The agentic-host methodology composes three referenced tools as submodules:
-no-phase (Unlicense, ours), allium (MIT, JUXT Ltd), and Specula (Apache-2.0,
+host-lint (Unlicense, ours), allium (MIT, JUXT Ltd), and Specula (Apache-2.0,
 specula-org). Running them produces artifacts inside our project — allium's
 `propagate` emits obligations; Specula emits a modeling brief, `base.tla` /
 `MC.tla` specs, traces, and bug reports into `.specula-output/`. We need a
