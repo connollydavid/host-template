@@ -92,7 +92,8 @@ one or more components: `<name>.git/` (the shared object store) plus the canonic
 worktree `<name>/` and any parallel worktrees `<name>.<line>/`. The host commits a
 recipe (`.host-software`) with one `[software "<name>"]` stanza per component
 (mirroring `.gitmodules`: source URL, pinned canonical SHA, worktree set); the
-trees themselves are gitignored and materialized by a setup step.
+trees themselves are gitignored and materialized by `host-lifecycle software
+--materialize` (`call/0004`).
 
 **Converting an existing submodule.** If the software is already a gitlink
 submodule, convert it in place — preserving the software exactly, with no software
@@ -171,6 +172,7 @@ entry. These make the migration auditable from a fresh session.
 ### 6. Verify
 
 - `host-lifecycle validate plan/` and `host-lifecycle validate call/` → `ok`.
+- `host-lifecycle software --check` → each software worktree is at its recorded pin.
 - `host-lint --all` → clean on the live files (the record is excluded via
   `.host-lintignore`).
 - Make a throwaway commit with a tell in its message → the hook blocks it.

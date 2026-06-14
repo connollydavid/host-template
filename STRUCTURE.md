@@ -33,8 +33,9 @@ store, `<name>/` is the canonical worktree (the audited state, where CI runs), a
 These trees are local and gitignored; the host commits a recipe (`.host-software`)
 with **one `[software "<name>"]` stanza per component** (mirroring `.gitmodules`),
 each recording the source URL, the pinned canonical SHA, and the worktree set,
-which a setup step materializes. The recorded pin replaces a submodule gitlink as
-the reproducibility anchor, so several branches stay materialized at once where a
+which `host-lifecycle software --materialize` realises and `--check` audits
+(`call/0004`). The recorded pin replaces a submodule gitlink as the
+reproducibility anchor, so several branches stay materialized at once where a
 single submodule tree could not.
 
 To instantiate: clone, `git submodule update --init` (the tools), replace the

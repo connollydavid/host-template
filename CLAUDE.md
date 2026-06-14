@@ -10,12 +10,13 @@ things, stop and ask the human before you act. Clarity beats cleverness here.
 This repository is an **agentic host**. The host is the externalized *thought*
 about a piece of software: the plans, the decisions, the specifications, the
 people it serves, and the rules you work under. The software itself — the
-*action* — lives in a git submodule beneath the host. You write thought in the
-host and action in the submodule. Keep them separate.
+*action* — lives beneath the host as a bare store with worktrees (the *Where*
+room; `call/0004`). You write thought in the host and action in the worktree.
+Keep them separate.
 
 You are working in a *template*. A real project replaces the example personas
-with its own and adds its software as the hosted submodule. The structure below
-stays the same.
+with its own and adds its software as the hosted bare store with worktrees. The
+structure below stays the same.
 
 ## The five rooms
 
@@ -27,7 +28,7 @@ Put each kind of file in its room. Do not invent new top-level folders.
 | Who  | `cast/` | personas — the people (human or agent) the software serves |
 | What | `plan/<milestone>/spec/` | specifications: behaviour (`.allium`), timing (`.tla`) |
 | When | `plan/` | the milestone index and one folder per milestone |
-| Where | `<software>/` | the hosted software, as a submodule — you add it |
+| Where | `<software>/` | the hosted software — a bare store with worktrees; you add it |
 | Why  | `call/` | decisions, in MADR format (see `call/0000`) |
 | How  | `CLAUDE.md` + `tools/` | this manual, and the verification tools |
 
@@ -175,7 +176,10 @@ Three of the tools are ours, released into the public domain (Unlicense):
 - **host-lifecycle** — the *generator*. It allocates numbers and scaffolds
   milestones, decisions, and personas without spending model tokens on
   mechanical work. Run `host-lifecycle next <dir>` for the next number and
-  `host-lifecycle validate <dir>` to check a folder.
+  `host-lifecycle validate <dir>` to check a folder. It also materialises and
+  audits the *Where* room: `host-lifecycle software --materialize|--check <dir>`
+  realises the `.host-software` bare store + worktrees and verifies each is at its
+  pin (`call/0004`).
 
 Because the generator and the checker share `host-grammar`, what host-lifecycle
 emits is exactly what host-lint accepts. Trust that symmetry; do not number by
@@ -200,16 +204,20 @@ The test for both: a new session with no memory of this conversation should be
 able to read `plan/`, `call/`, and `MEMORY.md` and continue without repeating a
 past mistake.
 
-## Submodule discipline
+## Software and submodule discipline
 
-The software and the tools are submodules. When you change one:
+The **tools** are submodules; the **software** is a bare store with worktrees
+(`call/0004`). Both follow a commit-upstream-first rule:
 
-1. Commit and push inside the submodule first, on its `main` branch.
-2. Then commit the updated submodule pointer in the host and push.
+- **A tool submodule:** commit and push inside it (on `main`) first, then commit
+  the updated submodule pointer in the host and push.
+- **The software:** commit and push inside the canonical worktree first, then
+  record the new SHA as the `.host-software` `pin` and push that host commit. The
+  recorded pin is the audit anchor a gitlink used to be.
 
-Never push a host commit whose submodule pointer is not yet pushed. If a push
-fails (no network, no auth), stop, tell the human which commits are unpushed, and
-do not start work that depends on them.
+Never push a host commit whose tool pointer or software pin is not yet pushed. If
+a push fails (no network, no auth), stop, tell the human which commits are
+unpushed, and do not start work that depends on them.
 
 ## Provenance
 
