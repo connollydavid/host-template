@@ -16,9 +16,12 @@ five W's.
 `tools/` are referenced submodules, each under its own license — we orchestrate
 and wrap, never patch:
 
-- `tools/host-lint` (Unlicense) — hygiene / anti-slop.
+- `tools/host-lint` (Unlicense) — hygiene / anti-slop; checks names against `host-grammar`.
+- `tools/host-lifecycle` (Unlicense) — token-free scaffolder/validator; generates names from `host-grammar`, so what it emits is exactly what `host-lint` accepts.
 - `tools/allium` (MIT, JUXT) — requirements + property-based testing.
 - `tools/specula` (Apache-2.0) — timing and concurrency via TLA+.
+
+(`host-grammar`, the shared naming/numbering rules crate, is a build dependency of `host-lint` and `host-lifecycle` — not a host submodule.)
 
 `.claude/skills/` are symlinks into those submodules' skills — reference, not
 copy. Tool *outputs* are project-owned (see `call/0001`).
@@ -27,6 +30,4 @@ To instantiate: clone, `git submodule update --init`, replace the `cast/`
 examples with your own personas, and add your software as the hosted submodule.
 
 Not yet wired: the `CLAUDE.md` methodology rewrite and the `LICENSE` flip to
-Unlicense (coupled — the rewrite is what makes the content ours to dedicate),
-and the token-free Rust lifecycle binary that scaffolds milestones and decisions
-and validates the tree.
+Unlicense (coupled — the rewrite is what makes the content ours to dedicate).
