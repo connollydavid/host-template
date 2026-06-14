@@ -85,8 +85,31 @@ adopted  = "YYYY-MM-DD"
 ### 2. Scaffold the rooms
 
 `host-lifecycle adopt <dir> <current-template-revision>` creates `cast/ plan/
-call/` (idempotently — existing rooms are left alone) and writes the stamp. Add
-your software as the hosted submodule under its own folder (the *Where* slot).
+call/` (idempotently — existing rooms are left alone) and writes the stamp.
+
+Then embed your software in the *Where* slot as a **bare store with worktrees**:
+`<software>.git/` (the shared object store) plus the canonical worktree
+`<software>/` and any parallel worktrees `<software>.<line>/`. The host commits a
+recipe (`.host-software`: source URL, pinned canonical SHA, worktree set); the
+trees themselves are gitignored and materialized by a setup step.
+
+**Converting an existing submodule.** If the software is already a gitlink
+submodule, convert it in place — preserving the software exactly, with no software
+commit created, rewritten, or moved:
+
+1. **Preserve the pin.** Record the current gitlink SHA as the recipe's pinned
+   canonical SHA — the bare+worktree state begins at precisely the pinned commit.
+2. **De-register the gitlink.** `git rm --cached <name>`, delete the
+   `[submodule "<name>"]` stanza from `.gitmodules`, remove `.git/modules/<name>`.
+3. **Write `.host-software`** with the URL, the preserved SHA, and the worktree set.
+4. **Gitignore** `/<name>/`, `/<name>.git/`, `/<name>.*/` — all rebuilt from the recipe.
+5. **Path continuity.** The canonical worktree keeps the path `<name>/`, so
+   references to `<name>/…` (build commands, hook paths, routing) still resolve;
+   only the embedding mechanism changed. Audit references that named the submodule
+   *qua* submodule.
+6. **Pin-update replaces pointer-bump.** Completing software work becomes "update
+   the recipe `pin`" — a tracked one-line commit recording the new SHA — not "bump
+   the submodule pointer."
 
 ### 3. Wire the tools
 
@@ -163,5 +186,6 @@ entry. These make the migration auditable from a fresh session.
   during the audit. The substitution itself is deterministic.
 - **Repo-root config the tools read.** `.host-remap` (the rename dictionary,
   transient), `.host-lint-allow` (sanctioned vocabulary the audit never flags),
-  and `.host-lintignore` (paths the audit excludes — the record). All are plain
-  line-oriented files.
+  `.host-lintignore` (paths the audit excludes — the record), and `.host-software`
+  (the *Where* recipe — source URL, pinned canonical SHA, worktree set). All are
+  plain line-oriented files.

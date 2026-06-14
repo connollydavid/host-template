@@ -9,7 +9,7 @@ five W's.
 | Who | `cast/` | personas (Powell, Keenan & McDaid 2007) — examples Mara + Wren |
 | What | `plan/NNNN-*/spec/` | behavioural (`.allium`) + temporal (`.tla/`) specs |
 | When | `plan/` | the milestone index and folders |
-| Where | `<software>/` | the hosted-software submodule — you add it |
+| Where | `<software>/` | the hosted software — a bare store with worktrees; you add it |
 | Why | `call/` | decisions (MADR; see `call/0000`) |
 | How | `CLAUDE.md` + `tools/` | the verification lanes |
 
@@ -26,9 +26,20 @@ and wrap, never patch:
 `.claude/skills/` are symlinks into those submodules' skills — reference, not
 copy. Tool *outputs* are project-owned (see `call/0001`).
 
-To instantiate: clone, `git submodule update --init`, replace the `cast/`
-examples with your own personas, and add your software as the hosted submodule.
-To bring an *existing* repo under the methodology instead, follow `MIGRATION.md`.
+The *Where* room is the software under test, embedded as a **bare store with
+worktrees**: `<software>.git/` is the shared object store, `<software>/` is the
+canonical worktree (the audited state, where CI runs), and `<software>.<line>/`
+are parallel worktrees — one per agent or live release branch. These trees are
+local and gitignored; the host commits a recipe (`.host-software`) recording the
+source URL, the pinned canonical SHA, and the worktree set, which a setup step
+materializes. The recorded pin replaces a submodule gitlink as the
+reproducibility anchor, so several branches stay materialized at once where a
+single submodule tree could not.
+
+To instantiate: clone, `git submodule update --init` (the tools), replace the
+`cast/` examples with your own personas, and set up your software as a bare store
+with worktrees (above). To bring an *existing* repo under the methodology
+instead, follow `MIGRATION.md`.
 
 A migrated or instantiated repo carries a `.host` stamp at its root
 recording the template revision it adopted (`template`/`revision`/`adopted`),
