@@ -28,6 +28,11 @@ copy. Tool *outputs* are project-owned (see `call/0001`).
 
 To instantiate: clone, `git submodule update --init`, replace the `cast/`
 examples with your own personas, and add your software as the hosted submodule.
+To bring an *existing* repo under the methodology instead, follow `MIGRATION.md`.
+
+A migrated or instantiated repo carries a `.agentic-host` stamp at its root
+recording the template revision it adopted (`template`/`revision`/`adopted`),
+written by `host-lifecycle adopt`. It is what a later upgrade diffs from.
 
 The methodology lives in `CLAUDE.md` — read it first. The whole template is
 released into the public domain (Unlicense); see `README.md` for provenance.
