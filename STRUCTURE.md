@@ -29,5 +29,5 @@ copy. Tool *outputs* are project-owned (see `call/0001`).
 To instantiate: clone, `git submodule update --init`, replace the `cast/`
 examples with your own personas, and add your software as the hosted submodule.
 
-Not yet wired: the `CLAUDE.md` methodology rewrite and the `LICENSE` flip to
-Unlicense (coupled — the rewrite is what makes the content ours to dedicate).
+The methodology lives in `CLAUDE.md` — read it first. The whole template is
+released into the public domain (Unlicense); see `README.md` for provenance.
