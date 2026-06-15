@@ -22,3 +22,8 @@ keyed by the template revision at which its action became required.
     title    = Worktree-absence coherence (call/0005)
     action   = Untrack artifacts that depend on the worktree (skill symlinks into the software path); gitignore them and recreate after materialize. Keep an un-materialized CI job green. `host-lifecycle software --check` must report no HAZARD.
     requires = host-lifecycle v0.3.1
+
+[upgrade "71d12a8"]
+    title    = Coherence generalized to tool submodules (call/0005)
+    action   = Re-run `host-lifecycle software --check` (now flags any tracked symlink whose target is not tracked here, not just software-worktree paths). Untrack any flagged tool-skill symlinks and generate them instead (the link-skills.sh pattern); keep them gitignored.
+    requires = host-lifecycle v0.4.1
