@@ -219,13 +219,16 @@ Never push a host commit whose tool pointer or software pin is not yet pushed. I
 a push fails (no network, no auth), stop, tell the human which commits are
 unpushed, and do not start work that depends on them.
 
-**Worktree-absence coherence (`call/0005`).** The software worktree is absent
-until materialized — a fresh clone and CI do not have it. So **do not git-track an
-artifact that depends on the worktree existing** (a skill symlink into
-`<software>/`): gitignore it and recreate it after `software --materialize`. Where
-an automated context genuinely needs the software, it runs `software --materialize`
-first; otherwise it must tolerate the absence. `host-lifecycle software --check`
-flags a tracked symlink resolving into a worktree path as a `HAZARD`. And: an
+**Worktree-absence coherence (`call/0005`).** A separately-materialized path — the
+software worktree, or a tool submodule — is absent (or empty) until materialized; a
+fresh clone, CI, and a partial submodule init do not have it. So **do not git-track
+an artifact that depends on such a path existing** (a skill symlink into
+`<software>/` *or* into `tools/<tool>/skills/`): gitignore it and **generate** it
+after materialization — `link-skills.sh` produces `.claude/skills/*` for the tools
+present, and the software's links are recreated after `software --materialize`.
+Where an automated context genuinely needs the path, it materializes first;
+otherwise it must tolerate the absence. `host-lifecycle software --check` flags any
+tracked symlink whose target is not itself tracked here as a `HAZARD`. And: an
 un-materialized CI job must exercise each runtime-critical artifact — "done" means
 the whole CI sweep is green, not one artifact built.
 

@@ -24,7 +24,11 @@ and wrap, never patch:
 (`host-grammar`, the shared naming/numbering rules crate, is a build dependency of `host-lint` and `host-lifecycle` — not a host submodule.)
 
 `.claude/skills/` are symlinks into those submodules' skills — reference, not
-copy. Tool *outputs* are project-owned (see `call/0001`).
+copy. They are **generated, not tracked**: `link-skills.sh` creates a link for each
+*materialized* tool (skipping uninitialized submodules), because a tracked symlink
+into an uninitialized tool dangles and trips any tree-walking tool
+(`call/0005`). Run it after `git submodule update --init`. Tool *outputs* are
+project-owned (see `call/0001`).
 
 The *Where* room is the software under test — **one or more** components, each
 embedded as a **bare store with worktrees**: `<name>.git/` is the shared object
@@ -38,10 +42,17 @@ which `host-lifecycle software --materialize` realises and `--check` audits
 reproducibility anchor, so several branches stay materialized at once where a
 single submodule tree could not.
 
-To instantiate: clone, `git submodule update --init` (the tools), replace the
-`cast/` examples with your own personas, and set up your software as a bare store
-with worktrees (above). To bring an *existing* repo under the methodology
-instead, follow `MIGRATION.md`.
+To instantiate: clone, `git submodule update --init` (the tools), run
+`./link-skills.sh` (regenerate the skill symlinks for the tools you initialized),
+replace the `cast/` examples with your own personas, and set up your software as a
+bare store with worktrees (above). To bring an *existing* repo under the
+methodology instead, follow `MIGRATION.md`.
+
+If you publish docs with mdBook, scope `src` to a dedicated `docs/` directory and
+pull content in with `{{#include}}` pointers — **do not** set `src = "."`. A
+root-scoped book walks the whole tree, descending into tool submodules and the
+software worktree, and trips over anything not currently materialized; a scoped
+`src` only renders what you list (`call/0005`).
 
 A migrated or instantiated repo carries a `.host` stamp at its root
 recording the template revision it adopted (`template`/`revision`/`adopted`),
