@@ -15,7 +15,7 @@ keyed by the template revision at which its action became required.
 
 [upgrade "8c28e33"]
     title    = Software is a bare store with worktrees (call/0004)
-    action   = Convert the embedded gitlink submodule to a bare store + worktrees — MIGRATION.md "Converting an existing submodule": preserve the pin, de-register the gitlink, write .host-software, gitignore the trees, then `host-lifecycle software --materialize`.
+    action   = Convert the embedded gitlink submodule to a bare store + worktrees — see the `host` repo (converting an existing submodule): preserve the pin, de-register the gitlink, write .host-software, gitignore the trees, then `host-lifecycle software --materialize`.
     requires = host-lifecycle v0.3.0
 
 [upgrade "325f2cf"]
