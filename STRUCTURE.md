@@ -46,7 +46,7 @@ To instantiate: clone, `git submodule update --init` (the tools), run
 `./link-skills.sh` (regenerate the skill symlinks for the tools you initialized),
 replace the `cast/` examples with your own personas, and set up your software as a
 bare store with worktrees (above). To bring an *existing* repo under the
-methodology instead, follow `MIGRATION.md`.
+methodology instead, follow the `host` repo (`github.com/connollydavid/host`).
 
 If you publish docs with mdBook, scope `src` to a dedicated `docs/` directory and
 pull content in with `{{#include}}` pointers — **do not** set `src = "."`. A
