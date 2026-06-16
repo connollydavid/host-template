@@ -27,3 +27,8 @@ keyed by the template revision at which its action became required.
     title    = Coherence generalized to tool submodules (call/0005)
     action   = Re-run `host-lifecycle software --check` (now flags any tracked symlink whose target is not tracked here, not just software-worktree paths). Untrack any flagged tool-skill symlinks and generate them instead (the link-skills.sh pattern); keep them gitignored.
     requires = host-lifecycle v0.4.1
+
+[upgrade "bbbfdc3"]
+    title    = Reserve agentic-host for the meta repo; stamp is `.host`, scaffold is `host-template`
+    action   = Rename your `.agentic-host` stamp to `.host`. Re-point your `template-agentic-host` submodule and its URL to `host-template`. A repo that adopts the methodology is "an agentic project" (e.g. `agentic-acme`); `agentic-host` now names only the meta repo.
+    requires = host-lifecycle v0.5.0
