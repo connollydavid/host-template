@@ -37,3 +37,8 @@ keyed by the template revision at which its action became required.
     title    = Publish via `host-lifecycle book` (the canonical doc-site publisher)
     action   = Replace any hand-rolled mdBook generator/SUMMARY with `host-lifecycle book .`; it writes book.toml (src = "docs", never ".") + docs/ in lifecycle order, renders specs, and emits a Where stub from .host-software. Run `host-lifecycle book . && host-lifecycle book --check .` before `mdbook build` (see .github/workflows/site.yml); gitignore the generated book.toml/docs/.
     requires = host-lifecycle v0.6.1
+
+[upgrade "6db01f3"]
+    title    = Anti-ouroboros: call/ is for the software, methodology lives in the spine
+    action   = The methodology is owned by the spine (copy-at-version), not your call/. In a single dedicated commit, set `Status: superseded by the spine` on every accepted call/ decision that merely restates a methodology rule now settled upstream (leave the file in place — MADR records are immutable). Add a `Scope:` header to each remaining accepted decision. Do not treat any host/management repo's top-level instance rooms as normative. `host-lifecycle validate <call-dir>` now fails an accepted decision missing `Scope:` or declaring `Scope: methodology`.
+    requires = host-lifecycle v0.7.0
