@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">host-template</a></li><li class="chapter-item expanded affix "><li class="part-title">Cast — who</li><li class="chapter-item expanded "><a href="cast/index.html"><strong aria-hidden="true">1.</strong> Cast — the project's Who</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cast/applying-personas.html"><strong aria-hidden="true">1.1.</strong> Applying personas during planning</a></li><li class="chapter-item expanded "><a href="cast/mara.html"><strong aria-hidden="true">1.2.</strong> Mara — the Human Operator</a></li><li class="chapter-item expanded "><a href="cast/wren.html"><strong aria-hidden="true">1.3.</strong> Wren — the Agentic LLM Developer</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Plan — what & when</li><li class="chapter-item expanded "><a href="plan-index.html"><strong aria-hidden="true">2.</strong> Plan</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="plan/0001-example-milestone/index.html"><strong aria-hidden="true">2.1.</strong> 0001 — example milestone</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Software — where</li><li class="chapter-item expanded affix "><li class="part-title">Call — why</li><li class="chapter-item expanded "><a href="call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">3.</strong> Use Markdown decision records (MADR)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="call/0001-tool-outputs-are-project-owned.html"><strong aria-hidden="true">3.1.</strong> Tool outputs are project-owned, not under allium or Specula licenses</a></li><li class="chapter-item expanded "><a href="call/0002-verification-lanes-by-property-type.html"><strong aria-hidden="true">3.2.</strong> Split verification into lanes by property type</a></li><li class="chapter-item expanded "><a href="call/0003-compose-tools-as-referenced-submodules.html"><strong aria-hidden="true">3.3.</strong> Compose verification tools as referenced submodules</a></li><li class="chapter-item expanded "><a href="call/0004-software-is-a-bare-store-with-worktrees.html"><strong aria-hidden="true">3.4.</strong> Embed the software as a bare store with named worktrees</a></li><li class="chapter-item expanded "><a href="call/0005-worktree-absence-coherence.html"><strong aria-hidden="true">3.5.</strong> References into a separately-materialized path must survive its absence</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Reference — how</li><li class="chapter-item expanded "><a href="CLAUDE.html" class="active"><strong aria-hidden="true">4.</strong> CLAUDE.md — operating manual for an agentic project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="MIGRATION.html"><strong aria-hidden="true">4.1.</strong> MIGRATION.md — the process moved to the host repo</a></li><li class="chapter-item expanded "><a href="STRUCTURE.html"><strong aria-hidden="true">4.2.</strong> Structure</a></li><li class="chapter-item expanded "><a href="UPGRADING.html"><strong aria-hidden="true">4.3.</strong> UPGRADING.md — the version-to-version upgrade ledger</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Memory</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">host-template</a></li><li class="chapter-item expanded affix "><li class="part-title">Cast — who</li><li class="chapter-item expanded "><a href="cast/index.html"><strong aria-hidden="true">1.</strong> Cast — the project's Who</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cast/applying-personas.html"><strong aria-hidden="true">1.1.</strong> Applying personas during planning</a></li><li class="chapter-item expanded "><a href="cast/mara.html"><strong aria-hidden="true">1.2.</strong> Mara — the Human Operator</a></li><li class="chapter-item expanded "><a href="cast/wren.html"><strong aria-hidden="true">1.3.</strong> Wren — the Agentic LLM Developer</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Plan — what & when</li><li class="chapter-item expanded "><a href="plan-index.html"><strong aria-hidden="true">2.</strong> Plan</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="plan/0001-example-milestone/index.html"><strong aria-hidden="true">2.1.</strong> 0001 — example milestone</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Software — where</li><li class="chapter-item expanded affix "><li class="part-title">Call — why</li><li class="chapter-item expanded "><a href="call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">3.</strong> Use Markdown decision records (MADR)</a></li><li class="chapter-item expanded affix "><li class="part-title">Reference — how</li><li class="chapter-item expanded "><a href="CLAUDE.html" class="active"><strong aria-hidden="true">4.</strong> CLAUDE.md — operating manual for an agentic project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="MIGRATION.html"><strong aria-hidden="true">4.1.</strong> MIGRATION.md — the process moved to the host repo</a></li><li class="chapter-item expanded "><a href="STRUCTURE.html"><strong aria-hidden="true">4.2.</strong> Structure</a></li><li class="chapter-item expanded "><a href="UPGRADING.html"><strong aria-hidden="true">4.3.</strong> UPGRADING.md — the version-to-version upgrade ledger</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Memory</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -183,7 +183,7 @@ things, stop and ask the human before you act. Clarity beats cleverness here.</p
 externalized <em>thought</em> about a piece of software: the plans, the decisions, the
 specifications, the people it serves, and the rules you work under. The software
 itself — the <em>action</em> — lives beneath the project as a bare store with worktrees
-(the <em>Where</em> room; <code>call/0004</code>). You write thought in the project and action in
+(the <em>Where</em> room). You write thought in the project and action in
 the worktree. Keep them separate.</p>
 <p>You are working in a <em>template</em>. A real project replaces the example personas
 with its own and adds its software as the hosted bare store with worktrees. The
@@ -275,6 +275,23 @@ Use it (see below) instead of numbering by hand.</li>
 decision in <code>call/</code>, in MADR (Markdown Any Decision Record) format. The bootstrap
 decision <code>call/0000</code> explains the format and links to the MADR spec. One file per
 decision, <code>NNNN-slug.md</code>, number assigned when the decision is accepted.</p>
+<p><code>call/</code> records decisions about <strong>the software under development</strong> — why your
+software is built as it is. It does <strong>not</strong> hold methodology decisions. The
+methodology is settled in this spine (<code>CLAUDE.md</code> + <code>STRUCTURE.md</code>), inherited by
+copy-at-version; a change to it is made in the template and propagated by
+<code>host-lifecycle upgrade</code>, never re-litigated as a project <code>call/</code>.</p>
+<p><strong>Anti-ouroboros.</strong> A project must not feed on its own methodological tail. If a
+<code>call/</code> decision restates a methodology rule that is then settled or changed
+upstream in the spine, retire it the MADR way: set <code>Status: superseded by the spine</code> in place (records are immutable — you change status, never delete). The
+live (<code>accepted</code>) Why room then holds only decisions still in force.
+<code>host-lifecycle validate</code> fails an <code>accepted</code> decision that is missing a <code>Scope:</code>
+header or declares <code>Scope: methodology</code>. The template ships <code>call/0000</code> only as a
+worked example; replace it with your software's own decisions.</p>
+<p><strong>Inherit from the source, not from a host.</strong> You inherit the methodology from
+<em>this template</em> (the versioned source you copy-at-version) alone. A host or
+management repo's <strong>top-level instance contents</strong> — its <code>call/</code>, <code>plan/</code>,
+<code>MEMORY.md</code>, the project-specific parts of its <code>CLAUDE.md</code> — are that project's own
+rooms and bind no adopter. Do not read them as normative.</p>
 <h2 id="specs--planmilestonespec"><a class="header" href="#specs--planmilestonespec">Specs — <code>plan/&lt;milestone&gt;/spec/</code></a></h2>
 <p>Each milestone carries its specifications in its own <code>spec/</code> folder:</p>
 <ul>
@@ -313,7 +330,7 @@ change, raise it upstream.</li>
 </ul>
 <p>The <em>output</em> a tool produces about your project (a report, a counterexample, a
 generated check) belongs to your project, not to the tool's license — the same
-way a compiler's license does not cover the program it compiles. See <code>call/0001</code>.</p>
+way a compiler's license does not cover the program it compiles.</p>
 <h2 id="the-host--tools"><a class="header" href="#the-host--tools">The host-* tools</a></h2>
 <p>Three of the tools are ours, released into the public domain (Unlicense):</p>
 <ul>
@@ -326,7 +343,7 @@ mechanical work. Run <code>host-lifecycle next &lt;dir&gt;</code> for the next n
 <code>host-lifecycle validate &lt;dir&gt;</code> to check a folder. It also materialises and
 audits the <em>Where</em> room: <code>host-lifecycle software --materialize|--check &lt;dir&gt;</code>
 realises the <code>.host-software</code> bare store + worktrees and verifies each is at its
-pin (<code>call/0004</code>).</li>
+pin.</li>
 </ul>
 <p>Because the generator and the checker share <code>host-grammar</code>, what host-lifecycle
 emits is exactly what host-lint accepts. Trust that symmetry; do not number by
@@ -349,8 +366,8 @@ old entry; if one was wrong, add a new entry that corrects it and points back.</
 able to read <code>plan/</code>, <code>call/</code>, and <code>MEMORY.md</code> and continue without repeating a
 past mistake.</p>
 <h2 id="software-and-submodule-discipline"><a class="header" href="#software-and-submodule-discipline">Software and submodule discipline</a></h2>
-<p>The <strong>tools</strong> are submodules; the <strong>software</strong> is a bare store with worktrees
-(<code>call/0004</code>). Both follow a commit-upstream-first rule:</p>
+<p>The <strong>tools</strong> are submodules; the <strong>software</strong> is a bare store with worktrees.
+Both follow a commit-upstream-first rule:</p>
 <ul>
 <li><strong>A tool submodule:</strong> commit and push inside it (on <code>main</code>) first, then commit
 the updated submodule pointer in the host and push.</li>
@@ -361,7 +378,7 @@ recorded pin is the audit anchor a gitlink used to be.</li>
 <p>Never push a host commit whose tool pointer or software pin is not yet pushed. If
 a push fails (no network, no auth), stop, tell the human which commits are
 unpushed, and do not start work that depends on them.</p>
-<p><strong>Worktree-absence coherence (<code>call/0005</code>).</strong> A separately-materialized path — the
+<p><strong>Worktree-absence coherence.</strong> A separately-materialized path — the
 software worktree, or a tool submodule — is absent (or empty) until materialized; a
 fresh clone, CI, and a partial submodule init do not have it. So <strong>do not git-track
 an artifact that depends on such a path existing</strong> (a skill symlink into
@@ -393,7 +410,7 @@ license obligation.</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="call/0005-worktree-absence-coherence.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="call/0000-use-markdown-decision-records.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -407,7 +424,7 @@ license obligation.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="call/0005-worktree-absence-coherence.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="call/0000-use-markdown-decision-records.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
