@@ -40,7 +40,11 @@ each recording the source URL, the pinned canonical SHA, and the worktree set,
 which `host-lifecycle software --materialize` realises and `--check` audits.
 The recorded pin replaces a submodule gitlink as the
 reproducibility anchor, so several branches stay materialized at once where a
-single submodule tree could not.
+single submodule tree could not. Software initiated under the methodology has
+**reproducible builds** — the stanza also records the `build`/`toolchain` recipe and
+the deployed `artifact` hash, so `host-lifecycle software --verify-build` can rebuild
+from the pin and prove the deployed binary; migrated software not yet reproducible
+carries a `repro-exempt = call/NNNN` case decision (see `CLAUDE.md`).
 
 To instantiate: clone, `git submodule update --init` (the tools), run
 `./link-skills.sh` (regenerate the skill symlinks for the tools you initialized),

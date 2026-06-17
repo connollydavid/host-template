@@ -253,6 +253,25 @@ tracked symlink whose target is not itself tracked here as a `HAZARD`. And: an
 un-materialized CI job must exercise each runtime-critical artifact — "done" means
 the whole CI sweep is green, not one artifact built.
 
+**Reproducible builds — the production anchor.** Software *initiated* under the
+methodology has **reproducible builds**: its deployed artifact MUST be byte-reproducible
+from the pinned source plus a recorded build recipe (a pinned `toolchain` and `build`
+command in `.host-software`). That is what makes the pin a true production anchor — a
+clean rebuild from the pin equals what is deployed — rather than just a source pin.
+Record per component which line ships (`deploy`) and the artifact's expected hash
+(`artifact = <path> <sha256>`); `host-lifecycle software --check` attests these cheaply,
+and a CI job runs `host-lifecycle software --verify-build` to rebuild from the pin and
+fail unless the artifact reproduces. For **greenfield** software, non-reproducibility is
+a defect designed out from the start.
+
+**Escape clause (migrated software only).** Pre-existing software brought under the
+methodology may not be reproducible yet. It may carry `repro-exempt = call/NNNN` citing a
+recorded **case decision** — a software-scoped `call/` decision documenting why it is not
+yet reproducible and the interim provenance. `--verify-build` then warns and skips the
+rebuild comparison; `--check` still requires the citation to resolve. The exemption is
+meant to be retired as the component converges on reproducibility, and is **never**
+available to greenfield software.
+
 ## Upgrading
 
 Adopting is one event; the template moves on. To **upgrade**, re-apply the spine
