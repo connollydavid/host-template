@@ -32,3 +32,8 @@ keyed by the template revision at which its action became required.
     title    = Reserve agentic-host for the meta repo; stamp is `.host`, scaffold is `host-template`
     action   = Rename your `.agentic-host` stamp to `.host`. Re-point your `template-agentic-host` submodule and its URL to `host-template`. A repo that adopts the methodology is "an agentic project" (e.g. `agentic-acme`); `agentic-host` now names only the meta repo.
     requires = host-lifecycle v0.5.0
+
+[upgrade "7ae93cd"]
+    title    = Publish via `host-lifecycle book` (the canonical doc-site publisher)
+    action   = Replace any hand-rolled mdBook generator/SUMMARY with `host-lifecycle book .`; it writes book.toml (src = "docs", never ".") + docs/ in lifecycle order, renders specs, and emits a Where stub from .host-software. Run `host-lifecycle book . && host-lifecycle book --check .` before `mdbook build` (see .github/workflows/site.yml); gitignore the generated book.toml/docs/.
+    requires = host-lifecycle v0.6.1
