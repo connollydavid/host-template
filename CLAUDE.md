@@ -264,6 +264,15 @@ and a CI job runs `host-lifecycle software --verify-build` to rebuild from the p
 fail unless the artifact reproduces. For **greenfield** software, non-reproducibility is
 a defect designed out from the start.
 
+**Multi-platform builds.** A component whose *one* source pin ships on several platforms
+records one `[build "<name>" "<platform>"]` subsection per platform under its
+`[software "<name>"]` stanza, each carrying its own `build`/`toolchain`/`artifact`/`deploy`
+(and optional `repro-exempt`) plus an `attest-host` naming the OS — `linux`, `windows`,
+`macos` — that reproduces it. `--check` and `--verify-build` iterate the builds and attest
+each only on its `attest-host`, skipping a build whose host is not the current one rather
+than failing (a Linux runner cannot reproduce the Windows artifact, and is not asked to).
+The flat single-build fields remain the form for a single-platform component.
+
 **Escape clause (migrated software only).** Pre-existing software brought under the
 methodology may not be reproducible yet. It may carry `repro-exempt = call/NNNN` citing a
 recorded **case decision** — a software-scoped `call/` decision documenting why it is not

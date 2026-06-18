@@ -44,7 +44,11 @@ single submodule tree could not. Software initiated under the methodology has
 **reproducible builds** — the stanza also records the `build`/`toolchain` recipe and
 the deployed `artifact` hash, so `host-lifecycle software --verify-build` can rebuild
 from the pin and prove the deployed binary; migrated software not yet reproducible
-carries a `repro-exempt = call/NNNN` case decision (see `CLAUDE.md`).
+carries a `repro-exempt = call/NNNN` case decision (see `CLAUDE.md`). A component that
+ships on several platforms records one `[build "<name>" "<platform>"]` subsection per
+platform (each a distinct toolchain/artifact of the *same* pin, with an `attest-host`
+naming the OS that reproduces it); the flat single-build form stays valid for the
+single-platform case.
 
 To instantiate: clone, `git submodule update --init` (the tools), run
 `./link-skills.sh` (regenerate the skill symlinks for the tools you initialized),
