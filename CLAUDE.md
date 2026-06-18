@@ -342,6 +342,21 @@ tracked symlink whose target is not itself tracked here as a `HAZARD`. And: an
 un-materialized CI job must exercise each runtime-critical artifact — "done" means
 the whole CI sweep is green, not one artifact built.
 
+**Worktrees live under the host root.** Every materialized Where-room worktree
+**MUST** surface at a path *under* the host root — never a bare external path
+disjoint from the tree. The rule an agent relies on is: *if you build it, its
+files live under the host root*, so an edit through the default-cwd path lands in
+the tree under test. When a backing store genuinely must live elsewhere — another
+filesystem or platform (e.g. a native-Windows build that cannot sit on a WSL
+share) — record it on the parallel-worktree line as `store=<path>` (and `host=<os>`
+to gate it to one OS); `software --materialize` then realises the store at that
+path and the in-tree `<dir>` as a **symlink / directory junction / bind-mount** to
+it. `host-lifecycle software --check` **HAZARDs** any recorded worktree path that
+escapes the host root, and any `store=` line whose in-tree handle is missing or
+does not resolve to the store. A disjoint external worktree with no in-structure
+handle is the wrong-tree footgun — edits silently land in a tree not under test —
+and is a defect, not a layout choice.
+
 **Reproducible builds — the production anchor.** Software *initiated* under the
 methodology has **reproducible builds**: its deployed artifact MUST be byte-reproducible
 from the pinned source plus a recorded build recipe (a pinned `toolchain` and `build`
