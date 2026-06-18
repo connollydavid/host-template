@@ -26,7 +26,7 @@ Put each kind of file in its room. Do not invent new top-level folders.
 | Question | Room | What goes here |
 |----------|------|----------------|
 | Who  | `cast/` | personas — the people (human or agent) the software serves |
-| What | `plan/<milestone>/spec/` | specifications: behaviour (`.allium`), timing (`.tla`) |
+| What | `<software>/` (with the code) | specifications: behaviour (`.allium`), timing (`.tla`), verified in the software's own CI |
 | When | `plan/` | the milestone index and one folder per milestone |
 | Where | `<software>/` | the hosted software — a bare store with worktrees; you add it |
 | Why  | `call/` | decisions, in MADR format (see `call/0000`) |
@@ -141,15 +141,24 @@ management repo's **top-level instance contents** — its `call/`, `plan/`,
 `MEMORY.md`, the project-specific parts of its `CLAUDE.md` — are that project's own
 rooms and bind no adopter. Do not read them as normative.
 
-## Specs — `plan/<milestone>/spec/`
+## Specs — with the software they constrain
 
-Each milestone carries its specifications in its own `spec/` folder:
+A spec states what the software must do; a tool turns it into a check. Specs live
+**with the software they describe** — in the software repo, beside the code, and
+verified by **that repo's CI** — the way tests live next to code, so a spec and the
+code it constrains move, version, and break together:
 
 - Behaviour and requirements as `.allium` files — checked by `tools/allium`
-  (property-based testing).
-- Timing and concurrency as `.tla` files — checked by `tools/specula` (TLA+).
+  (`allium check` validates structure; `allium analyse` adds data-flow,
+  reachability, terminal-state and deadlock analysis). The software's CI runs both
+  and fails on any error or warning.
+- Timing and concurrency as `.tla` files — checked by `tools/specula` (TLA+/TLC),
+  run by the software's CI.
 
-A spec states what the software must do; the tools turn it into a check.
+The host's `plan/<milestone>/` *references* a spec (by path and the software pin);
+it does not contain it. Do not place specs in the host's `plan/` tree — quarantining
+a spec from its software is a bad smell (the spec drifts from the code). A spec that
+ended up under `plan/*/spec/` is relocated into the software repo.
 
 ## Personas — `cast/`
 

@@ -7,7 +7,7 @@ rooms map to the five W's.
 | W | room | holds |
 |---|---|---|
 | Who | `cast/` | personas (Powell, Keenan & McDaid 2007) — examples Mara + Wren |
-| What | `plan/NNNN-*/spec/` | behavioural (`.allium`) + temporal (`.tla/`) specs |
+| What | `<software>/` (with the code) | behavioural (`.allium`) + temporal (`.tla`) specs, verified in the software's CI; the host `plan/` references them |
 | When | `plan/` | the milestone index and folders |
 | Where | `<software>/` | the hosted software — a bare store with worktrees; you add it |
 | Why | `call/` | decisions about the software (MADR; see `call/0000`) — methodology lives in the spine, not here |
@@ -61,8 +61,9 @@ publisher, so you do not hand-roll a generator that drops a room or re-derives t
 src-scoping wrong. It writes a `book.toml` scoped to a generated `docs/` (never
 `src = "."`, which would walk the tool submodules and the un-materialized software
 worktree and trip over whatever is not present) and a `SUMMARY.md` in
-**lifecycle order**: Cast (Who) → Plan + specs (What/When) → Software/Where (a stub
-read from `.host-software`) → Call (Why) → Reference/CLAUDE (How) → Memory. Then
+**lifecycle order**: Cast (Who) → Plan (When) → Software/Where (the What specs live
+with the code, read as a stub from `.host-software`) → Call (Why) →
+Reference/CLAUDE (How) → Memory. Then
 `host-lifecycle book --check .` fails the build unless every room with source
 renders a page, so a half-room site cannot ship. `book.toml` and `docs/` are
 generated output (gitignored); the reference Site workflow under
