@@ -23,6 +23,8 @@ and wrap, never patch:
 
 (`host-grammar`, the shared naming/numbering rules crate, is a build dependency of `host-lint` and `host-lifecycle` — not a host submodule.)
 
+A lane is **mandatory once a spec of its kind exists** (RFC-2119 MUST; see `CLAUDE.md`): a `.allium` requires `tools/allium` + its skills + a `check`/`analyse`/`plan` CI lane with the obligations discharged by tests; a `.tla` requires `tools/specula` + a TLC lane. Adopting a lane is optional; ignoring a present spec's lane is a defect.
+
 `.claude/skills/` are symlinks into those submodules' skills — reference, not
 copy. They are **generated, not tracked**: `link-skills.sh` creates a link for each
 *materialized* tool (skipping uninitialized submodules), because a tracked symlink

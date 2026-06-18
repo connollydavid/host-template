@@ -148,12 +148,17 @@ A spec states what the software must do; a tool turns it into a check. Specs liv
 verified by **that repo's CI** — the way tests live next to code, so a spec and the
 code it constrains move, version, and break together:
 
-- Behaviour and requirements as `.allium` files — checked by `tools/allium`
-  (`allium check` validates structure; `allium analyse` adds data-flow,
-  reachability, terminal-state and deadlock analysis). The software's CI runs both
-  and fails on any error or warning.
+- Behaviour and requirements as `.allium` files — authored and maintained through
+  the allium skills (`elicit`/`distill`/`tend`/`weed`/`propagate`), checked by
+  `tools/allium` (`allium check` validates structure; `allium analyse` adds
+  data-flow, reachability, terminal-state and deadlock analysis; `allium plan`
+  derives the test obligations the suite must discharge). The software's CI runs
+  `check` + `analyse` + `plan` and fails on any error or warning.
 - Timing and concurrency as `.tla` files — checked by `tools/specula` (TLA+/TLC),
   run by the software's CI.
+
+A present spec carries its full lane (see "Mandatory when used", below) — wire the
+tool and its skills before authoring.
 
 The host's `plan/<milestone>/` *references* a spec (by path and the software pin);
 it does not contain it. Do not place specs in the host's `plan/` tree — quarantining
@@ -179,10 +184,26 @@ each claim to the lane that can prove it.
 1. **Hygiene** — `tools/host-lint`. Catches naming tells: ordinal labels and bare
    numerals leaking into commit messages, headers, and comments. Runs as a git
    hook.
-2. **Requirements** — `tools/allium` (MIT, by JUXT). Property-based testing: does
-   the software meet the behaviour the spec states?
+2. **Requirements** — `tools/allium` (MIT, by JUXT). Does the software meet the
+   behaviour the spec states? Author and maintain `.allium` specs **through the
+   allium skills**, not by hand: `elicit`/`distill` to author, `tend` to evolve,
+   `weed` to find spec↔code divergence, `propagate` to generate the tests. Gate
+   each spec in the software's CI with `allium check` (structure) + `allium
+   analyse` (data flow, reachability, terminal states, deadlock) + `allium plan`
+   (test obligations).
 3. **Timing and concurrency** — `tools/specula` (Apache-2.0). TLA+ model
-   checking: are the orderings and timings correct?
+   checking: are the orderings and timings correct? Model-check each `.tla` with
+   TLC in the software's CI.
+
+**Mandatory when used (RFC-2119).** Adopting a lane is optional — not every
+project needs TLA+ — but **once a spec of a kind exists, its tool, skills, and CI
+lane are required.** A component carrying any `.allium` spec MUST wire `tools/allium`
+and its skills and run `check` + `analyse` + `plan` in that repo's CI, and the
+`plan` obligations MUST be discharged by the software's tests. A component carrying
+any `.tla` spec MUST wire `tools/specula` and TLC-check it in that repo's CI. A spec
+present without its full lane is a **defect**, not a choice — the lanes are not
+reference decoration. The tools are referenced submodules; their skills are
+generated, gitignored symlinks (`link-skills.sh`), wired before you author a spec.
 
 Two rules govern the tools:
 
