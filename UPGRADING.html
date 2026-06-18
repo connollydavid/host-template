@@ -237,6 +237,10 @@ requires = host-lifecycle v0.9.1</p>
 title    = The spec-lane MUST is enforced by software --check
 action   = Bump your pinned host-lifecycle to v0.10.0. <code>host-lifecycle software --check</code> now raises a HAZARD when a materialized component carries a <code>.allium</code> spec with no CI workflow running <code>allium check</code> + <code>allium analyse</code>, or a <code>.tla</code> with no TLC lane (<code>tlc2.TLC</code>/<code>tla2tools</code>). Wire the missing lane (per the previous entry) so --check is clean; an un-materialized worktree is skipped.
 requires = host-lifecycle v0.10.0</p>
+<p>[upgrade "821a216"]
+title    = Allium plan obligations must be dispositioned per component
+action   = For each <code>.allium</code>, add a sibling <code>&lt;spec&gt;.obligations</code> manifest that dispositions every obligation <code>allium plan</code> derives — <code>test:&lt;name&gt;</code> (a named test discharges it), <code>structural</code> (the check/analyse lane covers it), or <code>waived: &lt;reason&gt;</code>. Run <code>host-lifecycle obligations &lt;spec&gt; --tests &lt;dir&gt;</code> in the software's CI (it fails on any undispositioned/stale obligation or absent test ref). Bump host-lifecycle to v0.11.1, where <code>software --check</code> also HAZARDs a <code>.allium</code> with no <code>.obligations</code> manifest.
+requires = host-lifecycle v0.11.1</p>
 
                     </main>
 
