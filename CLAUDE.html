@@ -431,6 +431,13 @@ recorded pin is the audit anchor a gitlink used to be.</li>
 <p>Never push a host commit whose tool pointer or software pin is not yet pushed. If
 a push fails (no network, no auth), stop, tell the human which commits are
 unpushed, and do not start work that depends on them.</p>
+<p><strong>Tag every release.</strong> A version bump — a change to the <code>version</code> in a tool's or
+the software's manifest (<code>Cargo.toml</code>, …) — <strong>MUST</strong> be accompanied by a matching
+annotated git tag <code>vX.Y.Z</code> at the release commit, pushed alongside it (<code>git tag -a vX.Y.Z -m "&lt;name&gt; vX.Y.Z" &amp;&amp; git push origin vX.Y.Z</code>). The tag <strong>is</strong> the release:
+a tag-triggered CI job builds the artifacts from it (e.g. a <code>v*</code> release workflow).
+An untagged version bump is an unreleased version — a defect; back-fill the tag at
+its bump commit. Do not re-pin <code>.host-software</code> (or a tool pointer) to a
+version-bumped commit that carries no matching tag.</p>
 <p><strong>Worktree-absence coherence.</strong> A separately-materialized path — the
 software worktree, or a tool submodule — is absent (or empty) until materialized; a
 fresh clone, CI, and a partial submodule init do not have it. So <strong>do not git-track
