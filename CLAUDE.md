@@ -267,6 +267,25 @@ scaffolded, embedded, migrated, verified, published and upgraded through them. Y
 Operating the methodology ad-hoc (hand-scaffolding rooms, hand-renaming files,
 hand-rolling the site, eyeballing an upgrade diff) is a defect.
 
+### Never adopt a software repository in place
+
+A host is a *separate meta-repo*; the software it governs lives beneath it as the
+*Where* room (a bare store with worktrees recorded in `.host-software`). The two
+stay separable and independently versioned — that is the whole point of "keep
+them separate". So at **first adoption** (no `.host` stamp yet), if the target
+directory is itself a software repository — it carries a root build manifest
+(`Cargo.toml`, `package.json`, `go.mod`, `pyproject.toml`, …) and is not already
+managing software via `.host-software` — you **MUST** refuse to continue.
+`host-lifecycle classify <dir>` enforces this: it prints the refusal and exits
+non-zero instead of a case letter, rather than letting you turn the code repo
+into the host.
+
+Refusing is not the end of the task — embed the software the right way instead:
+create or choose an empty host repository (e.g. `agentic-<name>`), `adopt` it
+there, then add the software as the Where room with a `[software "<name>"]`
+stanza in the host's `.host-software` (the repo's URL, a pinned SHA, the worktree
+set) and `software --materialize`. The classify refusal prints these exact steps.
+
 ## Audited plans and append-only memory
 
 Two disciplines keep the host trustworthy across sessions.
