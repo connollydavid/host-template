@@ -92,3 +92,8 @@ keyed by the template revision at which its action became required.
     title    = Tag every release (a version bump MUST carry a matching vX.Y.Z tag)
     action   = Audit your tools and software for version bumps that were never tagged (`git tag` vs the manifest `version`); back-fill an annotated `vX.Y.Z` tag at each bump commit and push it. From now on, every version bump is committed with its matching tag, pushed alongside — the tag is the release a `v*` CI workflow builds. Do not re-pin `.host-software` or a tool pointer to a version-bumped commit that has no matching tag.
     requires = host-lifecycle v0.11.1
+
+[upgrade "ae1e688"]
+    title    = Never adopt a software repository in place
+    action   = Bump your pinned host-lifecycle to v0.12.0 and re-run the classify phase as the first step of any adoption. `host-lifecycle classify <dir>` now refuses (exits non-zero, prints the embedding steps) when the target is itself a software repository — a root build manifest (`Cargo.toml`, `package.json`, `go.mod`, `pyproject.toml`, …) with no `.host` stamp and no `.host-software` recipe — instead of printing a case letter. A host is a separate meta-repo; the software is embedded as its Where room. If you previously adopted a methodology host directly on top of a software repo, split them: move the code into a bare store with worktrees recorded in the host's `.host-software`, leaving the host root carrying only the rooms and config.
+    requires = host-lifecycle v0.12.0
