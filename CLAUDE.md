@@ -250,6 +250,23 @@ Because the generator and the checker share `host-grammar`, what host-lifecycle
 emits is exactly what host-lint accepts. Trust that symmetry; do not number by
 hand.
 
+### The lifecycle phases — mandatory, no opt-out
+
+host-lifecycle ships one Claude **skill per lifecycle phase**, generated into
+`.claude/skills/` by `link-skills.sh` exactly as the allium/specula skills are:
+**classify** (preview + case), **adopt** (governance + rooms + stamp), **embed**
+(the software as a bare store with worktrees), **remap** (the dictionary rename),
+**verify** (the gate sweep — `validate`, `software --check`, `obligations`,
+`book --check`), **publish** (the doc site), **upgrade** (the ledger). Each owns
+the judgment around its mechanical command.
+
+Unlike a verification lane, which is conditional (required only once a spec of its
+kind exists), the lifecycle phases are **unconditional**: every agentic project is
+scaffolded, embedded, migrated, verified, published and upgraded through them. You
+**MUST** drive each phase through its skill and command — **there is no opt-out**.
+Operating the methodology ad-hoc (hand-scaffolding rooms, hand-renaming files,
+hand-rolling the site, eyeballing an upgrade diff) is a defect.
+
 ## Audited plans and append-only memory
 
 Two disciplines keep the host trustworthy across sessions.
