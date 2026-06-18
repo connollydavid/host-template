@@ -259,10 +259,14 @@ from the pinned source plus a recorded build recipe (a pinned `toolchain` and `b
 command in `.host-software`). That is what makes the pin a true production anchor — a
 clean rebuild from the pin equals what is deployed — rather than just a source pin.
 Record per component which line ships (`deploy`) and the artifact's expected hash
-(`artifact = <path> <sha256>`); `host-lifecycle software --check` attests these cheaply,
-and a CI job runs `host-lifecycle software --verify-build` to rebuild from the pin and
-fail unless the artifact reproduces. For **greenfield** software, non-reproducibility is
-a defect designed out from the start.
+(`artifact = <path> <sha256>`); `host-lifecycle software --check` attests these cheaply
+(a present artifact that matches is **verified**; one built by a local toolchain that
+differs from the canonical hash is **noted, not failed** — the same reasoning
+`--install-hooks` uses, since the recorded hash is the pinned build host's output), and
+a CI job runs `host-lifecycle software --verify-build` to rebuild from the pin and fail
+unless the artifact reproduces. `--verify-build`, not `--check`, is the reproducibility
+proof. For **greenfield** software, non-reproducibility is a defect designed out from the
+start.
 
 **Multi-platform builds.** A component whose *one* source pin ships on several platforms
 records one `[build "<name>" "<platform>"]` subsection per platform under its
