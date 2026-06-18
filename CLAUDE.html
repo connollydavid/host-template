@@ -401,6 +401,22 @@ scaffolded, embedded, migrated, verified, published and upgraded through them. Y
 <strong>MUST</strong> drive each phase through its skill and command — <strong>there is no opt-out</strong>.
 Operating the methodology ad-hoc (hand-scaffolding rooms, hand-renaming files,
 hand-rolling the site, eyeballing an upgrade diff) is a defect.</p>
+<h3 id="never-adopt-a-software-repository-in-place"><a class="header" href="#never-adopt-a-software-repository-in-place">Never adopt a software repository in place</a></h3>
+<p>A host is a <em>separate meta-repo</em>; the software it governs lives beneath it as the
+<em>Where</em> room (a bare store with worktrees recorded in <code>.host-software</code>). The two
+stay separable and independently versioned — that is the whole point of "keep
+them separate". So at <strong>first adoption</strong> (no <code>.host</code> stamp yet), if the target
+directory is itself a software repository — it carries a root build manifest
+(<code>Cargo.toml</code>, <code>package.json</code>, <code>go.mod</code>, <code>pyproject.toml</code>, …) and is not already
+managing software via <code>.host-software</code> — you <strong>MUST</strong> refuse to continue.
+<code>host-lifecycle classify &lt;dir&gt;</code> enforces this: it prints the refusal and exits
+non-zero instead of a case letter, rather than letting you turn the code repo
+into the host.</p>
+<p>Refusing is not the end of the task — embed the software the right way instead:
+create or choose an empty host repository (e.g. <code>agentic-&lt;name&gt;</code>), <code>adopt</code> it
+there, then add the software as the Where room with a <code>[software "&lt;name&gt;"]</code>
+stanza in the host's <code>.host-software</code> (the repo's URL, a pinned SHA, the worktree
+set) and <code>software --materialize</code>. The classify refusal prints these exact steps.</p>
 <h2 id="audited-plans-and-append-only-memory"><a class="header" href="#audited-plans-and-append-only-memory">Audited plans and append-only memory</a></h2>
 <p>Two disciplines keep the host trustworthy across sessions.</p>
 <ul>
