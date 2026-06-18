@@ -87,3 +87,8 @@ keyed by the template revision at which its action became required.
     title    = Lifecycle phases are an unconditional MUST, driven by host-lifecycle skills
     action   = Bump tools/host-lifecycle and run link-skills.sh so the phase skills (classify, adopt, embed, remap, verify, publish, upgrade) appear under .claude/skills/ alongside the allium/specula skills. Operate the methodology through these phases and their commands — scaffolding, embedding, migration, verification, publishing and upgrading — not ad-hoc. Unlike a verification lane, this is unconditional: there is no opt-out, and hand-operating any phase is a defect.
     requires = host-lifecycle v0.11.1
+
+[upgrade "0e83e3f"]
+    title    = Tag every release (a version bump MUST carry a matching vX.Y.Z tag)
+    action   = Audit your tools and software for version bumps that were never tagged (`git tag` vs the manifest `version`); back-fill an annotated `vX.Y.Z` tag at each bump commit and push it. From now on, every version bump is committed with its matching tag, pushed alongside — the tag is the release a `v*` CI workflow builds. Do not re-pin `.host-software` or a tool pointer to a version-bumped commit that has no matching tag.
+    requires = host-lifecycle v0.11.1
