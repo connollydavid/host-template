@@ -670,6 +670,20 @@ otherwise it must tolerate the absence. <code>host-lifecycle software --check</c
 tracked symlink whose target is not itself tracked here as a <code>HAZARD</code>. And: an
 un-materialized CI job must exercise each runtime-critical artifact — "done" means
 the whole CI sweep is green, not one artifact built.</p>
+<p><strong>Worktrees live under the host root.</strong> Every materialized Where-room worktree
+<strong>MUST</strong> surface at a path <em>under</em> the host root — never a bare external path
+disjoint from the tree. The rule an agent relies on is: <em>if you build it, its
+files live under the host root</em>, so an edit through the default-cwd path lands in
+the tree under test. When a backing store genuinely must live elsewhere — another
+filesystem or platform (e.g. a native-Windows build that cannot sit on a WSL
+share) — record it on the parallel-worktree line as <code>store=&lt;path&gt;</code> (and <code>host=&lt;os&gt;</code>
+to gate it to one OS); <code>software --materialize</code> then realises the store at that
+path and the in-tree <code>&lt;dir&gt;</code> as a <strong>symlink / directory junction / bind-mount</strong> to
+it. <code>host-lifecycle software --check</code> <strong>HAZARDs</strong> any recorded worktree path that
+escapes the host root, and any <code>store=</code> line whose in-tree handle is missing or
+does not resolve to the store. A disjoint external worktree with no in-structure
+handle is the wrong-tree footgun — edits silently land in a tree not under test —
+and is a defect, not a layout choice.</p>
 <p><strong>Reproducible builds — the production anchor.</strong> Software <em>initiated</em> under the
 methodology has <strong>reproducible builds</strong>: its deployed artifact MUST be byte-reproducible
 from the pinned source plus a recorded build recipe (a pinned <code>toolchain</code> and <code>build</code>
@@ -879,6 +893,10 @@ requires = host-lifecycle v0.11.1</p>
 title    = Never adopt a software repository in place
 action   = Bump your pinned host-lifecycle to v0.12.0 and re-run the classify phase as the first step of any adoption. <code>host-lifecycle classify &lt;dir&gt;</code> now refuses (exits non-zero, prints the embedding steps) when the target is itself a software repository — a root build manifest (<code>Cargo.toml</code>, <code>package.json</code>, <code>go.mod</code>, <code>pyproject.toml</code>, …) with no <code>.host</code> stamp and no <code>.host-software</code> recipe — instead of printing a case letter. A host is a separate meta-repo; the software is embedded as its Where room. If you previously adopted a methodology host directly on top of a software repo, split them: move the code into a bare store with worktrees recorded in the host's <code>.host-software</code>, leaving the host root carrying only the rooms and config.
 requires = host-lifecycle v0.12.0</p>
+<p>[upgrade "7de7cb1"]
+title    = Materialized worktrees must live under the host root
+action   = Bump your pinned host-lifecycle to v0.13.0. Audit <code>.host-software</code> for any worktree whose path escapes the host root (an absolute or <code>..</code>-climbing <code>worktrees</code>/<code>worktree</code> entry, or a Where-room worktree materialized at a disjoint external path with no in-structure handle). Bring each under the root: for a store that must live off-tree (another filesystem or platform), record it on the parallel line as <code>worktree = &lt;dir&gt; &lt;branch&gt; &lt;pin&gt; store=&lt;path&gt; [host=&lt;os&gt;]</code> and re-run <code>software --materialize</code>, which realises the store at <code>&lt;path&gt;</code> and the in-tree <code>&lt;dir&gt;</code> as a symlink/junction to it. <code>software --check</code> now HAZARDs an escaping path and a <code>store=</code> line whose in-tree handle is missing or does not resolve to the store; <code>host=</code> gates a line to one OS so a foreign-OS CI skips it rather than failing.
+requires = host-lifecycle v0.13.0</p>
 
                     </main>
 

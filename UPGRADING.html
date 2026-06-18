@@ -253,6 +253,10 @@ requires = host-lifecycle v0.11.1</p>
 title    = Never adopt a software repository in place
 action   = Bump your pinned host-lifecycle to v0.12.0 and re-run the classify phase as the first step of any adoption. <code>host-lifecycle classify &lt;dir&gt;</code> now refuses (exits non-zero, prints the embedding steps) when the target is itself a software repository — a root build manifest (<code>Cargo.toml</code>, <code>package.json</code>, <code>go.mod</code>, <code>pyproject.toml</code>, …) with no <code>.host</code> stamp and no <code>.host-software</code> recipe — instead of printing a case letter. A host is a separate meta-repo; the software is embedded as its Where room. If you previously adopted a methodology host directly on top of a software repo, split them: move the code into a bare store with worktrees recorded in the host's <code>.host-software</code>, leaving the host root carrying only the rooms and config.
 requires = host-lifecycle v0.12.0</p>
+<p>[upgrade "7de7cb1"]
+title    = Materialized worktrees must live under the host root
+action   = Bump your pinned host-lifecycle to v0.13.0. Audit <code>.host-software</code> for any worktree whose path escapes the host root (an absolute or <code>..</code>-climbing <code>worktrees</code>/<code>worktree</code> entry, or a Where-room worktree materialized at a disjoint external path with no in-structure handle). Bring each under the root: for a store that must live off-tree (another filesystem or platform), record it on the parallel line as <code>worktree = &lt;dir&gt; &lt;branch&gt; &lt;pin&gt; store=&lt;path&gt; [host=&lt;os&gt;]</code> and re-run <code>software --materialize</code>, which realises the store at <code>&lt;path&gt;</code> and the in-tree <code>&lt;dir&gt;</code> as a symlink/junction to it. <code>software --check</code> now HAZARDs an escaping path and a <code>store=</code> line whose in-tree handle is missing or does not resolve to the store; <code>host=</code> gates a line to one OS so a foreign-OS CI skips it rather than failing.
+requires = host-lifecycle v0.13.0</p>
 
                     </main>
 
