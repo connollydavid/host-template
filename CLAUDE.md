@@ -348,10 +348,13 @@ disjoint from the tree. The rule an agent relies on is: *if you build it, its
 files live under the host root*, so an edit through the default-cwd path lands in
 the tree under test. When a backing store genuinely must live elsewhere — another
 filesystem or platform (e.g. a native-Windows build that cannot sit on a WSL
-share) — record it on the parallel-worktree line as `store=<path>` (and `host=<os>`
-to gate it to one OS); `software --materialize` then realises the store at that
-path and the in-tree `<dir>` as a **symlink / directory junction / bind-mount** to
-it. `host-lifecycle software --check` **HAZARDs** any recorded worktree path that
+share) — record it on the parallel-worktree line as `store=<path>` (and optionally
+`host=<os>` — the OS that **materializes** the store, i.e. where you run
+`host-lifecycle`, *not* the build platform; for a Windows Dev Drive reached from WSL
+that is `linux`, even though the build's own `attest-host` is `windows`). Off-platform,
+`host=` makes `--materialize`/`--check` skip the line rather than fail.
+`software --materialize` then realises the store at that path and the in-tree `<dir>`
+as a **symlink / directory junction / bind-mount** to it. `host-lifecycle software --check` **HAZARDs** any recorded worktree path that
 escapes the host root, and any `store=` line whose in-tree handle is missing or
 does not resolve to the store. A disjoint external worktree with no in-structure
 handle is the wrong-tree footgun — edits silently land in a tree not under test —
@@ -391,13 +394,35 @@ available to greenfield software.
 
 ## Upgrading
 
-Adopting is one event; the template moves on. To **upgrade**, re-apply the spine
-changes across the revision span *and* the structural migrations it introduced
-(re-embedding the software, bumping a tool) — a doc diff shows the prose but not
-the actions. `UPGRADING.md` is the ledger of those actions, one `[upgrade
-"<revision>"]` stanza each; `host-lifecycle upgrade <dir>` prints every entry
-newer than the repo's `.host` stamp. Fetch the template to the target
-revision, run it, apply the list, then re-stamp.
+Adopting is one event; the template moves on. The `.host` stamp records **what you
+have applied**: a `baseline` ledger entry — every entry at or before its position in
+`UPGRADING.md` counts as applied — plus an optional `applied` set of entries taken
+out of order. `UPGRADING.md` is the ledger of actions, one `[upgrade "<revision>"]`
+stanza each, ordered by file position; a stanza may declare `independent` or
+`depends = <id> …` (logical prerequisites, distinct from the `requires` tool-version
+floor) and a `verify` post-condition.
+
+To upgrade, fetch the template to the target revision, then:
+
+- `host-lifecycle upgrade <dir>` lists every ledger entry **not yet applied**, by
+  ledger position — never git ancestry (ledger SHAs are a linear-commit artifact and
+  some are orphaned from HEAD). A legacy single-`revision` stamp is migrated once to a
+  `baseline`. `upgrade --next` prints the single next safe action.
+- Apply an entry, then record it with `host-lifecycle upgrade --record <id>` (an id,
+  an unambiguous prefix, or a ledger ordinal). The tool validates the id, refuses if a
+  `depends` is unapplied, runs the entry's `verify` post-condition — or, when it has
+  none, requires an explicit `--unverified call/NNNN` citation — and appends an
+  append-only claim. **You never hand-edit the stamp.**
+- A late **independent** entry may be cherry-applied without an earlier unrelated one:
+  the deferred entries stay pending and **re-list** — a forgotten or premature record
+  can never silently hide owed work (fail-safe). `upgrade --advance` later compacts a
+  contiguous applied run into the `baseline`.
+- `host-lifecycle software --check` re-checks every recorded claim (a `verify` that no
+  longer holds, or an applied entry whose `depends` is unapplied, is a loud `HAZARD`).
+
+The tool carries the process — even a low-capability agent upgrades by reading one
+line and running one command, never editing the stamp by hand. Re-stamp is the tool's
+job, not yours.
 
 ## Provenance
 
