@@ -57,11 +57,13 @@ keyed by the template revision at which its action became required.
     title    = Per-platform builds for multi-platform software
     action   = For a component whose one source pin ships on several platforms, replace the flat single-build fields with one `[build "<name>" "<platform>"]` subsection per platform under its `[software "<name>"]` stanza — each with its own `build`/`toolchain`/`artifact`/`deploy` (and optional `repro-exempt`) plus an `attest-host` naming the OS (`linux`/`windows`/`macos`) that reproduces it. `host-lifecycle software --check`/`--verify-build` then attest each build only on its `attest-host`, skipping foreign-host builds rather than failing. Single-platform components need no change: the flat form stays valid.
     requires = host-lifecycle v0.9.0
+    independent = true
 
 [upgrade "d3dc5ed"]
     title    = --check artifact mismatch is a note, not a failure
     action   = Bump your pinned `host-lifecycle` revision to v0.9.1. `software --check` no longer hard-fails when a present artifact's hash differs from the recorded canonical hash (a local-toolchain build legitimately differs) — it prints a `note` instead, the way `--install-hooks` already does. A match still reports `verified`; `--verify-build` (the container/CI lane) remains the reproducibility proof. No recipe change is required; this only removes a dev-box false failure.
     requires = host-lifecycle v0.9.1
+    independent = true
 
 [upgrade "b6232a5"]
     title    = Specs live with the software, not the host plan tree
@@ -72,33 +74,40 @@ keyed by the template revision at which its action became required.
     title    = Verification lanes are mandatory when a spec of their kind exists
     action   = Wire the lane tools you use as submodules and generate their skills (gitignored) with `link-skills.sh`: `tools/allium` (+ its elicit/distill/tend/weed/propagate skills) for any `.allium`, `tools/specula` for any `.tla`. Author and maintain `.allium` specs THROUGH the skills, not by hand. In the *software* repo's CI, gate each `.allium` with `allium check` + `allium analyse` + `allium plan` (install `allium-cli@3.4.2`; both check and analyse exit non-zero on any error or warning) and discharge the `plan` test obligations with the suite; TLC-check each `.tla` (`tla2tools v1.8.0` on Temurin `21`). The lane is conditional — TLA+ stays optional until a `.tla` exists, allium until a `.allium` exists — but a spec present without its full lane is a defect, not a choice. Do not treat the lanes as reference decoration.
     requires = host-lifecycle v0.9.1
+    depends  = b6232a5
 
 [upgrade "b8c54fc"]
     title    = The spec-lane MUST is enforced by software --check
     action   = Bump your pinned host-lifecycle to v0.10.0. `host-lifecycle software --check` now raises a HAZARD when a materialized component carries a `.allium` spec with no CI workflow running `allium check` + `allium analyse`, or a `.tla` with no TLC lane (`tlc2.TLC`/`tla2tools`). Wire the missing lane (per the previous entry) so --check is clean; an un-materialized worktree is skipped.
     requires = host-lifecycle v0.10.0
+    depends  = c771d60
 
 [upgrade "821a216"]
     title    = Allium plan obligations must be dispositioned per component
     action   = For each `.allium`, add a sibling `<spec>.obligations` manifest that dispositions every obligation `allium plan` derives — `test:<name>` (a named test discharges it), `structural` (the check/analyse lane covers it), or `waived: <reason>`. Run `host-lifecycle obligations <spec> --tests <dir>` in the software's CI (it fails on any undispositioned/stale obligation or absent test ref). Bump host-lifecycle to v0.11.1, where `software --check` also HAZARDs a `.allium` with no `.obligations` manifest.
     requires = host-lifecycle v0.11.1
+    depends  = b6232a5 c771d60
 
 [upgrade "f62d766"]
     title    = Lifecycle phases are an unconditional MUST, driven by host-lifecycle skills
     action   = Bump tools/host-lifecycle and run link-skills.sh so the phase skills (classify, adopt, embed, remap, verify, publish, upgrade) appear under .claude/skills/ alongside the allium/specula skills. Operate the methodology through these phases and their commands — scaffolding, embedding, migration, verification, publishing and upgrading — not ad-hoc. Unlike a verification lane, this is unconditional: there is no opt-out, and hand-operating any phase is a defect.
     requires = host-lifecycle v0.11.1
+    independent = true
 
 [upgrade "0e83e3f"]
     title    = Tag every release (a version bump MUST carry a matching vX.Y.Z tag)
     action   = Audit your tools and software for version bumps that were never tagged (`git tag` vs the manifest `version`); back-fill an annotated `vX.Y.Z` tag at each bump commit and push it. From now on, every version bump is committed with its matching tag, pushed alongside — the tag is the release a `v*` CI workflow builds. Do not re-pin `.host-software` or a tool pointer to a version-bumped commit that has no matching tag.
     requires = host-lifecycle v0.11.1
+    independent = true
 
 [upgrade "ae1e688"]
     title    = Never adopt a software repository in place
     action   = Bump your pinned host-lifecycle to v0.12.0 and re-run the classify phase as the first step of any adoption. `host-lifecycle classify <dir>` now refuses (exits non-zero, prints the embedding steps) when the target is itself a software repository — a root build manifest (`Cargo.toml`, `package.json`, `go.mod`, `pyproject.toml`, …) with no `.host` stamp and no `.host-software` recipe — instead of printing a case letter. A host is a separate meta-repo; the software is embedded as its Where room. If you previously adopted a methodology host directly on top of a software repo, split them: move the code into a bare store with worktrees recorded in the host's `.host-software`, leaving the host root carrying only the rooms and config.
     requires = host-lifecycle v0.12.0
+    independent = true
 
 [upgrade "7de7cb1"]
     title    = Materialized worktrees must live under the host root
     action   = Bump your pinned host-lifecycle to v0.13.0. Audit `.host-software` for any worktree whose path escapes the host root (an absolute or `..`-climbing `worktrees`/`worktree` entry, or a Where-room worktree materialized at a disjoint external path with no in-structure handle). Bring each under the root: for a store that must live off-tree (another filesystem or platform), record it on the parallel line as `worktree = <dir> <branch> <pin> store=<path> [host=<os>]` and re-run `software --materialize`, which realises the store at `<path>` and the in-tree `<dir>` as a symlink/junction to it. `software --check` now HAZARDs an escaping path and a `store=` line whose in-tree handle is missing or does not resolve to the store; `host=` gates a line to one OS so a foreign-OS CI skips it rather than failing.
     requires = host-lifecycle v0.13.0
+    independent = true
