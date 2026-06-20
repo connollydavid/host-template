@@ -176,10 +176,11 @@ Build at least one persona by discussion with the human before planning the work
 it serves. `cast/applying-personas.md` gives the cited process for doing this —
 follow it.
 
-## The three verification lanes
+## The verification ladder
 
-Different kinds of property need different checkers. There are three lanes; route
-each claim to the lane that can prove it.
+Different kinds of property need different checkers — and different *strengths* of
+checker. Route each claim to the lane, and to the rung, that can prove it. The base
+lanes:
 
 1. **Hygiene** — `tools/host-lint`. Catches naming tells: ordinal labels and bare
    numerals leaking into commit messages, headers, and comments. Runs as a git
@@ -195,6 +196,30 @@ each claim to the lane that can prove it.
    checking: are the orderings and timings correct? Model-check each `.tla` with
    TLC in the software's CI.
 
+**Deeper rungs — `tools/host-prove`** (our tooling, Unlicense). The base lanes are
+*bounded*: TLC checks one finite instance, allium's tests sample inputs. When a claim
+must hold for *all* parameter values or *all* inputs, host-prove drives three heavier
+verifiers as agentic skills, each turning the tool's output into one machine-readable
+verdict so the rung runs down to a small model:
+
+4. **Symbolic / parametric** — **Apalache** (TLA+ → SMT/Z3; the `apalache-symbolic`
+   skill). Proves a `.tla` invariant across a whole symbolic parameter family at once,
+   where TLC can only enumerate one instance.
+5. **Proof / unbounded** — **TLAPS** (`tlapm`; the `tlaps-proof` skill). A deductive,
+   machine-checked proof that a property holds for all states — the must-hold-for-all
+   claims bounded and symbolic checking cannot close. (Authoring a proof needs a strong
+   model; the skill scopes a weak model to running and maintaining existing proofs.)
+6. **Code-conformance** — verify the *implementation* against the spec, beyond tests
+   and trace validation. This rung is **target-specific**: Rust → **Kani** (the
+   `kani-conformance` skill), C → CBMC, and so on. The methodology prescribes the
+   *obligation*; the project picks the verifier its language supports. (Prefer
+   byte/char-level targets — `str::split`/`Vec` make CBMC-style checkers blow up.)
+
+Read the ladder as: hygiene → requirements → bounded timing (TLC) → symbolic
+(Apalache) → proof (TLAPS), with code-conformance (Kani et al.) the orthogonal rung
+that ties a proven spec to the running code. The deeper rungs are **opt-in and inert**
+(see below): nothing installs or runs until a project declares one.
+
 **Mandatory when used (RFC-2119).** Adopting a lane is optional — not every
 project needs TLA+ — but **once a spec of a kind exists, its tool, skills, and CI
 lane are required.** A component carrying any `.allium` spec MUST wire `tools/allium`
@@ -208,15 +233,26 @@ This is **enforced**, not only stated: `host-lifecycle software --check` raises 
 HAZARD when a materialized component carries a `.allium` with no `allium check` +
 `allium analyse` CI workflow, or a `.tla` with no TLC lane.
 
+The deeper rungs work the same way, one level up: they are **opt-in and inert until a
+project declares a rung** by dispositioning an obligation `kani:`/`apalache:`/`tlaps:`
+(below). A declaration then obliges that rung's CI lane — `software --check` HAZARDs an
+obligation that declares `kani:` with no `cargo kani` lane, `apalache:` with no
+`apalache-mc` lane, or `tlaps:` with no `tlapm` lane. The mere presence of a `.tla` or a
+crate never activates a rung; only the declaration does, so a project pays for a heavier
+verifier exactly when, and only when, it chooses to.
+
 **Obligations are discharged, not just emitted.** `allium plan` derives a test
 obligation for every config default, entity, enum, invariant, rule and transition.
 Each obligation MUST be **dispositioned** in a sibling `<spec>.obligations` manifest
 — the remap-dictionary discipline applied to tests — as `test:<name>` (a named test
-discharges it), `structural` (the spec's own `check`/`analyse` lane covers it), or
-`waived: <reason>` (an honest, recorded gap). `host-lifecycle obligations <spec>
---tests <dir>` fails on any undispositioned obligation, any stale disposition, and
-any `test:<name>` absent from the test sources; the software's CI runs it, and
-`software --check` HAZARDs a `.allium` that has no `.obligations` manifest. An
+discharges it), `structural` (the spec's own `check`/`analyse` lane covers it),
+`waived: <reason>` (an honest, recorded gap), or a deeper-rung proof: `kani:<harness>`,
+`apalache:<inv>`, or `tlaps:<theorem>` (a host-prove rung discharges it — stronger than
+a test, for all inputs/parameters). `host-lifecycle obligations <spec> --tests <dir>
+[--prove <dir>]` fails on any undispositioned obligation, any stale disposition, any
+`test:<name>` absent from the test sources, and any rung proof name absent from the
+`--prove` sources; the software's CI runs it, and `software --check` HAZARDs a
+`.allium` that has no `.obligations` manifest. An
 obligation left undispositioned is a defect — discharge is total, per component.
 
 Two rules govern the tools:
