@@ -542,7 +542,18 @@ ordinary source scanned (reword an example comment rather than mute the file).
 <strong>Never <code>--no-verify</code> past the gate to land a fixture</strong> — that silently defeats
 the lane, the same "let red hide" failure as a CI matrix that fail-fast-cancels
 its own jobs. (A fix to either, once found, is a behaviour change: ship it as a
-patch release with a matching tag.)</li>
+patch release with a matching tag.) <strong>Legitimate tell-shaped tokens are
+declared, not silenced.</strong> A version string, product name, or cited tracker
+reference that merely <em>looks</em> like a tell is declared in a provenance-checked
+allowlist (host-lint's <code>LEXICON</code>) — each entry the full contextual phrase, masked
+before detection; a tracker reference carries its backing URL. Because a sound,
+declarable escape then exists, the identifier/reference tier MAY escalate from an
+advisory warn to a blocking flag (the committed <code>strict</code> directive), so an
+<em>un</em>declared tell-shaped token becomes a hard signal. The allowlist is provenance,
+not a mute button: the tool refuses a bare master key, a phrase that is <em>itself</em> a
+tell (rename it, do not declare it), and an un-cited tracker reference (<code>#N</code>,
+<code>owner/repo#N</code>, or an opted-in <code>PROJ-NNNN</code> key); URL liveness is re-derived by a
+network-having lane, never the offline hook.</li>
 <li><strong>Requirements</strong> — <code>tools/allium</code> (MIT, by JUXT). Does the software meet the
 behaviour the spec states? Author and maintain <code>.allium</code> specs <strong>through the
 allium skills</strong>, not by hand: <code>elicit</code>/<code>distill</code> to author, <code>tend</code> to evolve,
@@ -607,6 +618,20 @@ a test, for all inputs/parameters). <code>host-lifecycle obligations &lt;spec&gt
 <code>--prove</code> sources; the software's CI runs it, and <code>software --check</code> HAZARDs a
 <code>.allium</code> that has no <code>.obligations</code> manifest. An
 obligation left undispositioned is a defect — discharge is total, per component.</p>
+<p><strong>A rung is discharged by re-derivation, not by name-presence (<code>call/0018</code>).</strong> That a
+proof <em>exists</em> is not that it <em>passes</em> — <code>--prove</code> only lints that the named harness,
+invariant, or theorem is present (AVAILABLE ≠ DISCHARGED). The real discharge is
+<code>host-lifecycle obligations &lt;spec&gt; --rederive &lt;dir&gt;</code>, which re-runs each rung's verifier
+through host-prove <strong>in its recorded pinned toolchain</strong> and requires a PASS at the
+declared <code>bound=</code> — checkable anywhere, with no keys and no dependence on a specific CI;
+it generalizes the reproducible-build re-derivation (which reproduces a recorded artifact
+hash) from artifacts to proofs. The cheap offline signal is <strong>input-digest staleness</strong>: a
+rung may declare <code>inputs=&lt;files&gt;</code>, <code>--rederive --record-digests</code> fingerprints them with
+<code>git hash-object</code> into a committed <code>&lt;manifest&gt;.digests</code> ledger, and a later offline run
+reports the proof <strong>STALE</strong> if those inputs drifted without a fresh re-derivation.
+Enforcement is <strong>project-pluggable</strong> — a required check, any CI, a pre-push hook, or the
+operator running the verify phase; the methodology prescribes the re-derivation and ships
+the re-deriver, and never bakes in a CI.</p>
 <p>Two rules govern the tools:</p>
 <ul>
 <li><strong>Reference, don't vendor.</strong> Each tool is a git submodule pinned to a commit.
@@ -992,6 +1017,12 @@ action   = Bump your pinned host-lifecycle to v0.15.1 (it fixes the first-upgrad
 requires = host-lifecycle v0.15.1
 independent = true
 verify   = grep -rqs "Self-referential software is excluded" host-template/CLAUDE.md</p>
+<p>[upgrade "897ce0d"]
+title    = Sound discharge by re-derivation (call/0018) + the LEXICON provenance allowlist
+action   = Bump your pinned host-lifecycle to v0.18.1, host-lint to v0.6.0, and (if you run a deeper rung) host-prove to v0.2.0. A rung obligation is now discharged by RE-DERIVATION, not name-presence: <code>host-lifecycle obligations &lt;spec&gt; --rederive &lt;dir&gt;</code> re-runs each <code>kani:</code>/<code>apalache:</code>/<code>tlaps:</code> rung through host-prove in its recorded pinned toolchain and requires a PASS at the declared bound (AVAILABLE != DISCHARGED). The offline <code>--prove</code> check stays, honestly a name-presence lint. Add the cheap offline staleness signal by declaring <code>inputs=&lt;files&gt;</code> on a rung and recording <code>&lt;manifest&gt;.digests</code> with <code>--rederive --record-digests</code>; a later offline run reports STALE if the proven inputs drift without a fresh re-derivation. Enforcement is project-pluggable (a required check, any CI, a pre-push hook, or the operator's verify phase) — no keys, no CI lock-in; it generalizes the reproducible-build re-derivation from artifacts to proofs. For the hygiene lane, declare legitimate tell-shaped tokens in a <code>LEXICON</code> (each the full contextual phrase, masked; a tracker reference carries its URL); <code>host-lifecycle adopt</code> seeds a comment-only scaffold. Because a sound escape now exists, the identifier/reference tier may escalate warn to flag via a committed <code>host-lint: strict</code> directive, and <code>host-lint: jira-key PROJ</code> opts a project key into citation-gating. Curate with <code>host-lint lexicon add</code> (it refuses a master key, a laundered tell, or an un-cited reference); <code>host-lint lexicon --check-urls</code> re-derives URL liveness in a network lane.
+requires = host-lifecycle v0.18.1
+depends  = 4a98d92
+verify   = grep -rqs "discharged by re-derivation" host-template/CLAUDE.md</p>
 
                     </main>
 
