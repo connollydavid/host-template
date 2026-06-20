@@ -194,7 +194,18 @@ lanes:
    **Never `--no-verify` past the gate to land a fixture** — that silently defeats
    the lane, the same "let red hide" failure as a CI matrix that fail-fast-cancels
    its own jobs. (A fix to either, once found, is a behaviour change: ship it as a
-   patch release with a matching tag.)
+   patch release with a matching tag.) **Legitimate tell-shaped tokens are
+   declared, not silenced.** A version string, product name, or cited tracker
+   reference that merely *looks* like a tell is declared in a provenance-checked
+   allowlist (host-lint's `LEXICON`) — each entry the full contextual phrase, masked
+   before detection; a tracker reference carries its backing URL. Because a sound,
+   declarable escape then exists, the identifier/reference tier MAY escalate from an
+   advisory warn to a blocking flag (the committed `strict` directive), so an
+   *un*declared tell-shaped token becomes a hard signal. The allowlist is provenance,
+   not a mute button: the tool refuses a bare master key, a phrase that is *itself* a
+   tell (rename it, do not declare it), and an un-cited tracker reference (`#N`,
+   `owner/repo#N`, or an opted-in `PROJ-NNNN` key); URL liveness is re-derived by a
+   network-having lane, never the offline hook.
 2. **Requirements** — `tools/allium` (MIT, by JUXT). Does the software meet the
    behaviour the spec states? Author and maintain `.allium` specs **through the
    allium skills**, not by hand: `elicit`/`distill` to author, `tend` to evolve,
@@ -264,6 +275,21 @@ a test, for all inputs/parameters). `host-lifecycle obligations <spec> --tests <
 `--prove` sources; the software's CI runs it, and `software --check` HAZARDs a
 `.allium` that has no `.obligations` manifest. An
 obligation left undispositioned is a defect — discharge is total, per component.
+
+**A rung is discharged by re-derivation, not by name-presence (`call/0018`).** That a
+proof *exists* is not that it *passes* — `--prove` only lints that the named harness,
+invariant, or theorem is present (AVAILABLE ≠ DISCHARGED). The real discharge is
+`host-lifecycle obligations <spec> --rederive <dir>`, which re-runs each rung's verifier
+through host-prove **in its recorded pinned toolchain** and requires a PASS at the
+declared `bound=` — checkable anywhere, with no keys and no dependence on a specific CI;
+it generalizes the reproducible-build re-derivation (which reproduces a recorded artifact
+hash) from artifacts to proofs. The cheap offline signal is **input-digest staleness**: a
+rung may declare `inputs=<files>`, `--rederive --record-digests` fingerprints them with
+`git hash-object` into a committed `<manifest>.digests` ledger, and a later offline run
+reports the proof **STALE** if those inputs drifted without a fresh re-derivation.
+Enforcement is **project-pluggable** — a required check, any CI, a pre-push hook, or the
+operator running the verify phase; the methodology prescribes the re-derivation and ships
+the re-deriver, and never bakes in a CI.
 
 Two rules govern the tools:
 
