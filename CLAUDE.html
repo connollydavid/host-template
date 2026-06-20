@@ -321,9 +321,10 @@ modalities; replace them with your project's own.</p>
 <p>Build at least one persona by discussion with the human before planning the work
 it serves. <code>cast/applying-personas.md</code> gives the cited process for doing this —
 follow it.</p>
-<h2 id="the-three-verification-lanes"><a class="header" href="#the-three-verification-lanes">The three verification lanes</a></h2>
-<p>Different kinds of property need different checkers. There are three lanes; route
-each claim to the lane that can prove it.</p>
+<h2 id="the-verification-ladder"><a class="header" href="#the-verification-ladder">The verification ladder</a></h2>
+<p>Different kinds of property need different checkers — and different <em>strengths</em> of
+checker. Route each claim to the lane, and to the rung, that can prove it. The base
+lanes:</p>
 <ol>
 <li><strong>Hygiene</strong> — <code>tools/host-lint</code>. Catches naming tells: ordinal labels and bare
 numerals leaking into commit messages, headers, and comments. Runs as a git
@@ -338,6 +339,29 @@ each spec in the software's CI with <code>allium check</code> (structure) + <cod
 checking: are the orderings and timings correct? Model-check each <code>.tla</code> with
 TLC in the software's CI.</li>
 </ol>
+<p><strong>Deeper rungs — <code>tools/host-prove</code></strong> (our tooling, Unlicense). The base lanes are
+<em>bounded</em>: TLC checks one finite instance, allium's tests sample inputs. When a claim
+must hold for <em>all</em> parameter values or <em>all</em> inputs, host-prove drives three heavier
+verifiers as agentic skills, each turning the tool's output into one machine-readable
+verdict so the rung runs down to a small model:</p>
+<ol start="4">
+<li><strong>Symbolic / parametric</strong> — <strong>Apalache</strong> (TLA+ → SMT/Z3; the <code>apalache-symbolic</code>
+skill). Proves a <code>.tla</code> invariant across a whole symbolic parameter family at once,
+where TLC can only enumerate one instance.</li>
+<li><strong>Proof / unbounded</strong> — <strong>TLAPS</strong> (<code>tlapm</code>; the <code>tlaps-proof</code> skill). A deductive,
+machine-checked proof that a property holds for all states — the must-hold-for-all
+claims bounded and symbolic checking cannot close. (Authoring a proof needs a strong
+model; the skill scopes a weak model to running and maintaining existing proofs.)</li>
+<li><strong>Code-conformance</strong> — verify the <em>implementation</em> against the spec, beyond tests
+and trace validation. This rung is <strong>target-specific</strong>: Rust → <strong>Kani</strong> (the
+<code>kani-conformance</code> skill), C → CBMC, and so on. The methodology prescribes the
+<em>obligation</em>; the project picks the verifier its language supports. (Prefer
+byte/char-level targets — <code>str::split</code>/<code>Vec</code> make CBMC-style checkers blow up.)</li>
+</ol>
+<p>Read the ladder as: hygiene → requirements → bounded timing (TLC) → symbolic
+(Apalache) → proof (TLAPS), with code-conformance (Kani et al.) the orthogonal rung
+that ties a proven spec to the running code. The deeper rungs are <strong>opt-in and inert</strong>
+(see below): nothing installs or runs until a project declares one.</p>
 <p><strong>Mandatory when used (RFC-2119).</strong> Adopting a lane is optional — not every
 project needs TLA+ — but <strong>once a spec of a kind exists, its tool, skills, and CI
 lane are required.</strong> A component carrying any <code>.allium</code> spec MUST wire <code>tools/allium</code>
@@ -350,14 +374,24 @@ generated, gitignored symlinks (<code>link-skills.sh</code>), wired before you a
 This is <strong>enforced</strong>, not only stated: <code>host-lifecycle software --check</code> raises a
 HAZARD when a materialized component carries a <code>.allium</code> with no <code>allium check</code> +
 <code>allium analyse</code> CI workflow, or a <code>.tla</code> with no TLC lane.</p>
+<p>The deeper rungs work the same way, one level up: they are <strong>opt-in and inert until a
+project declares a rung</strong> by dispositioning an obligation <code>kani:</code>/<code>apalache:</code>/<code>tlaps:</code>
+(below). A declaration then obliges that rung's CI lane — <code>software --check</code> HAZARDs an
+obligation that declares <code>kani:</code> with no <code>cargo kani</code> lane, <code>apalache:</code> with no
+<code>apalache-mc</code> lane, or <code>tlaps:</code> with no <code>tlapm</code> lane. The mere presence of a <code>.tla</code> or a
+crate never activates a rung; only the declaration does, so a project pays for a heavier
+verifier exactly when, and only when, it chooses to.</p>
 <p><strong>Obligations are discharged, not just emitted.</strong> <code>allium plan</code> derives a test
 obligation for every config default, entity, enum, invariant, rule and transition.
 Each obligation MUST be <strong>dispositioned</strong> in a sibling <code>&lt;spec&gt;.obligations</code> manifest
 — the remap-dictionary discipline applied to tests — as <code>test:&lt;name&gt;</code> (a named test
-discharges it), <code>structural</code> (the spec's own <code>check</code>/<code>analyse</code> lane covers it), or
-<code>waived: &lt;reason&gt;</code> (an honest, recorded gap). <code>host-lifecycle obligations &lt;spec&gt; --tests &lt;dir&gt;</code> fails on any undispositioned obligation, any stale disposition, and
-any <code>test:&lt;name&gt;</code> absent from the test sources; the software's CI runs it, and
-<code>software --check</code> HAZARDs a <code>.allium</code> that has no <code>.obligations</code> manifest. An
+discharges it), <code>structural</code> (the spec's own <code>check</code>/<code>analyse</code> lane covers it),
+<code>waived: &lt;reason&gt;</code> (an honest, recorded gap), or a deeper-rung proof: <code>kani:&lt;harness&gt;</code>,
+<code>apalache:&lt;inv&gt;</code>, or <code>tlaps:&lt;theorem&gt;</code> (a host-prove rung discharges it — stronger than
+a test, for all inputs/parameters). <code>host-lifecycle obligations &lt;spec&gt; --tests &lt;dir&gt; [--prove &lt;dir&gt;]</code> fails on any undispositioned obligation, any stale disposition, any
+<code>test:&lt;name&gt;</code> absent from the test sources, and any rung proof name absent from the
+<code>--prove</code> sources; the software's CI runs it, and <code>software --check</code> HAZARDs a
+<code>.allium</code> that has no <code>.obligations</code> manifest. An
 obligation left undispositioned is a defect — discharge is total, per component.</p>
 <p>Two rules govern the tools:</p>
 <ul>
