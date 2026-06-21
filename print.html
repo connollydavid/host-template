@@ -645,7 +645,13 @@ the re-deriver, and never bakes in a CI.</p>
 <p>Two rules govern the tools:</p>
 <ul>
 <li><strong>Reference, don't vendor.</strong> Each tool is a git submodule pinned to a commit.
-Do not copy its code into this repository.</li>
+Do not copy its code into this repository. This governs an <strong>adopter</strong> consuming
+the tools. A <strong>development host</strong> that <em>authors</em> a host-* tool is the exception:
+it develops that tool as a Where-room software component of its own — materialized
+and released through the lifecycle like any software it builds — and consumes the
+built result (binary + worktree-sourced skills) from that worktree, rather than
+referencing its own source as a foreign submodule. Reference is for the consumer;
+the producer of a tool embeds it.</li>
 <li><strong>Instruct, don't patch.</strong> Drive the tools through this manual and their own
 interfaces. Do not edit a tool's source to make it fit. If a tool needs a
 change, raise it upstream.</li>
@@ -761,9 +767,9 @@ otherwise it must tolerate the absence. <code>host-lifecycle software --check</c
 tracked symlink whose target is not itself tracked here as a <code>HAZARD</code>. And: an
 un-materialized CI job must exercise each runtime-critical artifact — "done" means
 the whole CI sweep is green, not one artifact built.</p>
-<p><strong>Worktrees live under the host root.</strong> Every materialized Where-room worktree
-<strong>MUST</strong> surface at a path <em>under</em> the host root — never a bare external path
-disjoint from the tree. The rule an agent relies on is: <em>if you build it, its
+<p><strong>Worktrees live under <code>software/</code>.</strong> Every materialized Where-room worktree
+<strong>MUST</strong> surface at <code>software/&lt;name&gt;/&lt;branch&gt;/</code> <em>under</em> the host root — never a bare
+external path disjoint from the tree. The rule an agent relies on is: <em>if you build it, its
 files live under the host root</em>, so an edit through the default-cwd path lands in
 the tree under test. When a backing store genuinely must live elsewhere — another
 filesystem or platform (e.g. a native-Windows build that cannot sit on a WSL
@@ -772,8 +778,8 @@ share) — record it on the parallel-worktree line as <code>store=&lt;path&gt;</
 <code>host-lifecycle</code>, <em>not</em> the build platform; for a Windows Dev Drive reached from WSL
 that is <code>linux</code>, even though the build's own <code>attest-host</code> is <code>windows</code>). Off-platform,
 <code>host=</code> makes <code>--materialize</code>/<code>--check</code> skip the line rather than fail.
-<code>software --materialize</code> then realises the store at that path and the in-tree <code>&lt;dir&gt;</code>
-as a <strong>symlink / directory junction / bind-mount</strong> to it. <code>host-lifecycle software --check</code> <strong>HAZARDs</strong> any recorded worktree path that
+<code>software --materialize</code> then realises the store at that path and the in-tree
+<code>software/&lt;name&gt;/&lt;branch&gt;/</code> as a <strong>symlink / directory junction / bind-mount</strong> to it. <code>host-lifecycle software --check</code> <strong>HAZARDs</strong> any recorded worktree path that
 escapes the host root, and any <code>store=</code> line whose in-tree handle is missing or
 does not resolve to the store. A disjoint external worktree with no in-structure
 handle is the wrong-tree footgun — edits silently land in a tree not under test —
@@ -890,13 +896,18 @@ tool, and the rule is <strong>every phase emits a receipt</strong> (<code>done</
 <code>.host-receipts</code>), not "every phase runs" — a phase with no receipt is a
 <code>software --check</code> HAZARD (<code>CLAUDE.md</code>).</p>
 <p>The <em>Where</em> room is the software under test — <strong>one or more</strong> components, each
-embedded as a <strong>bare store with worktrees</strong>: <code>&lt;name&gt;.git/</code> is the shared object
-store, <code>&lt;name&gt;/</code> is the canonical worktree (the audited state, where CI runs), and
-<code>&lt;name&gt;.&lt;line&gt;/</code> are parallel worktrees — one per agent or live release branch.
-These trees are local and gitignored; the host commits a recipe (<code>.host-software</code>)
+embedded as a <strong>bare store with worktrees</strong> under <code>software/&lt;name&gt;/</code>: the shared
+object store is <code>software/&lt;name&gt;/.git</code>, and each worktree is keyed by branch at
+<code>software/&lt;name&gt;/&lt;branch&gt;/</code> (the branch keeps its slashes, so <code>feature/login</code>
+nests). The canonical worktree — the audited state, where CI runs — is the
+component's recorded <code>branch</code> (default <code>main</code>) checked out at the <code>pin</code>; the rest are
+parallel lines, one per agent or live release branch. These trees are local and
+gitignored (a single <code>/software/</code> entry); the host commits a recipe (<code>.host-software</code>)
 with <strong>one <code>[software "&lt;name&gt;"]</code> stanza per component</strong> (mirroring <code>.gitmodules</code>),
-each recording the source URL, the pinned canonical SHA, and the worktree set,
-which <code>host-lifecycle software --materialize</code> realises and <code>--check</code> audits.
+each recording the source URL, the pinned canonical SHA, the canonical <code>branch</code>, and
+any parallel-line branches, which <code>host-lifecycle software --materialize</code> realises
+and <code>--check</code> audits. Operate on a single component, or one branch worktree of it,
+with <code>--item &lt;name&gt;[@&lt;branch&gt;]</code>.
 The recorded pin replaces a submodule gitlink as the
 reproducibility anchor, so several branches stay materialized at once where a
 single submodule tree could not. Software initiated under the methodology has
@@ -1060,6 +1071,12 @@ action   = Bump your pinned host-lifecycle to the v0.18.1 build that ships <code
 requires = host-lifecycle v0.18.1
 independent = true
 verify   = grep -rqs "every phase emits a receipt" host-template/CLAUDE.md</p>
+<p>[upgrade "0cd6b0a"]
+title    = The Where room uses the nested software/<name>/<branch> layout
+action   = Bump your pinned host-lifecycle to v0.19.0. The Where room now materializes under <code>software/&lt;name&gt;/</code>: the bare store at <code>software/&lt;name&gt;/.git</code> and each worktree keyed by branch at <code>software/&lt;name&gt;/&lt;branch&gt;/</code> (the canonical worktree is the recorded <code>branch</code>, default <code>main</code>, checked out at the pin), replacing the old root-scattered <code>&lt;name&gt;/</code>, <code>&lt;name&gt;.git/</code>, <code>&lt;name&gt;.&lt;line&gt;/</code>. Migrate, in order: (1) replace the per-component <code>.gitignore</code> triplets with a single <code>/software/</code> entry; (2) remove the old root-scattered worktrees and bare stores (commit or stash any uncommitted parallel-worktree work first — re-materialize is destructive); (3) run <code>host-lifecycle software --materialize .</code> to realise the new tree; (4) re-run <code>link-skills.sh</code> and re-point any software skill link at <code>software/&lt;name&gt;/&lt;branch&gt;/</code>; then <code>host-lifecycle software --check .</code> must be clean. The <code>worktree =</code> recipe line drops its leading <code>&lt;dir&gt;</code> token (the path now derives from the branch: <code>worktree = &lt;branch&gt; &lt;pin&gt; [store=&lt;path&gt;] [host=&lt;os&gt;]</code>), <code>worktrees =</code> is a branch list, and an optional <code>branch =</code> sets a non-<code>main</code> canonical branch. Operate on one component (or one branch worktree) with <code>software --item &lt;name&gt;[@&lt;branch&gt;]</code>. <code>software --check</code> also HAZARDs a dangling generated skill link now. A development host that authors a host-* tool embeds it as its own Where component rather than referencing its own source as a submodule (the reference-don't-vendor carve-out).
+requires = host-lifecycle v0.19.0
+independent = true
+verify   = grep -rqs "the producer of a tool embeds it" host-template/CLAUDE.md</p>
 
                     </main>
 

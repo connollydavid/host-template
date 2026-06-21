@@ -208,13 +208,18 @@ tool, and the rule is <strong>every phase emits a receipt</strong> (<code>done</
 <code>.host-receipts</code>), not "every phase runs" — a phase with no receipt is a
 <code>software --check</code> HAZARD (<code>CLAUDE.md</code>).</p>
 <p>The <em>Where</em> room is the software under test — <strong>one or more</strong> components, each
-embedded as a <strong>bare store with worktrees</strong>: <code>&lt;name&gt;.git/</code> is the shared object
-store, <code>&lt;name&gt;/</code> is the canonical worktree (the audited state, where CI runs), and
-<code>&lt;name&gt;.&lt;line&gt;/</code> are parallel worktrees — one per agent or live release branch.
-These trees are local and gitignored; the host commits a recipe (<code>.host-software</code>)
+embedded as a <strong>bare store with worktrees</strong> under <code>software/&lt;name&gt;/</code>: the shared
+object store is <code>software/&lt;name&gt;/.git</code>, and each worktree is keyed by branch at
+<code>software/&lt;name&gt;/&lt;branch&gt;/</code> (the branch keeps its slashes, so <code>feature/login</code>
+nests). The canonical worktree — the audited state, where CI runs — is the
+component's recorded <code>branch</code> (default <code>main</code>) checked out at the <code>pin</code>; the rest are
+parallel lines, one per agent or live release branch. These trees are local and
+gitignored (a single <code>/software/</code> entry); the host commits a recipe (<code>.host-software</code>)
 with <strong>one <code>[software "&lt;name&gt;"]</code> stanza per component</strong> (mirroring <code>.gitmodules</code>),
-each recording the source URL, the pinned canonical SHA, and the worktree set,
-which <code>host-lifecycle software --materialize</code> realises and <code>--check</code> audits.
+each recording the source URL, the pinned canonical SHA, the canonical <code>branch</code>, and
+any parallel-line branches, which <code>host-lifecycle software --materialize</code> realises
+and <code>--check</code> audits. Operate on a single component, or one branch worktree of it,
+with <code>--item &lt;name&gt;[@&lt;branch&gt;]</code>.
 The recorded pin replaces a submodule gitlink as the
 reproducibility anchor, so several branches stay materialized at once where a
 single submodule tree could not. Software initiated under the methodology has
