@@ -145,3 +145,10 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.18.1
     independent = true
     verify   = grep -rqs "boxed in the file, not path-excluded" host-template/CLAUDE.md
+
+[upgrade "617e420"]
+    title    = Lifecycle manifest, and every phase emits a receipt
+    action   = Bump your pinned host-lifecycle to the v0.18.1 build that ships `manifest`/`receipt`/`release`. The lifecycle phases — their order, modality, command and the evidence each carries — now live once in a tool-readable `lifecycle.manifest` at the template root (the CLAUDE.md/STRUCTURE.md prose point at it instead of re-typing the order), and a `release` phase is added (the strict, tool-carried release: verify, build in the recorded toolchain, re-derive the artifact hash, re-pin, tag, receipt). The rule changes from "every phase runs, no opt-out" to **every phase emits a receipt**: `host-lifecycle receipt --record <phase> [--component <c>] --disposition done|skip` writes an append-only `.host-receipts`, and `host-lifecycle software --check` now HAZARDs any manifest phase with no receipt, re-verifying each `done` by the manifest's closed `recheck =` (never the receipt's own say-so). Modality is first-class — a `conditional-on-Where` phase is tool-computed `n-a` where the project has no Where room, a `recurring-per-component` phase (embed, release) is receipted once per component, and a protected core (`verify`, `skippable = false`) refuses a skip. Back-fill a receipt for each phase your project has already done; `host-lifecycle manifest <path>` prints the whole lifecycle at a glance.
+    requires = host-lifecycle v0.18.1
+    independent = true
+    verify   = grep -rqs "every phase emits a receipt" host-template/CLAUDE.md
