@@ -326,7 +326,8 @@ follow it.</p>
 checker. Route each claim to the lane, and to the rung, that can prove it. The base
 lanes:</p>
 <ol>
-<li><strong>Hygiene</strong> — <code>tools/host-lint</code>. Catches naming tells: ordinal labels and bare
+<li>
+<p><strong>Hygiene</strong> — <code>tools/host-lint</code>. Catches naming tells: ordinal labels and bare
 numerals leaking into commit messages, headers, and comments. Runs as a git
 hook. <strong>Self-referential software is excluded, not bypassed.</strong> Software that
 <em>detects</em> tells (a linter, parser, validator, grammar tool) must embed them in
@@ -359,16 +360,30 @@ advisory warn to a blocking flag (the committed <code>strict</code> directive), 
 not a mute button: the tool refuses a bare master key, a phrase that is <em>itself</em> a
 tell (rename it, do not declare it), and an un-cited tracker reference (<code>#N</code>,
 <code>owner/repo#N</code>, or an opted-in <code>PROJ-NNNN</code> key); URL liveness is re-derived by a
-network-having lane, never the offline hook.</li>
-<li><strong>Requirements</strong> — <code>tools/allium</code> (MIT, by JUXT). Does the software meet the
+network-having lane, never the offline hook.</p>
+<p><strong>Prose hygiene is the same lane, applied continuously.</strong> Beyond naming tells,
+<code>host-lint --prose</code> audits authored docs for the LLM-slop prose tropes that
+tropes.fyi names (decoration dashes and arrows, tricolons, hypophora, and so on).
+The bar matches the naming audit: authored docs carry <strong>zero</strong> prose tropes, as an
+<strong>ongoing</strong> rule, not a one-time migration. It is wired into the <strong>receipts
+mechanism</strong>: the <code>verify</code> phase <strong>applies</strong> the prose audit and <strong>generates</strong> a
+receipt, and <code>software --check</code> re-verifies that receipt by re-running <code>host-lint --prose</code>, so a doc that regresses to slop re-opens it as a HAZARD. The one exception
+is <code>MEMORY.md</code>, the <strong>agent's own append-only working memory</strong>: it is excluded from
+both the naming and prose audits via <code>.host-lintignore</code>, never rewritten.</p>
+</li>
+<li>
+<p><strong>Requirements</strong> — <code>tools/allium</code> (MIT, by JUXT). Does the software meet the
 behaviour the spec states? Author and maintain <code>.allium</code> specs <strong>through the
 allium skills</strong>, not by hand: <code>elicit</code>/<code>distill</code> to author, <code>tend</code> to evolve,
 <code>weed</code> to find spec↔code divergence, <code>propagate</code> to generate the tests. Gate
 each spec in the software's CI with <code>allium check</code> (structure) + <code>allium analyse</code> (data flow, reachability, terminal states, deadlock) + <code>allium plan</code>
-(test obligations).</li>
-<li><strong>Timing and concurrency</strong> — <code>tools/specula</code> (Apache-2.0). TLA+ model
+(test obligations).</p>
+</li>
+<li>
+<p><strong>Timing and concurrency</strong> — <code>tools/specula</code> (Apache-2.0). TLA+ model
 checking: are the orderings and timings correct? Model-check each <code>.tla</code> with
-TLC in the software's CI.</li>
+TLC in the software's CI.</p>
+</li>
 </ol>
 <p><strong>Deeper rungs — <code>tools/host-prove</code></strong> (our tooling, Unlicense). The base lanes are
 <em>bounded</em>: TLC checks one finite instance, allium's tests sample inputs. When a claim
