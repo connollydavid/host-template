@@ -332,22 +332,36 @@ Because the generator and the checker share `host-grammar`, what host-lifecycle
 emits is exactly what host-lint accepts. Trust that symmetry; do not number by
 hand.
 
-### The lifecycle phases — mandatory, no opt-out
+### The lifecycle phases — every phase emits a receipt
 
 host-lifecycle ships one Claude **skill per lifecycle phase**, generated into
 `.claude/skills/` by `link-skills.sh` exactly as the allium/specula skills are:
 **classify** (preview + case), **adopt** (governance + rooms + stamp), **embed**
 (the software as a bare store with worktrees), **remap** (the dictionary rename),
 **verify** (the gate sweep — `validate`, `software --check`, `obligations`,
-`book --check`), **publish** (the doc site), **upgrade** (the ledger). Each owns
-the judgment around its mechanical command.
+`book --check`), **publish** (the doc site), **upgrade** (the ledger), and
+**release** (the strict, tool-carried release — verify, build in the recorded
+toolchain, re-derive the artifact hash, re-pin, tag, receipt). Each owns the
+judgment around its mechanical command.
 
-Unlike a verification lane, which is conditional (required only once a spec of its
-kind exists), the lifecycle phases are **unconditional**: every agentic project is
-scaffolded, embedded, migrated, verified, published and upgraded through them. You
-**MUST** drive each phase through its skill and command — **there is no opt-out**.
-Operating the methodology ad-hoc (hand-scaffolding rooms, hand-renaming files,
-hand-rolling the site, eyeballing an upgrade diff) is a defect.
+The phases — their order, modality, command, and the evidence each carries — are
+not re-typed in prose; they live once in the tool-readable **`lifecycle.manifest`**
+(one `[phase "<name>"]` stanza each), which `host-lifecycle` reads at the project's
+adopted `.host` revision for `--next`, the `book` order, and the receipt gate. Read
+the whole lifecycle at a glance with `host-lifecycle manifest <path>`.
+
+Unlike a verification lane, which is conditional on a spec existing, the lifecycle
+is **driven by the tool, never hand-operated** — and the rule is **every phase
+emits a receipt**, not "every phase runs". Modality is first-class: a phase may be
+**conditional** (embed and release apply only with a Where room) or **recurring**
+(once per software component), so it can legitimately not run — but it still records
+a **receipt** in `.host-receipts`, written by the tool: `done` with re-derivable
+evidence, `skip` with a cited reason, or tool-computed `n-a`. `host-lifecycle
+software --check` re-verifies each `done` by the manifest's closed `recheck =` and
+**HAZARDs a phase with no receipt** — the one defect the gate needs; a protected
+core (`verify`, `skippable = false`) refuses a skip outright. Operating a phase
+ad-hoc (hand-scaffolding rooms, hand-renaming files, hand-rolling the site or a
+release) leaves no receipt, and so is a defect by construction.
 
 ### Never adopt a software repository in place
 

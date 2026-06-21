@@ -31,8 +31,11 @@ copy. They are **generated, not tracked**: `link-skills.sh` creates a link for e
 into an uninitialized tool dangles and trips any tree-walking tool.
 Run it after `git submodule update --init`. Tool *outputs* are
 project-owned. host-lifecycle ships one skill **per lifecycle phase** (classify,
-adopt, embed, remap, verify, publish, upgrade); unlike a lane, the phases are
-**unconditional** — every project is operated through them, no opt-out (`CLAUDE.md`).
+adopt, embed, remap, verify, publish, upgrade, release), enumerated once in the
+tool-readable `lifecycle.manifest`; unlike a lane, the lifecycle is driven by the
+tool, and the rule is **every phase emits a receipt** (`done`/`skip`/`n-a` in
+`.host-receipts`), not "every phase runs" — a phase with no receipt is a
+`software --check` HAZARD (`CLAUDE.md`).
 
 The *Where* room is the software under test — **one or more** components, each
 embedded as a **bare store with worktrees**: `<name>.git/` is the shared object
