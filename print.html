@@ -813,6 +813,22 @@ a CI job runs <code>host-lifecycle software --verify-build</code> to rebuild fro
 unless the artifact reproduces. <code>--verify-build</code>, not <code>--check</code>, is the reproducibility
 proof. For <strong>greenfield</strong> software, non-reproducibility is a defect designed out from the
 start.</p>
+<p><strong>Hermetic builds, the dependency bundle.</strong> Reproducibility and hermeticity are the same
+lane: a component that ships static or self-contained release binaries MUST be able to
+reproduce them offline from pinned inputs, never from whatever a network fetch returns at
+build time. The recommended mechanism is a reusable, versioned, hash-pinned <strong>dependency
+bundle</strong>: vendor the dependency layer once, publish it as a downloadable release (the pattern
+<code>pgs-release</code> uses for its prebuilt sysroot), and have every build download and verify that
+bundle and build with no network. Record it per component as <code>deps-bundle = &lt;url&gt; &lt;sha256&gt;</code>
+in <code>.host-software</code>. <code>host-lifecycle software --verify-build</code> and <code>release</code> then perform the
+one controlled, pinned download, verify the sha (the provenance half of the gate), stage the
+vendored sources, and build under <code>--network none</code> (the egress half). The gate invariant is
+specific and enforceable: a component recording a <code>deps-bundle</code> MUST build offline, its staged
+bundle sha MUST match the recorded one, and <code>software --check</code> HAZARDs a <code>deps-bundle</code> pin that
+has drifted from the producer's committed <code>deps-bundle.lock</code>. A component that genuinely cannot
+vendor offline, such as one with a network-fetching <code>build.rs</code> or a non-Rust toolchain, may
+carry <code>hermetic-exempt = call/NNNN</code> citing a software-scoped case decision, the same escape
+shape as <code>repro-exempt</code>; the exemption is never available where offline vendoring is feasible.</p>
 <p><strong>Multi-platform builds.</strong> A component whose <em>one</em> source pin ships on several platforms
 records one <code>[build "&lt;name&gt;" "&lt;platform&gt;"]</code> subsection per platform under its
 <code>[software "&lt;name&gt;"]</code> stanza, each carrying its own <code>build</code>/<code>toolchain</code>/<code>artifact</code>/<code>deploy</code>
@@ -930,6 +946,9 @@ single submodule tree could not. Software initiated under the methodology has
 the deployed <code>artifact</code> hash, so <code>host-lifecycle software --verify-build</code> can rebuild
 from the pin and prove the deployed binary; migrated software not yet reproducible
 carries a <code>repro-exempt = call/NNNN</code> case decision (see <code>CLAUDE.md</code>). A component that
+ships static or self-contained binaries also records a <code>deps-bundle = &lt;url&gt; &lt;sha256&gt;</code>, a
+pinned vendored-dependency bundle it downloads, verifies, and builds offline against under
+<code>--network none</code>, so the build is hermetic (see <code>CLAUDE.md</code>). A component that
 ships on several platforms records one <code>[build "&lt;name&gt;" "&lt;platform&gt;"]</code> subsection per
 platform (each a distinct toolchain/artifact of the <em>same</em> pin, with an <code>attest-host</code>
 naming the OS that reproduces it); the flat single-build form stays valid for the
@@ -1098,6 +1117,12 @@ action   = Treat the prose audit as a STANDING part of the hygiene lane, not a o
 requires = host-lifecycle v0.19.0
 independent = true
 verify   = grep -rqs "Prose hygiene is the same lane" host-template/CLAUDE.md</p>
+<p>[upgrade "ecce498"]
+title    = Hermetic builds via a pinned dependency bundle
+action   = Bump your pinned host-lifecycle to the v0.20.0 build that ships the <code>deps-bundle</code> recipe field and the offline <code>--network none</code> build. A component that ships static or self-contained release binaries MUST be able to reproduce them offline from pinned inputs, never from a network fetch at build time. Vendor the dependency layer once and publish it as a reusable, versioned, hash-pinned downloadable release bundle (the pattern <code>pgs-release</code> uses for its prebuilt sysroot), then record it per component as <code>deps-bundle = &lt;url&gt; &lt;sha256&gt;</code> in <code>.host-software</code>. <code>host-lifecycle software --verify-build</code> and <code>release</code> perform the one controlled, pinned download, verify the sha (provenance), stage the vendored sources, and build under <code>--network none</code> (egress). The producer commits a <code>deps-bundle.lock</code> as the single source of truth, and <code>software --check</code> HAZARDs a <code>deps-bundle</code> pin that has drifted from it. A component that genuinely cannot vendor offline (a network-fetching <code>build.rs</code>, a non-Rust toolchain) may carry <code>hermetic-exempt = call/NNNN</code> citing a software-scoped case decision, the same escape shape as <code>repro-exempt</code>; the exemption is never available where offline vendoring is feasible.
+requires = host-lifecycle v0.20.0
+independent = true
+verify   = grep -rqs "reproduce them offline from pinned inputs" host-template/CLAUDE.md</p>
 
                     </main>
 

@@ -227,6 +227,9 @@ single submodule tree could not. Software initiated under the methodology has
 the deployed <code>artifact</code> hash, so <code>host-lifecycle software --verify-build</code> can rebuild
 from the pin and prove the deployed binary; migrated software not yet reproducible
 carries a <code>repro-exempt = call/NNNN</code> case decision (see <code>CLAUDE.md</code>). A component that
+ships static or self-contained binaries also records a <code>deps-bundle = &lt;url&gt; &lt;sha256&gt;</code>, a
+pinned vendored-dependency bundle it downloads, verifies, and builds offline against under
+<code>--network none</code>, so the build is hermetic (see <code>CLAUDE.md</code>). A component that
 ships on several platforms records one <code>[build "&lt;name&gt;" "&lt;platform&gt;"]</code> subsection per
 platform (each a distinct toolchain/artifact of the <em>same</em> pin, with an <code>attest-host</code>
 naming the OS that reproduces it); the flat single-build form stays valid for the
