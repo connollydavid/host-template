@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">host-template</a></li><li class="chapter-item expanded affix "><li class="part-title">Cast — who</li><li class="chapter-item expanded "><a href="cast/index.html"><strong aria-hidden="true">1.</strong> Cast — the project's Who</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cast/applying-personas.html"><strong aria-hidden="true">1.1.</strong> Applying personas during planning</a></li><li class="chapter-item expanded "><a href="cast/mara.html"><strong aria-hidden="true">1.2.</strong> Mara — the Human Operator</a></li><li class="chapter-item expanded "><a href="cast/wren.html"><strong aria-hidden="true">1.3.</strong> Wren — the Agentic LLM Developer</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Plan — what & when</li><li class="chapter-item expanded "><a href="plan-index.html"><strong aria-hidden="true">2.</strong> Plan</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="plan/0001-example-milestone/index.html"><strong aria-hidden="true">2.1.</strong> 0001 — example milestone</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Software — where</li><li class="chapter-item expanded affix "><li class="part-title">Call — why</li><li class="chapter-item expanded "><a href="call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">3.</strong> Use Markdown decision records (MADR)</a></li><li class="chapter-item expanded affix "><li class="part-title">Reference — how</li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">4.</strong> CLAUDE.md — operating manual for an agentic project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="MIGRATION.html"><strong aria-hidden="true">4.1.</strong> MIGRATION.md — the process moved to the host repo</a></li><li class="chapter-item expanded "><a href="STRUCTURE.html"><strong aria-hidden="true">4.2.</strong> Structure</a></li><li class="chapter-item expanded "><a href="UPGRADING.html"><strong aria-hidden="true">4.3.</strong> UPGRADING.md — the version-to-version upgrade ledger</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Memory</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">host-template</a></li><li class="chapter-item expanded affix "><li class="part-title">Cast — who</li><li class="chapter-item expanded "><a href="cast/index.html"><strong aria-hidden="true">1.</strong> Cast — the project's Who</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cast/applying-personas.html"><strong aria-hidden="true">1.1.</strong> Applying personas during planning</a></li><li class="chapter-item expanded "><a href="cast/mara.html"><strong aria-hidden="true">1.2.</strong> Mara — the Human Operator</a></li><li class="chapter-item expanded "><a href="cast/wren.html"><strong aria-hidden="true">1.3.</strong> Wren — the Agentic LLM Developer</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Plan — what & when</li><li class="chapter-item expanded "><a href="plan-index.html"><strong aria-hidden="true">2.</strong> Plan</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="plan/0001-example-milestone/index.html"><strong aria-hidden="true">2.1.</strong> 0001 — example milestone</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Software — where</li><li class="chapter-item expanded affix "><li class="part-title">Call — why</li><li class="chapter-item expanded "><a href="call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">3.</strong> Use Markdown decision records (MADR)</a></li><li class="chapter-item expanded affix "><li class="part-title">Reference — how</li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">4.</strong> CLAUDE.md: operating manual for an agentic project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="MIGRATION.html"><strong aria-hidden="true">4.1.</strong> MIGRATION.md — the process moved to the host repo</a></li><li class="chapter-item expanded "><a href="STRUCTURE.html"><strong aria-hidden="true">4.2.</strong> Structure</a></li><li class="chapter-item expanded "><a href="UPGRADING.html"><strong aria-hidden="true">4.3.</strong> UPGRADING.md — the version-to-version upgrade ledger</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Memory</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -377,16 +377,16 @@ identity; this log documents its own format as record zero.</li>
 <li>Neutral: this is one of two numbered registers (milestones and decisions),
 told apart by home — kept explicit to avoid confusion.</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="claudemd--operating-manual-for-an-agentic-project"><a class="header" href="#claudemd--operating-manual-for-an-agentic-project">CLAUDE.md — operating manual for an agentic project</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="claudemd-operating-manual-for-an-agentic-project"><a class="header" href="#claudemd-operating-manual-for-an-agentic-project">CLAUDE.md: operating manual for an agentic project</a></h1>
 <p>This file tells you, the agent, how to work in this repository. Follow it
-exactly. The rules are written to be literal: when one says "do X", do X — do
+exactly. The rules are written to be literal: when one says "do X", do X. Do
 not look for a cleverer path. When something is unclear or could mean two
 things, stop and ask the human before you act. Clarity beats cleverness here.</p>
 <h2 id="what-this-repository-is"><a class="header" href="#what-this-repository-is">What this repository is</a></h2>
 <p>This repository is an <strong>agentic project</strong> (e.g. <code>agentic-acme</code>). It is the
 externalized <em>thought</em> about a piece of software: the plans, the decisions, the
 specifications, the people it serves, and the rules you work under. The software
-itself — the <em>action</em> — lives beneath the project as a bare store with worktrees
+itself (the <em>action</em>) lives beneath the project as a bare store with worktrees
 (the <em>Where</em> room). You write thought in the project and action in
 the worktree. Keep them separate.</p>
 <p>You are working in a <em>template</em>. A real project replaces the example personas
@@ -396,16 +396,16 @@ structure below stays the same.</p>
 <p>The host has five rooms, one for each question you ask about any piece of work.
 Put each kind of file in its room. Do not invent new top-level folders.</p>
 <div class="table-wrapper"><table><thead><tr><th>Question</th><th>Room</th><th>What goes here</th></tr></thead><tbody>
-<tr><td>Who</td><td><code>cast/</code></td><td>personas — the people (human or agent) the software serves</td></tr>
+<tr><td>Who</td><td><code>cast/</code></td><td>personas: the people (human or agent) the software serves</td></tr>
 <tr><td>What</td><td><code>&lt;software&gt;/</code> (with the code)</td><td>specifications: behaviour (<code>.allium</code>), timing (<code>.tla</code>), verified in the software's own CI</td></tr>
 <tr><td>When</td><td><code>plan/</code></td><td>the milestone index and one folder per milestone</td></tr>
-<tr><td>Where</td><td><code>&lt;software&gt;/</code></td><td>the hosted software — a bare store with worktrees; you add it</td></tr>
+<tr><td>Where</td><td><code>&lt;software&gt;/</code></td><td>the hosted software, a bare store with worktrees; you add it</td></tr>
 <tr><td>Why</td><td><code>call/</code></td><td>decisions, in MADR format (see <code>call/0000</code>)</td></tr>
 <tr><td>How</td><td><code>CLAUDE.md</code> + <code>tools/</code></td><td>this manual, and the verification tools</td></tr>
 </tbody></table>
 </div>
 <p><code>STRUCTURE.md</code> is the short map of the same thing. Read it once.</p>
-<h2 id="how-you-work--four-principles"><a class="header" href="#how-you-work--four-principles">How you work — four principles</a></h2>
+<h2 id="how-you-work-four-principles"><a class="header" href="#how-you-work-four-principles">How you work: four principles</a></h2>
 <p>These four principles govern every change. They exist because language models
 make predictable mistakes; each principle blocks one.</p>
 <h3 id="1-think-before-coding"><a class="header" href="#1-think-before-coding">1. Think before coding</a></h3>
@@ -435,7 +435,7 @@ rewrite it short before you show it.</li>
 <li>Do not "improve" nearby code, comments, names, or whitespace that the request
 did not ask about.</li>
 <li>Do not refactor working code that is not part of the request.</li>
-<li>Match the existing style exactly — tabs or spaces, snake_case or camelCase,
+<li>Match the existing style exactly: tabs or spaces, snake_case or camelCase,
 whatever the file already uses.</li>
 <li>If your change leaves an import or variable unused, remove it in the same
 commit. If you spot unrelated dead code or a bug, mention it to the human; do
@@ -463,9 +463,9 @@ before you start.</p>
 the name.</p>
 <ul>
 <li>A milestone is a folder in <code>plan/</code> named <code>NNNN-slug</code>: a four-digit
-zero-padded number, a hyphen, then a lowercase hyphenated slug — for example
+zero-padded number, a hyphen, then a lowercase hyphenated slug, for example
 <code>0001-example-milestone</code>. Decisions in <code>call/</code> use the same <code>NNNN-slug</code> form.</li>
-<li>Name a milestone after its content, not its position. <code>0003-ci-pipeline</code> is
+<li>Name a milestone after its content rather than its position. <code>0003-ci-pipeline</code> is
 good. Do <strong>not</strong> name things by ordinal position (<code>phase-one</code>, <code>M2</code>) or by a
 bare numeral (a header that is just "3" or "5.5"). Positions move when a plan
 is re-cut; content names stay attached to their content.</li>
@@ -474,92 +474,92 @@ read sequence, read the index, not the filenames.</li>
 <li><code>tools/host-lifecycle</code> allocates these numbers and checks the names for you.
 Use it (see below) instead of numbering by hand.</li>
 </ul>
-<h2 id="decisions--call"><a class="header" href="#decisions--call">Decisions — <code>call/</code></a></h2>
+<h2 id="decisions-call"><a class="header" href="#decisions-call">Decisions: <code>call/</code></a></h2>
 <p>When you make a choice that someone later will ask "why?", record it as a
 decision in <code>call/</code>, in MADR (Markdown Any Decision Record) format. The bootstrap
 decision <code>call/0000</code> explains the format and links to the MADR spec. One file per
 decision, <code>NNNN-slug.md</code>, number assigned when the decision is accepted.</p>
-<p><code>call/</code> records decisions about <strong>the software under development</strong> — why your
+<p><code>call/</code> records decisions about <strong>the software under development</strong>, why your
 software is built as it is. It does <strong>not</strong> hold methodology decisions. The
 methodology is settled in this spine (<code>CLAUDE.md</code> + <code>STRUCTURE.md</code>), inherited by
 copy-at-version; a change to it is made in the template and propagated by
 <code>host-lifecycle upgrade</code>, never re-litigated as a project <code>call/</code>.</p>
-<p><strong>Anti-ouroboros.</strong> A project must not feed on its own methodological tail. If a
+<p><strong>Anti-ouroboros.</strong> A project must avoid feeding on its own methodological tail. If a
 <code>call/</code> decision restates a methodology rule that is then settled or changed
-upstream in the spine, retire it the MADR way: set <code>Status: superseded by the spine</code> in place (records are immutable — you change status, never delete). The
+upstream in the spine, retire it the MADR way: set <code>Status: superseded by the spine</code> in place (records are immutable: you change status, never delete). The
 live (<code>accepted</code>) Why room then holds only decisions still in force.
 <code>host-lifecycle validate</code> fails an <code>accepted</code> decision that is missing a <code>Scope:</code>
 header or declares <code>Scope: methodology</code>. The template ships <code>call/0000</code> only as a
 worked example; replace it with your software's own decisions.</p>
 <p><strong>Inherit from the source, not from a host.</strong> You inherit the methodology from
 <em>this template</em> (the versioned source you copy-at-version) alone. A host or
-management repo's <strong>top-level instance contents</strong> — its <code>call/</code>, <code>plan/</code>,
-<code>MEMORY.md</code>, the project-specific parts of its <code>CLAUDE.md</code> — are that project's own
+management repo's <strong>top-level instance contents</strong> (its <code>call/</code>, <code>plan/</code>,
+<code>MEMORY.md</code>, the project-specific parts of its <code>CLAUDE.md</code>) are that project's own
 rooms and bind no adopter. Do not read them as normative.</p>
-<h2 id="specs--with-the-software-they-constrain"><a class="header" href="#specs--with-the-software-they-constrain">Specs — with the software they constrain</a></h2>
+<h2 id="specs-with-the-software-they-constrain"><a class="header" href="#specs-with-the-software-they-constrain">Specs, with the software they constrain</a></h2>
 <p>A spec states what the software must do; a tool turns it into a check. Specs live
-<strong>with the software they describe</strong> — in the software repo, beside the code, and
-verified by <strong>that repo's CI</strong> — the way tests live next to code, so a spec and the
+<strong>with the software they describe</strong> (in the software repo, beside the code, and
+verified by <strong>that repo's CI</strong>), the way tests live next to code, so a spec and the
 code it constrains move, version, and break together:</p>
 <ul>
-<li>Behaviour and requirements as <code>.allium</code> files — authored and maintained through
+<li>Behaviour and requirements as <code>.allium</code> files, authored and maintained through
 the allium skills (<code>elicit</code>/<code>distill</code>/<code>tend</code>/<code>weed</code>/<code>propagate</code>), checked by
 <code>tools/allium</code> (<code>allium check</code> validates structure; <code>allium analyse</code> adds
 data-flow, reachability, terminal-state and deadlock analysis; <code>allium plan</code>
 derives the test obligations the suite must discharge). The software's CI runs
 <code>check</code> + <code>analyse</code> + <code>plan</code> and fails on any error or warning.</li>
-<li>Timing and concurrency as <code>.tla</code> files — checked by <code>tools/specula</code> (TLA+/TLC),
+<li>Timing and concurrency as <code>.tla</code> files, checked by <code>tools/specula</code> (TLA+/TLC),
 run by the software's CI.</li>
 </ul>
-<p>A present spec carries its full lane (see "Mandatory when used", below) — wire the
+<p>A present spec carries its full lane (see "Mandatory when used", below). Wire the
 tool and its skills before authoring.</p>
 <p>The host's <code>plan/&lt;milestone&gt;/</code> <em>references</em> a spec (by path and the software pin);
-it does not contain it. Do not place specs in the host's <code>plan/</code> tree — quarantining
+it does not contain it. Do not place specs in the host's <code>plan/</code> tree. Quarantining
 a spec from its software is a bad smell (the spec drifts from the code). A spec that
 ended up under <code>plan/*/spec/</code> is relocated into the software repo.</p>
-<h2 id="personas--cast"><a class="header" href="#personas--cast">Personas — <code>cast/</code></a></h2>
+<h2 id="personas-cast"><a class="header" href="#personas-cast">Personas: <code>cast/</code></a></h2>
 <p><code>cast/</code> holds the personas: short profiles of the people the software serves. A
 persona is a hypothetical archetypal user, not a real individual. The examples
 here (<code>mara.md</code>, a human operator, and <code>wren.md</code>, an agentic LLM) show the two
 modalities; replace them with your project's own.</p>
 <p>Build at least one persona by discussion with the human before planning the work
-it serves. <code>cast/applying-personas.md</code> gives the cited process for doing this —
-follow it.</p>
+it serves. <code>cast/applying-personas.md</code> gives the cited process for doing this.
+Follow it.</p>
 <h2 id="the-verification-ladder"><a class="header" href="#the-verification-ladder">The verification ladder</a></h2>
-<p>Different kinds of property need different checkers — and different <em>strengths</em> of
+<p>Different kinds of property need different checkers, and different <em>strengths</em> of
 checker. Route each claim to the lane, and to the rung, that can prove it. The base
 lanes:</p>
 <ol>
 <li>
-<p><strong>Hygiene</strong> — <code>tools/host-lint</code>. Catches naming tells: ordinal labels and bare
+<p><strong>Hygiene</strong>: <code>tools/host-lint</code>. Catches naming tells: ordinal labels and bare
 numerals leaking into commit messages, headers, and comments. Runs as a git
 hook. <strong>Self-referential software is excluded, not bypassed.</strong> Software that
 <em>detects</em> tells (a linter, parser, validator, grammar tool) must embed them in
-test fixtures, docs, and sometimes source — legitimate self-reference the hook
+test fixtures, docs, and sometimes source, legitimate self-reference the hook
 would otherwise flag. Exclude that corpus through the tool's ignore mechanism
 (<code>.host-lintignore</code>), which the per-file hook scan MUST honor; validate each
 excluded file line-by-line so no real tell hides among the examples, and keep
 ordinary source scanned (reword an example comment rather than mute the file).
-When a tracked <em>document</em> must instead reproduce a tell <strong>verbatim</strong> — an old-name
-remap table, or a frozen dated review citing another document's numbered steps —
+When a tracked <em>document</em> must instead reproduce a tell <strong>verbatim</strong> (an old-name
+remap table, or a frozen dated review citing another document's numbered steps),
 it is <strong>boxed in the file, not path-excluded</strong>: wrap it in a fenced code block
 tagged <code>host-lint:ignore</code> (markdown only), and the naming scan skips that block
-while the rest of the file stays linted — a regular code block and inline
+while the rest of the file stays linted. A regular code block and inline
 backticks stay scanned, so a tell cannot be laundered by quoting it. The choice is
 three-way: reword a pedagogical example or a document's own ordinal label into
 content; box an irreducible literal citation; and path-exclude only the immutable
 record (the append-only memory log, dated review artifacts) and the
 self-referential corpus above.
-<strong>Never <code>--no-verify</code> past the gate to land a fixture</strong> — that silently defeats
+<strong>Never <code>--no-verify</code> past the gate to land a fixture.</strong> That silently defeats
 the lane, the same "let red hide" failure as a CI matrix that fail-fast-cancels
 its own jobs. (A fix to either, once found, is a behaviour change: ship it as a
 patch release with a matching tag.) <strong>Legitimate tell-shaped tokens are
 declared, not silenced.</strong> A version string, product name, or cited tracker
 reference that merely <em>looks</em> like a tell is declared in a provenance-checked
-allowlist (host-lint's <code>LEXICON</code>) — each entry the full contextual phrase, masked
+allowlist (host-lint's <code>LEXICON</code>): each entry the full contextual phrase, masked
 before detection; a tracker reference carries its backing URL. Because a sound,
-declarable escape then exists, the identifier/reference tier MAY escalate from an
-advisory warn to a blocking flag (the committed <code>strict</code> directive), so an
+declarable escape then exists, the identifier/reference tier MAY escalate an
+advisory warn into a blocking flag (the committed <code>strict</code> directive), so an
 <em>un</em>declared tell-shaped token becomes a hard signal. The allowlist is provenance,
 not a mute button: the tool refuses a bare master key, a phrase that is <em>itself</em> a
 tell (rename it, do not declare it), and an un-cited tracker reference (<code>#N</code>,
@@ -576,7 +576,7 @@ is <code>MEMORY.md</code>, the <strong>agent's own append-only working memory</s
 both the naming and prose audits via <code>.host-lintignore</code>, never rewritten.</p>
 </li>
 <li>
-<p><strong>Requirements</strong> — <code>tools/allium</code> (MIT, by JUXT). Does the software meet the
+<p><strong>Requirements</strong>: <code>tools/allium</code> (MIT, by JUXT). Does the software meet the
 behaviour the spec states? Author and maintain <code>.allium</code> specs <strong>through the
 allium skills</strong>, not by hand: <code>elicit</code>/<code>distill</code> to author, <code>tend</code> to evolve,
 <code>weed</code> to find spec↔code divergence, <code>propagate</code> to generate the tests. Gate
@@ -584,41 +584,41 @@ each spec in the software's CI with <code>allium check</code> (structure) + <cod
 (test obligations).</p>
 </li>
 <li>
-<p><strong>Timing and concurrency</strong> — <code>tools/specula</code> (Apache-2.0). TLA+ model
+<p><strong>Timing and concurrency</strong>: <code>tools/specula</code> (Apache-2.0). TLA+ model
 checking: are the orderings and timings correct? Model-check each <code>.tla</code> with
 TLC in the software's CI.</p>
 </li>
 </ol>
-<p><strong>Deeper rungs — <code>tools/host-prove</code></strong> (our tooling, Unlicense). The base lanes are
+<p><strong>Deeper rungs, <code>tools/host-prove</code></strong> (our tooling, Unlicense). The base lanes are
 <em>bounded</em>: TLC checks one finite instance, allium's tests sample inputs. When a claim
 must hold for <em>all</em> parameter values or <em>all</em> inputs, host-prove drives three heavier
 verifiers as agentic skills, each turning the tool's output into one machine-readable
 verdict so the rung runs down to a small model:</p>
 <ol start="4">
-<li><strong>Symbolic / parametric</strong> — <strong>Apalache</strong> (TLA+ → SMT/Z3; the <code>apalache-symbolic</code>
+<li><strong>Symbolic / parametric</strong>: <strong>Apalache</strong> (TLA+ to SMT/Z3; the <code>apalache-symbolic</code>
 skill). Proves a <code>.tla</code> invariant across a whole symbolic parameter family at once,
 where TLC can only enumerate one instance.</li>
-<li><strong>Proof / unbounded</strong> — <strong>TLAPS</strong> (<code>tlapm</code>; the <code>tlaps-proof</code> skill). A deductive,
-machine-checked proof that a property holds for all states — the must-hold-for-all
+<li><strong>Proof / unbounded</strong>: <strong>TLAPS</strong> (<code>tlapm</code>; the <code>tlaps-proof</code> skill). A deductive,
+machine-checked proof that a property holds for all states, the must-hold-for-all
 claims bounded and symbolic checking cannot close. (Authoring a proof needs a strong
 model; the skill scopes a weak model to running and maintaining existing proofs.)</li>
-<li><strong>Code-conformance</strong> — verify the <em>implementation</em> against the spec, beyond tests
-and trace validation. This rung is <strong>target-specific</strong>: Rust → <strong>Kani</strong> (the
-<code>kani-conformance</code> skill), C → CBMC, and so on. The methodology prescribes the
+<li><strong>Code-conformance</strong>: verify the <em>implementation</em> against the spec, beyond tests
+and trace validation. This rung is <strong>target-specific</strong>: Rust uses <strong>Kani</strong> (the
+<code>kani-conformance</code> skill), C uses CBMC, and so on. The methodology prescribes the
 <em>obligation</em>; the project picks the verifier its language supports. (Prefer
-byte/char-level targets — <code>str::split</code>/<code>Vec</code> make CBMC-style checkers blow up.)</li>
+byte/char-level targets: <code>str::split</code>/<code>Vec</code> make CBMC-style checkers blow up.)</li>
 </ol>
-<p>Read the ladder as: hygiene → requirements → bounded timing (TLC) → symbolic
-(Apalache) → proof (TLAPS), with code-conformance (Kani et al.) the orthogonal rung
+<p>Read the ladder as: hygiene, then requirements, then bounded timing (TLC), then symbolic
+(Apalache), then proof (TLAPS), with code-conformance (Kani et al.) the orthogonal rung
 that ties a proven spec to the running code. The deeper rungs are <strong>opt-in and inert</strong>
 (see below): nothing installs or runs until a project declares one.</p>
-<p><strong>Mandatory when used (RFC-2119).</strong> Adopting a lane is optional — not every
-project needs TLA+ — but <strong>once a spec of a kind exists, its tool, skills, and CI
+<p><strong>Mandatory when used (RFC-2119).</strong> Adopting a lane is optional (not every
+project needs TLA+); <strong>once a spec of a kind exists, its tool, skills, and CI
 lane are required.</strong> A component carrying any <code>.allium</code> spec MUST wire <code>tools/allium</code>
 and its skills and run <code>check</code> + <code>analyse</code> + <code>plan</code> in that repo's CI, and the
 <code>plan</code> obligations MUST be discharged by the software's tests. A component carrying
 any <code>.tla</code> spec MUST wire <code>tools/specula</code> and TLC-check it in that repo's CI. A spec
-present without its full lane is a <strong>defect</strong>, not a choice — the lanes are not
+present without its full lane is a <strong>defect</strong>, not a choice. The lanes are not
 reference decoration. The tools are referenced submodules; their skills are
 generated, gitignored symlinks (<code>link-skills.sh</code>), wired before you author a spec.
 This is <strong>enforced</strong>, not only stated: <code>host-lifecycle software --check</code> raises a
@@ -626,7 +626,7 @@ HAZARD when a materialized component carries a <code>.allium</code> with no <cod
 <code>allium analyse</code> CI workflow, or a <code>.tla</code> with no TLC lane.</p>
 <p>The deeper rungs work the same way, one level up: they are <strong>opt-in and inert until a
 project declares a rung</strong> by dispositioning an obligation <code>kani:</code>/<code>apalache:</code>/<code>tlaps:</code>
-(below). A declaration then obliges that rung's CI lane — <code>software --check</code> HAZARDs an
+(below). A declaration then obliges that rung's CI lane. <code>software --check</code> HAZARDs an
 obligation that declares <code>kani:</code> with no <code>cargo kani</code> lane, <code>apalache:</code> with no
 <code>apalache-mc</code> lane, or <code>tlaps:</code> with no <code>tlapm</code> lane. The mere presence of a <code>.tla</code> or a
 crate never activates a rung; only the declaration does, so a project pays for a heavier
@@ -634,36 +634,36 @@ verifier exactly when, and only when, it chooses to.</p>
 <p><strong>Obligations are discharged, not just emitted.</strong> <code>allium plan</code> derives a test
 obligation for every config default, entity, enum, invariant, rule and transition.
 Each obligation MUST be <strong>dispositioned</strong> in a sibling <code>&lt;spec&gt;.obligations</code> manifest
-— the remap-dictionary discipline applied to tests — as <code>test:&lt;name&gt;</code> (a named test
+(the remap-dictionary discipline applied to tests) as <code>test:&lt;name&gt;</code> (a named test
 discharges it), <code>structural</code> (the spec's own <code>check</code>/<code>analyse</code> lane covers it),
 <code>waived: &lt;reason&gt;</code> (an honest, recorded gap), or a deeper-rung proof: <code>kani:&lt;harness&gt;</code>,
-<code>apalache:&lt;inv&gt;</code>, or <code>tlaps:&lt;theorem&gt;</code> (a host-prove rung discharges it — stronger than
+<code>apalache:&lt;inv&gt;</code>, or <code>tlaps:&lt;theorem&gt;</code> (a host-prove rung discharges it, stronger than
 a test, for all inputs/parameters). <code>host-lifecycle obligations &lt;spec&gt; --tests &lt;dir&gt; [--prove &lt;dir&gt;]</code> fails on any undispositioned obligation, any stale disposition, any
 <code>test:&lt;name&gt;</code> absent from the test sources, and any rung proof name absent from the
 <code>--prove</code> sources; the software's CI runs it, and <code>software --check</code> HAZARDs a
 <code>.allium</code> that has no <code>.obligations</code> manifest. An
-obligation left undispositioned is a defect — discharge is total, per component.</p>
+obligation left undispositioned is a defect. Discharge is total, per component.</p>
 <p><strong>A rung is discharged by re-derivation, not by name-presence (<code>call/0018</code>).</strong> That a
-proof <em>exists</em> is not that it <em>passes</em> — <code>--prove</code> only lints that the named harness,
+proof <em>exists</em> is not that it <em>passes</em>. <code>--prove</code> only lints that the named harness,
 invariant, or theorem is present (AVAILABLE ≠ DISCHARGED). The real discharge is
 <code>host-lifecycle obligations &lt;spec&gt; --rederive &lt;dir&gt;</code>, which re-runs each rung's verifier
 through host-prove <strong>in its recorded pinned toolchain</strong> and requires a PASS at the
-declared <code>bound=</code> — checkable anywhere, with no keys and no dependence on a specific CI;
+declared <code>bound=</code>, checkable anywhere, with no keys and no dependence on a specific CI;
 it generalizes the reproducible-build re-derivation (which reproduces a recorded artifact
-hash) from artifacts to proofs. The cheap offline signal is <strong>input-digest staleness</strong>: a
+hash) so the same re-derivation applies to proofs as well as artifacts. The cheap offline signal is <strong>input-digest staleness</strong>: a
 rung may declare <code>inputs=&lt;files&gt;</code>, <code>--rederive --record-digests</code> fingerprints them with
 <code>git hash-object</code> into a committed <code>&lt;manifest&gt;.digests</code> ledger, and a later offline run
 reports the proof <strong>STALE</strong> if those inputs drifted without a fresh re-derivation.
-Enforcement is <strong>project-pluggable</strong> — a required check, any CI, a pre-push hook, or the
+Enforcement is <strong>project-pluggable</strong>: a required check, any CI, a pre-push hook, or the
 operator running the verify phase; the methodology prescribes the re-derivation and ships
 the re-deriver, and never bakes in a CI.</p>
 <p>Two rules govern the tools:</p>
 <ul>
 <li><strong>Reference, don't vendor.</strong> Each tool is a git submodule pinned to a commit.
-Do not copy its code into this repository. This governs an <strong>adopter</strong> consuming
+Keep its code out of this repository. This governs an <strong>adopter</strong> consuming
 the tools. A <strong>development host</strong> that <em>authors</em> a host-* tool is the exception:
-it develops that tool as a Where-room software component of its own — materialized
-and released through the lifecycle like any software it builds — and consumes the
+it develops that tool as a Where-room software component of its own (materialized
+and released through the lifecycle like any software it builds) and consumes the
 built result (binary + worktree-sourced skills) from that worktree, rather than
 referencing its own source as a foreign submodule. Reference is for the consumer;
 the producer of a tool embeds it.</li>
@@ -672,15 +672,15 @@ interfaces. Do not edit a tool's source to make it fit. If a tool needs a
 change, raise it upstream.</li>
 </ul>
 <p>The <em>output</em> a tool produces about your project (a report, a counterexample, a
-generated check) belongs to your project, not to the tool's license — the same
+generated check) belongs to your project, not to the tool's license, the same
 way a compiler's license does not cover the program it compiles.</p>
 <h2 id="the-host--tools"><a class="header" href="#the-host--tools">The host-* tools</a></h2>
 <p>Three of the tools are ours, released into the public domain (Unlicense):</p>
 <ul>
-<li><strong>host-grammar</strong> — the shared rules for valid names and numbers. A library, not
+<li><strong>host-grammar</strong>: the shared rules for valid names and numbers. A library, not
 a command. Both tools below depend on it.</li>
-<li><strong>host-lint</strong> — the <em>checker</em>. It reads text and flags naming tells.</li>
-<li><strong>host-lifecycle</strong> — the <em>generator</em>. It allocates numbers and scaffolds
+<li><strong>host-lint</strong>: the <em>checker</em>. It reads text and flags naming tells.</li>
+<li><strong>host-lifecycle</strong>: the <em>generator</em>. It allocates numbers and scaffolds
 milestones, decisions, and personas without spending model tokens on
 mechanical work. Run <code>host-lifecycle next &lt;dir&gt;</code> for the next number and
 <code>host-lifecycle validate &lt;dir&gt;</code> to check a folder. It also materialises and
@@ -691,44 +691,44 @@ pin.</li>
 <p>Because the generator and the checker share <code>host-grammar</code>, what host-lifecycle
 emits is exactly what host-lint accepts. Trust that symmetry; do not number by
 hand.</p>
-<h3 id="the-lifecycle-phases--every-phase-emits-a-receipt"><a class="header" href="#the-lifecycle-phases--every-phase-emits-a-receipt">The lifecycle phases — every phase emits a receipt</a></h3>
+<h3 id="the-lifecycle-phases-every-phase-emits-a-receipt"><a class="header" href="#the-lifecycle-phases-every-phase-emits-a-receipt">The lifecycle phases, every phase emits a receipt</a></h3>
 <p>host-lifecycle ships one Claude <strong>skill per lifecycle phase</strong>, generated into
 <code>.claude/skills/</code> by <code>link-skills.sh</code> exactly as the allium/specula skills are:
 <strong>classify</strong> (preview + case), <strong>adopt</strong> (governance + rooms + stamp), <strong>embed</strong>
 (the software as a bare store with worktrees), <strong>remap</strong> (the dictionary rename),
-<strong>verify</strong> (the gate sweep — <code>validate</code>, <code>software --check</code>, <code>obligations</code>,
+<strong>verify</strong> (the gate sweep: <code>validate</code>, <code>software --check</code>, <code>obligations</code>,
 <code>book --check</code>), <strong>publish</strong> (the doc site), <strong>upgrade</strong> (the ledger), and
-<strong>release</strong> (the strict, tool-carried release — verify, build in the recorded
+<strong>release</strong> (the strict, tool-carried release: verify, build in the recorded
 toolchain, re-derive the artifact hash, re-pin, tag, receipt). Each owns the
 judgment around its mechanical command.</p>
-<p>The phases — their order, modality, command, and the evidence each carries — are
+<p>The phases (their order, modality, command, and the evidence each carries) are
 not re-typed in prose; they live once in the tool-readable <strong><code>lifecycle.manifest</code></strong>
 (one <code>[phase "&lt;name&gt;"]</code> stanza each), which <code>host-lifecycle</code> reads at the project's
 adopted <code>.host</code> revision for <code>--next</code>, the <code>book</code> order, and the receipt gate. Read
 the whole lifecycle at a glance with <code>host-lifecycle manifest &lt;path&gt;</code>.</p>
 <p>Unlike a verification lane, which is conditional on a spec existing, the lifecycle
-is <strong>driven by the tool, never hand-operated</strong> — and the rule is <strong>every phase
+is <strong>driven by the tool, never hand-operated</strong>, and the rule is <strong>every phase
 emits a receipt</strong>, not "every phase runs". Modality is first-class: a phase may be
 <strong>conditional</strong> (embed and release apply only with a Where room) or <strong>recurring</strong>
-(once per software component), so it can legitimately not run — but it still records
+(once per software component), so it can legitimately not run; even then it records
 a <strong>receipt</strong> in <code>.host-receipts</code>, written by the tool: <code>done</code> with re-derivable
 evidence, <code>skip</code> with a cited reason, or tool-computed <code>n-a</code>. <code>host-lifecycle software --check</code> re-verifies each <code>done</code> by the manifest's closed <code>recheck =</code> and
-<strong>HAZARDs a phase with no receipt</strong> — the one defect the gate needs; a protected
+<strong>HAZARDs a phase with no receipt</strong>, the one defect the gate needs; a protected
 core (<code>verify</code>, <code>skippable = false</code>) refuses a skip outright. Operating a phase
 ad-hoc (hand-scaffolding rooms, hand-renaming files, hand-rolling the site or a
 release) leaves no receipt, and so is a defect by construction.</p>
 <h3 id="never-adopt-a-software-repository-in-place"><a class="header" href="#never-adopt-a-software-repository-in-place">Never adopt a software repository in place</a></h3>
 <p>A host is a <em>separate meta-repo</em>; the software it governs lives beneath it as the
 <em>Where</em> room (a bare store with worktrees recorded in <code>.host-software</code>). The two
-stay separable and independently versioned — that is the whole point of "keep
+stay separable and independently versioned. That is the whole point of "keep
 them separate". So at <strong>first adoption</strong> (no <code>.host</code> stamp yet), if the target
-directory is itself a software repository — it carries a root build manifest
+directory is itself a software repository (it carries a root build manifest
 (<code>Cargo.toml</code>, <code>package.json</code>, <code>go.mod</code>, <code>pyproject.toml</code>, …) and is not already
-managing software via <code>.host-software</code> — you <strong>MUST</strong> refuse to continue.
+managing software via <code>.host-software</code>), you <strong>MUST</strong> refuse to continue.
 <code>host-lifecycle classify &lt;dir&gt;</code> enforces this: it prints the refusal and exits
 non-zero instead of a case letter, rather than letting you turn the code repo
 into the host.</p>
-<p>Refusing is not the end of the task — embed the software the right way instead:
+<p>Refusing is not the end of the task. Embed the software the right way instead:
 create or choose an empty host repository (e.g. <code>agentic-&lt;name&gt;</code>), <code>adopt</code> it
 there, then add the software as the Where room with a <code>[software "&lt;name&gt;"]</code>
 stanza in the host's <code>.host-software</code> (the repo's URL, a pinned SHA, the worktree
@@ -743,7 +743,7 @@ in the software, update the plan to say what you actually did, in a separate
 commit.</li>
 <li><strong>Append-only memory.</strong> <code>MEMORY.md</code> is a running log of decisions, discovered
 constraints, and lessons. Add a short entry whenever you finish something
-significant, hit a non-obvious bug, or find an unexpected constraint — as you
+significant, hit a non-obvious bug, or find an unexpected constraint, as you
 go, not at the end. Commit it on its own and push it. Never rewrite or delete an
 old entry; if one was wrong, add a new entry that corrects it and points back.</li>
 </ul>
@@ -763,33 +763,33 @@ recorded pin is the audit anchor a gitlink used to be.</li>
 <p>Never push a host commit whose tool pointer or software pin is not yet pushed. If
 a push fails (no network, no auth), stop, tell the human which commits are
 unpushed, and do not start work that depends on them.</p>
-<p><strong>Tag every release.</strong> A version bump — a change to the <code>version</code> in a tool's or
-the software's manifest (<code>Cargo.toml</code>, …) — <strong>MUST</strong> be accompanied by a matching
+<p><strong>Tag every release.</strong> A version bump (a change to the <code>version</code> in a tool's or
+the software's manifest (<code>Cargo.toml</code>, …)) <strong>MUST</strong> be accompanied by a matching
 annotated git tag <code>vX.Y.Z</code> at the release commit, pushed alongside it (<code>git tag -a vX.Y.Z -m "&lt;name&gt; vX.Y.Z" &amp;&amp; git push origin vX.Y.Z</code>). The tag <strong>is</strong> the release:
 a tag-triggered CI job builds the artifacts from it (e.g. a <code>v*</code> release workflow).
-An untagged version bump is an unreleased version — a defect; back-fill the tag at
+An untagged version bump is an unreleased version, a defect; back-fill the tag at
 its bump commit. Do not re-pin <code>.host-software</code> (or a tool pointer) to a
 version-bumped commit that carries no matching tag.</p>
-<p><strong>Worktree-absence coherence.</strong> A separately-materialized path — the
-software worktree, or a tool submodule — is absent (or empty) until materialized; a
+<p><strong>Worktree-absence coherence.</strong> A separately-materialized path (the
+software worktree, or a tool submodule) is absent (or empty) until materialized; a
 fresh clone, CI, and a partial submodule init do not have it. So <strong>do not git-track
 an artifact that depends on such a path existing</strong> (a skill symlink into
 <code>&lt;software&gt;/</code> <em>or</em> into <code>tools/&lt;tool&gt;/skills/</code>): gitignore it and <strong>generate</strong> it
-after materialization — <code>link-skills.sh</code> produces <code>.claude/skills/*</code> for the tools
+after materialization: <code>link-skills.sh</code> produces <code>.claude/skills/*</code> for the tools
 present, and the software's links are recreated after <code>software --materialize</code>.
 Where an automated context genuinely needs the path, it materializes first;
 otherwise it must tolerate the absence. <code>host-lifecycle software --check</code> flags any
 tracked symlink whose target is not itself tracked here as a <code>HAZARD</code>. And: an
-un-materialized CI job must exercise each runtime-critical artifact — "done" means
+un-materialized CI job must exercise each runtime-critical artifact. "done" means
 the whole CI sweep is green, not one artifact built.</p>
 <p><strong>Worktrees live under <code>software/</code>.</strong> Every materialized Where-room worktree
-<strong>MUST</strong> surface at <code>software/&lt;name&gt;/&lt;branch&gt;/</code> <em>under</em> the host root — never a bare
+<strong>MUST</strong> surface at <code>software/&lt;name&gt;/&lt;branch&gt;/</code> <em>under</em> the host root, never a bare
 external path disjoint from the tree. The rule an agent relies on is: <em>if you build it, its
 files live under the host root</em>, so an edit through the default-cwd path lands in
-the tree under test. When a backing store genuinely must live elsewhere — another
+the tree under test. When a backing store genuinely must live elsewhere (another
 filesystem or platform (e.g. a native-Windows build that cannot sit on a WSL
-share) — record it on the parallel-worktree line as <code>store=&lt;path&gt;</code> (and optionally
-<code>host=&lt;os&gt;</code> — the OS that <strong>materializes</strong> the store, i.e. where you run
+share)), record it on the parallel-worktree line as <code>store=&lt;path&gt;</code> (and optionally
+<code>host=&lt;os&gt;</code>, the OS that <strong>materializes</strong> the store, i.e. where you run
 <code>host-lifecycle</code>, <em>not</em> the build platform; for a Windows Dev Drive reached from WSL
 that is <code>linux</code>, even though the build's own <code>attest-host</code> is <code>windows</code>). Off-platform,
 <code>host=</code> makes <code>--materialize</code>/<code>--check</code> skip the line rather than fail.
@@ -797,17 +797,17 @@ that is <code>linux</code>, even though the build's own <code>attest-host</code>
 <code>software/&lt;name&gt;/&lt;branch&gt;/</code> as a <strong>symlink / directory junction / bind-mount</strong> to it. <code>host-lifecycle software --check</code> <strong>HAZARDs</strong> any recorded worktree path that
 escapes the host root, and any <code>store=</code> line whose in-tree handle is missing or
 does not resolve to the store. A disjoint external worktree with no in-structure
-handle is the wrong-tree footgun — edits silently land in a tree not under test —
+handle is the wrong-tree footgun (edits silently land in a tree not under test)
 and is a defect, not a layout choice.</p>
-<p><strong>Reproducible builds — the production anchor.</strong> Software <em>initiated</em> under the
+<p><strong>Reproducible builds, the production anchor.</strong> Software <em>initiated</em> under the
 methodology has <strong>reproducible builds</strong>: its deployed artifact MUST be byte-reproducible
 from the pinned source plus a recorded build recipe (a pinned <code>toolchain</code> and <code>build</code>
-command in <code>.host-software</code>). That is what makes the pin a true production anchor — a
-clean rebuild from the pin equals what is deployed — rather than just a source pin.
+command in <code>.host-software</code>). That is what makes the pin a true production anchor (a
+clean rebuild from the pin equals what is deployed) rather than just a source pin.
 Record per component which line ships (<code>deploy</code>) and the artifact's expected hash
 (<code>artifact = &lt;path&gt; &lt;sha256&gt;</code>); <code>host-lifecycle software --check</code> attests these cheaply
 (a present artifact that matches is <strong>verified</strong>; one built by a local toolchain that
-differs from the canonical hash is <strong>noted, not failed</strong> — the same reasoning
+differs from the canonical hash is <strong>noted, not failed</strong>, the same reasoning
 <code>--install-hooks</code> uses, since the recorded hash is the pinned build host's output), and
 a CI job runs <code>host-lifecycle software --verify-build</code> to rebuild from the pin and fail
 unless the artifact reproduces. <code>--verify-build</code>, not <code>--check</code>, is the reproducibility
@@ -832,22 +832,22 @@ shape as <code>repro-exempt</code>; the exemption is never available where offli
 <p><strong>Multi-platform builds.</strong> A component whose <em>one</em> source pin ships on several platforms
 records one <code>[build "&lt;name&gt;" "&lt;platform&gt;"]</code> subsection per platform under its
 <code>[software "&lt;name&gt;"]</code> stanza, each carrying its own <code>build</code>/<code>toolchain</code>/<code>artifact</code>/<code>deploy</code>
-(and optional <code>repro-exempt</code>) plus an <code>attest-host</code> naming the OS — <code>linux</code>, <code>windows</code>,
-<code>macos</code> — that reproduces it. <code>--check</code> and <code>--verify-build</code> iterate the builds and attest
-each only on its <code>attest-host</code>, skipping a build whose host is not the current one rather
-than failing (a Linux runner cannot reproduce the Windows artifact, and is not asked to).
+(and optional <code>repro-exempt</code>) plus an <code>attest-host</code> naming the OS (<code>linux</code>, <code>windows</code>,
+<code>macos</code>) that reproduces it. <code>--check</code> and <code>--verify-build</code> iterate the builds and attest
+each only on its <code>attest-host</code>. A build whose host is not the current one is skipped, and
+the run does not fail (a Linux runner cannot reproduce the Windows artifact, and is not asked to).
 The flat single-build fields remain the form for a single-platform component.</p>
 <p><strong>Escape clause (migrated software only).</strong> Pre-existing software brought under the
 methodology may not be reproducible yet. It may carry <code>repro-exempt = call/NNNN</code> citing a
-recorded <strong>case decision</strong> — a software-scoped <code>call/</code> decision documenting why it is not
+recorded <strong>case decision</strong>, a software-scoped <code>call/</code> decision documenting why it is not
 yet reproducible and the interim provenance. <code>--verify-build</code> then warns and skips the
 rebuild comparison; <code>--check</code> still requires the citation to resolve. The exemption is
 meant to be retired as the component converges on reproducibility, and is <strong>never</strong>
 available to greenfield software.</p>
 <h2 id="upgrading"><a class="header" href="#upgrading">Upgrading</a></h2>
 <p>Adopting is one event; the template moves on. The <code>.host</code> stamp records <strong>what you
-have applied</strong>: a <code>baseline</code> ledger entry — every entry at or before its position in
-<code>UPGRADING.md</code> counts as applied — plus an optional <code>applied</code> set of entries taken
+have applied</strong>: a <code>baseline</code> ledger entry (every entry at or before its position in
+<code>UPGRADING.md</code> counts as applied) plus an optional <code>applied</code> set of entries taken
 out of order. <code>UPGRADING.md</code> is the ledger of actions, one <code>[upgrade "&lt;revision&gt;"]</code>
 stanza each, ordered by file position; a stanza may declare <code>independent</code> or
 <code>depends = &lt;id&gt; …</code> (logical prerequisites, distinct from the <code>requires</code> tool-version
@@ -855,22 +855,22 @@ floor) and a <code>verify</code> post-condition.</p>
 <p>To upgrade, fetch the template to the target revision, then:</p>
 <ul>
 <li><code>host-lifecycle upgrade &lt;dir&gt;</code> lists every ledger entry <strong>not yet applied</strong>, by
-ledger position — never git ancestry (ledger SHAs are a linear-commit artifact and
+ledger position, never git ancestry (ledger SHAs are a linear-commit artifact and
 some are orphaned from HEAD). A legacy single-<code>revision</code> stamp is migrated once to a
 <code>baseline</code>. <code>upgrade --next</code> prints the single next safe action.</li>
 <li>Apply an entry, then record it with <code>host-lifecycle upgrade --record &lt;id&gt;</code> (an id,
 an unambiguous prefix, or a ledger ordinal). The tool validates the id, refuses if a
-<code>depends</code> is unapplied, runs the entry's <code>verify</code> post-condition — or, when it has
-none, requires an explicit <code>--unverified call/NNNN</code> citation — and appends an
+<code>depends</code> is unapplied, runs the entry's <code>verify</code> post-condition (or, when it has
+none, requires an explicit <code>--unverified call/NNNN</code> citation) and appends an
 append-only claim. <strong>You never hand-edit the stamp.</strong></li>
 <li>A late <strong>independent</strong> entry may be cherry-applied without an earlier unrelated one:
-the deferred entries stay pending and <strong>re-list</strong> — a forgotten or premature record
+the deferred entries stay pending and <strong>re-list</strong>. A forgotten or premature record
 can never silently hide owed work (fail-safe). <code>upgrade --advance</code> later compacts a
 contiguous applied run into the <code>baseline</code>.</li>
 <li><code>host-lifecycle software --check</code> re-checks every recorded claim (a <code>verify</code> that no
 longer holds, or an applied entry whose <code>depends</code> is unapplied, is a loud <code>HAZARD</code>).</li>
 </ul>
-<p>The tool carries the process — even a low-capability agent upgrades by reading one
+<p>The tool carries the process. Even a low-capability agent upgrades by reading one
 line and running one command, never editing the stamp by hand. Re-stamp is the tool's
 job, not yours.</p>
 <h2 id="provenance-1"><a class="header" href="#provenance-1">Provenance</a></h2>
@@ -897,26 +897,26 @@ ledger changes with the techniques that generate it, so it stays here with them.
 work; the software under development is the <em>action</em>, hosted beneath it. Its
 rooms map to the five W's.</p>
 <div class="table-wrapper"><table><thead><tr><th>W</th><th>room</th><th>holds</th></tr></thead><tbody>
-<tr><td>Who</td><td><code>cast/</code></td><td>personas (Powell, Keenan &amp; McDaid 2007) — examples Mara + Wren</td></tr>
+<tr><td>Who</td><td><code>cast/</code></td><td>personas (Powell, Keenan &amp; McDaid 2007), examples Mara + Wren</td></tr>
 <tr><td>What</td><td><code>&lt;software&gt;/</code> (with the code)</td><td>behavioural (<code>.allium</code>) + temporal (<code>.tla</code>) specs, verified in the software's CI; the host <code>plan/</code> references them</td></tr>
 <tr><td>When</td><td><code>plan/</code></td><td>the milestone index and folders</td></tr>
-<tr><td>Where</td><td><code>&lt;software&gt;/</code></td><td>the hosted software — a bare store with worktrees; you add it</td></tr>
-<tr><td>Why</td><td><code>call/</code></td><td>decisions about the software (MADR; see <code>call/0000</code>) — methodology lives in the spine, not here</td></tr>
+<tr><td>Where</td><td><code>&lt;software&gt;/</code></td><td>the hosted software, a bare store with worktrees; you add it</td></tr>
+<tr><td>Why</td><td><code>call/</code></td><td>decisions about the software (MADR; see <code>call/0000</code>); methodology lives in the spine, not here</td></tr>
 <tr><td>How</td><td><code>CLAUDE.md</code> + <code>tools/</code></td><td>the verification lanes</td></tr>
 </tbody></table>
 </div>
-<p><code>tools/</code> are referenced submodules, each under its own license — we orchestrate
+<p><code>tools/</code> are referenced submodules, each under its own license; we orchestrate
 and wrap, never patch:</p>
 <ul>
-<li><code>tools/host-lint</code> (Unlicense) — hygiene / anti-slop; checks names against <code>host-grammar</code>.</li>
-<li><code>tools/host-lifecycle</code> (Unlicense) — token-free scaffolder/validator; generates names from <code>host-grammar</code>, so what it emits is exactly what <code>host-lint</code> accepts.</li>
-<li><code>tools/allium</code> (MIT, JUXT) — requirements + property-based testing.</li>
-<li><code>tools/specula</code> (Apache-2.0) — timing and concurrency via TLA+.</li>
+<li><code>tools/host-lint</code> (Unlicense): hygiene / anti-slop; checks names against <code>host-grammar</code>.</li>
+<li><code>tools/host-lifecycle</code> (Unlicense): token-free scaffolder/validator; generates names from <code>host-grammar</code>, so what it emits is exactly what <code>host-lint</code> accepts.</li>
+<li><code>tools/allium</code> (MIT, JUXT): requirements + property-based testing.</li>
+<li><code>tools/specula</code> (Apache-2.0): timing and concurrency via TLA+.</li>
 </ul>
-<p>(<code>host-grammar</code>, the shared naming/numbering rules crate, is a build dependency of <code>host-lint</code> and <code>host-lifecycle</code> — not a host submodule.)</p>
+<p>(<code>host-grammar</code>, the shared naming/numbering rules crate, is a build dependency of <code>host-lint</code> and <code>host-lifecycle</code>, not a host submodule.)</p>
 <p>A lane is <strong>mandatory once a spec of its kind exists</strong> (RFC-2119 MUST; see <code>CLAUDE.md</code>): a <code>.allium</code> requires <code>tools/allium</code> + its skills + a <code>check</code>/<code>analyse</code>/<code>plan</code> CI lane with the obligations discharged by tests; a <code>.tla</code> requires <code>tools/specula</code> + a TLC lane. Adopting a lane is optional; ignoring a present spec's lane is a defect.</p>
-<p><code>.claude/skills/</code> are symlinks into those submodules' skills — reference, not
-copy. They are <strong>generated, not tracked</strong>: <code>link-skills.sh</code> creates a link for each
+<p><code>.claude/skills/</code> are symlinks into those submodules' skills (reference, not
+copy). They are <strong>generated, not tracked</strong>: <code>link-skills.sh</code> creates a link for each
 <em>materialized</em> tool (skipping uninitialized submodules), because a tracked symlink
 into an uninitialized tool dangles and trips any tree-walking tool.
 Run it after <code>git submodule update --init</code>. Tool <em>outputs</em> are
@@ -924,13 +924,13 @@ project-owned. host-lifecycle ships one skill <strong>per lifecycle phase</stron
 adopt, embed, remap, verify, publish, upgrade, release), enumerated once in the
 tool-readable <code>lifecycle.manifest</code>; unlike a lane, the lifecycle is driven by the
 tool, and the rule is <strong>every phase emits a receipt</strong> (<code>done</code>/<code>skip</code>/<code>n-a</code> in
-<code>.host-receipts</code>), not "every phase runs" — a phase with no receipt is a
+<code>.host-receipts</code>), not "every phase runs". A phase with no receipt is a
 <code>software --check</code> HAZARD (<code>CLAUDE.md</code>).</p>
-<p>The <em>Where</em> room is the software under test — <strong>one or more</strong> components, each
+<p>The <em>Where</em> room is the software under test, <strong>one or more</strong> components, each
 embedded as a <strong>bare store with worktrees</strong> under <code>software/&lt;name&gt;/</code>: the shared
 object store is <code>software/&lt;name&gt;/.git</code>, and each worktree is keyed by branch at
 <code>software/&lt;name&gt;/&lt;branch&gt;/</code> (the branch keeps its slashes, so <code>feature/login</code>
-nests). The canonical worktree — the audited state, where CI runs — is the
+nests). The canonical worktree (the audited state, where CI runs) is the
 component's recorded <code>branch</code> (default <code>main</code>) checked out at the <code>pin</code>; the rest are
 parallel lines, one per agent or live release branch. These trees are local and
 gitignored (a single <code>/software/</code> entry); the host commits a recipe (<code>.host-software</code>)
@@ -942,7 +942,7 @@ with <code>--item &lt;name&gt;[@&lt;branch&gt;]</code>.
 The recorded pin replaces a submodule gitlink as the
 reproducibility anchor, so several branches stay materialized at once where a
 single submodule tree could not. Software initiated under the methodology has
-<strong>reproducible builds</strong> — the stanza also records the <code>build</code>/<code>toolchain</code> recipe and
+<strong>reproducible builds</strong>: the stanza also records the <code>build</code>/<code>toolchain</code> recipe and
 the deployed <code>artifact</code> hash, so <code>host-lifecycle software --verify-build</code> can rebuild
 from the pin and prove the deployed binary; migrated software not yet reproducible
 carries a <code>repro-exempt = call/NNNN</code> case decision (see <code>CLAUDE.md</code>). A component that
@@ -956,16 +956,16 @@ single-platform case.</p>
 <p>To instantiate: clone, <code>git submodule update --init</code> (the tools), run
 <code>./link-skills.sh</code> (regenerate the skill symlinks for the tools you initialized),
 replace the <code>cast/</code> examples with your own personas, and set up your software as a
-bare store with worktrees (above). To bring an <em>existing</em> repo under the
+bare store with worktrees (above). For bringing an <em>existing</em> repo under the
 methodology instead, follow the <code>host</code> repo (<code>github.com/connollydavid/host</code>).</p>
-<p>To publish docs with mdBook, run <strong><code>host-lifecycle book .</code></strong> — the canonical
+<p>To publish docs with mdBook, run <strong><code>host-lifecycle book .</code></strong>, the canonical
 publisher, so you do not hand-roll a generator that drops a room or re-derives the
 src-scoping wrong. It writes a <code>book.toml</code> scoped to a generated <code>docs/</code> (never
 <code>src = "."</code>, which would walk the tool submodules and the un-materialized software
 worktree and trip over whatever is not present) and a <code>SUMMARY.md</code> in
-<strong>lifecycle order</strong>: Cast (Who) → Plan (When) → Software/Where (the What specs live
-with the code, read as a stub from <code>.host-software</code>) → Call (Why) →
-Reference/CLAUDE (How) → Memory. Then
+<strong>lifecycle order</strong>: Cast (Who), then Plan (When), then Software/Where (the What specs live
+with the code, read as a stub from <code>.host-software</code>), then Call (Why), then
+Reference/CLAUDE (How), then Memory. Then
 <code>host-lifecycle book --check .</code> fails the build unless every room with source
 renders a page, so a half-room site cannot ship. <code>book.toml</code> and <code>docs/</code> are
 generated output (gitignored); the reference Site workflow under
@@ -975,7 +975,7 @@ recording the template revision it adopted (<code>template</code>/<code>revision
 written by <code>host-lifecycle adopt</code>. It is what a later upgrade diffs from. An
 optional <code>name</code> line pins the published book's title, so <code>host-lifecycle book</code>
 does not derive it from the checkout directory.</p>
-<p>The methodology lives in <code>CLAUDE.md</code> — read it first. The whole template is
+<p>The methodology lives in <code>CLAUDE.md</code>. Read it first. The whole template is
 released into the public domain (Unlicense); see <code>README.md</code> for provenance.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="upgradingmd--the-version-to-version-upgrade-ledger"><a class="header" href="#upgradingmd--the-version-to-version-upgrade-ledger">UPGRADING.md — the version-to-version upgrade ledger</a></h1>
 <p>Adopting the methodology records a template revision in <code>.host</code>. The
