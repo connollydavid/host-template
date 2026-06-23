@@ -173,3 +173,10 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.20.0
     independent = true
     verify   = grep -rqs "reproduce them offline from pinned inputs" host-template/CLAUDE.md
+
+[upgrade "27d815b"]
+    title    = The hygiene grammar grows by reflective practice
+    action   = Bump your pinned host-lint to v0.9.0, which flags a positional reference to a milestone checklist item (the "box N" / "boxes N-M" / "steps N-M" shape), the same ordinal-by-position tell as a numbered name. Adopt the living-grammar doctrine: the shared tell corpus is incomplete and grows by reflective practice. Discovery is mechanical-first, a sweep of history and recent work for a recurring shape the lane misses, prompted at the verify gate before a milestone closes and at adoption, with the agent assisting rather than leading. The operator validates whether a surfaced shape is a genuine tell or legitimate domain vocabulary, by one test: is the shape a property of how models segment work, or of this project's own domain? A confirmed tell is proposed upstream to the shared grammar the lane consumes (a naming tell to host-lint, a prose trope to host-grammar), gained on the next bump; a legitimate tell-shaped token stays in the per-project `LEXICON`; the project that finds a tell does not edit the shared source itself. Reword by default; box or declare an irreducible citation; declare the numeral-free contextual prefix for a genuine quantity; reserve a graduation for the residue. A later grammar bump that flags a live doc is reworded, and a frozen record is boxed.
+    requires = host-lifecycle v0.20.0
+    independent = true
+    verify   = grep -rqs "grows by reflective practice" host-template/CLAUDE.md
