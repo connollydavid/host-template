@@ -58,7 +58,7 @@
 	skill     = verify
 	evidence  = gate sweep green (validate, software --check, book --check, hook tell test)
 	skippable = false
-	recheck   = host-lifecycle validate plan/ call/
+	recheck   = host-lifecycle validate plan/ call/ && host-lifecycle prose .
 
 [phase "publish"]
 	order    = 6

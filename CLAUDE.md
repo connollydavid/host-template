@@ -223,8 +223,10 @@ lanes:
    The bar matches the naming audit: authored docs carry **zero** prose tropes, as an
    **ongoing** rule, not a one-time migration. It is wired into the **receipts
    mechanism**: the `verify` phase **applies** the prose audit and **generates** a
-   receipt, and `software --check` re-verifies that receipt by re-running `host-lint
-   --prose`, so a doc that regresses to slop re-opens it as a HAZARD. The one exception
+   receipt, and `software --check` re-verifies that receipt by re-running the prose
+   audit (`host-lifecycle prose`, host-lint's `--docs` engine run in-process, so the
+   gate needs no host-lint on PATH), so a doc that regresses to slop re-opens it as a
+   HAZARD. The one exception
    is `MEMORY.md`, the **agent's own append-only working memory**: it is excluded from
    both the naming and prose audits via `.host-lintignore`, never rewritten.
 
