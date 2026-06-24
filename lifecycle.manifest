@@ -85,23 +85,7 @@
 	requires = verify
 	recheck  = test -f .host-software
 
-# Spine truth data (plan/0036) — not phases. Machine-readable facts the reconcile
-# check (the second arm of "grows by reflective practice") diffs a project's own
-# docs against, to catch a restatement a spine move staled. These stanzas MUST stay
-# after the phase stanzas: the phase parser skips a non-[phase] header and ignores
-# the keys here, and the reconcile reader parses these two stanzas directly.
-
-[family]
-	# The canonical host-* tool family. A project doc that enumerates the family
-	# must name this whole set; a set-diff catches an omission (e.g. a README that
-	# drops host-prove). The repo-self stanza ("host") in .host-software is the
-	# project's own repo, not a family member, and is not listed here.
-	tools = host-lint host-lifecycle host-prove host-grammar
-
-[verification]
-	# The verification ladder's rung-drivers, base to deep (plan/0023): hygiene
-	# (host-lint), requirements (allium), bounded timing (specula/TLC), and the
-	# deeper symbolic/proof/conformance rungs (host-prove). A project doc that
-	# describes the verification model must name every driver; an omission (e.g.
-	# "three lanes" that drops host-prove) flags.
-	drivers = host-lint allium specula host-prove
+# The lifecycle manifest is phases only (plan/0039): a project's own facts (its
+# `components` and `verifiers`) live in its `.host-software`, never the shared spine,
+# so no adopter inherits another project's facts. `manifest --check` rejects any stanza
+# that is not a `[phase "..."]`.

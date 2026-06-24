@@ -268,24 +268,32 @@ lanes:
 
    **The second arm, reconcile, looks backward at the project's own restatements.**
    Copy-at-version keeps the verbatim spine current, but a project also *restates*
-   methodology in its own prose: its room map, its tool family, its verification model,
-   its recorded Where layout. When a spine change moves a concept, that restatement
-   silently drifts, because the upgrade propagates the spine yet never re-reads the
-   paraphrase. **Prefer pointing over paraphrasing**: an instance doc should point at the
-   spine, not restate it, and a restatement that remains is a reconciliation liability the
-   project chooses to carry, which reconcile maintains. **Scope is machine-checkable and
-   annotation-backed, not a judgment**: a restatement that must stay carries an inline
-   `<!-- host-reconcile: KIND -->` annotation declaring an assertion the tool checks
-   against a source of truth (the host-* family list and the verification-ladder drivers
-   the lifecycle manifest records, the fixed `software/` and `plan/` layout), so the check
-   is operable at the weak-agent bar. `host-lifecycle reconcile` runs it over the
-   annotated set; the kinds are `family`, `verification`, `where-root`, and `spec-path`.
-   **The trigger is conditional and host-aware.** A `restates =` field on an `UPGRADING`
-   entry marks a drift-capable spine move and names the kinds it stales, so the `upgrade`
-   skill re-reads them; **adoption** runs the full reconcile once. For a **development
-   host** that authors its spine changes with no upgrade record, the **verify gate** is the
-   binding trigger: `software --check` runs reconcile in its recheck. **Disposition is
-   three-way**, as for a flagged tell: reword a live restatement to match the spine, box a
+   methodology in its own prose: its room map, its components, its verifiers, its
+   recorded layout. When a spine change moves a concept, that restatement silently
+   drifts, because the upgrade propagates the spine yet never re-reads the paraphrase.
+   **Prefer pointing over paraphrasing**: define each methodology concept once, at a
+   stable `{#id}` anchor on a heading in an authored doc (its home), and *point* at it from elsewhere
+   with a `[text](FILE#id)` link rather than restating it. For example, a home is the
+   heading `## Components {#components}` (the `{#id}` sits at the end of the heading) and a
+   pointer is `[components](STRUCTURE.md#components)`. The concepts are `components`,
+   `verifiers`, `software-root`, and `spec-home`, and their values are the project's own,
+   read from its `.host-software`: the `[software]` members are the `components` (a project
+   *with* a single-file front door sets it apart by `front-door = true`; most have none),
+   and the `[verification]` drivers are the `verifiers`. The lifecycle manifest is phases only, so no adopter
+   inherits another project's facts; `manifest --check` rejects a project-fact stanza.
+   `host-lifecycle reconcile` runs three checks over the tracked docs, operable at the
+   weak-agent bar: **link-integrity** (every concept link resolves to its home),
+   **declared-anchor** (the link names a real concept), and **coverage** (each
+   project-local home names its full `.host-software` set, so a dropped tool fails by
+   absence, the bite). Coverage guards the home and a pointer cannot drift; an enumeration
+   left un-pointed is the author's choice and is not guarded. The earlier inline
+   `<!-- host-reconcile: KIND -->` annotation is
+   **deprecated**: it is kept checking during the transition and a surviving annotation is
+   warned, and the form retires a spine revision later, never silently inert.
+   **The trigger is conditional and host-aware.** **Adoption** runs the full reconcile
+   once; for a **development host** that authors its spine changes, the **verify gate** is
+   the binding trigger: `software --check` runs reconcile in its recheck. **Disposition is
+   three-way**, as for a flagged tell: convert a live restatement to a pointer, box a
    frozen citation, forward-correct an immutable record (a `call/` body, a `Status: done`
    doc, `MEMORY.md`). A reconcile fix stays **local** and never propagates, the mirror of a
    gathered tell graduating **upstream**. A sibling check closes decision-status drift:
