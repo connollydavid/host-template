@@ -1,10 +1,10 @@
-# Mara — the Human Operator
+# Mara: the Human Operator
 
 *The accountable developer-director.* (Example persona.)
 
 **Modality: embodied and intermittent.** Perceives software visually, a screen
 at a time; reads selectively; holds a durable but lossy mental model that
-survives weeks away; reasons slowly and deeply; tires. Carries intent and
+survives weeks away; reasons slowly and with care; tires. Carries intent and
 accountability that exist nowhere but in her head.
 
 - **Goals:** ship correct software; keep understanding what is being built; set

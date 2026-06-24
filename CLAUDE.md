@@ -362,8 +362,8 @@ a test, for all inputs/parameters). `host-lifecycle obligations <spec> --tests <
 obligation left undispositioned is a defect. Discharge is total, per component.
 
 **A rung is discharged by re-derivation, not by name-presence (`call/0018`).** That a
-proof *exists* is not that it *passes*. `--prove` only lints that the named harness,
-invariant, or theorem is present (AVAILABLE ≠ DISCHARGED). The real discharge is
+proof *exists* is not that it *passes*. `--prove` only lints that the rung's named
+target is present (AVAILABLE ≠ DISCHARGED). The real discharge is
 `host-lifecycle obligations <spec> --rederive <dir>`, which re-runs each rung's verifier
 through host-prove **in its recorded pinned toolchain** and requires a PASS at the
 declared `bound=`, checkable anywhere, with no keys and no dependence on a specific CI;
