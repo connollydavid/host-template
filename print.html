@@ -743,7 +743,8 @@ is <strong>driven by the tool, never hand-operated</strong>, and the rule is <st
 emits a receipt</strong>, not "every phase runs". Modality is first-class: a phase may be
 <strong>conditional</strong> (embed and release apply only with a Where room) or <strong>recurring</strong>
 (once per software component), so it can legitimately not run; even then it records
-a <strong>receipt</strong> in <code>.host-receipts</code>, written by the tool: <code>done</code> with re-derivable
+a <strong>receipt</strong> written by the tool, in <code>.host-receipts</code> for a methodology-version phase
+(adopt, upgrade) and <code>.host-lifecycle-receipts</code> for an operational one: <code>done</code> with re-derivable
 evidence, <code>skip</code> with a cited reason, or tool-computed <code>n-a</code>. <code>host-lifecycle software --check</code> re-verifies each <code>done</code> by the manifest's closed <code>recheck =</code> and
 <strong>HAZARDs a phase with no receipt</strong>, the one defect the gate needs; a protected
 core (<code>verify</code>, <code>skippable = false</code>) refuses a skip outright. Operating a phase
@@ -877,10 +878,10 @@ rebuild comparison; <code>--check</code> still requires the citation to resolve.
 meant to be retired as the component converges on reproducibility, and is <strong>never</strong>
 available to greenfield software.</p>
 <h2 id="upgrading"><a class="header" href="#upgrading">Upgrading</a></h2>
-<p>Adopting is one event; the template moves on. The <code>.host</code> stamp records <strong>what you
-have applied</strong>: a <code>baseline</code> ledger entry (every entry at or before its position in
-<code>UPGRADING.md</code> counts as applied) plus an optional <code>applied</code> set of entries taken
-out of order. <code>UPGRADING.md</code> is the ledger of actions, one <code>[upgrade "&lt;revision&gt;"]</code>
+<p>Adopting is one event; the template moves on. The <code>.host</code> stamp records the <code>baseline</code>
+ledger entry (every entry at or before its position in <code>UPGRADING.md</code> counts as applied).
+The <code>applied</code> set of out-of-order entries lives in <code>.host-receipts</code> (the methodology-version
+trail); <code>host-lifecycle migrate-receipts</code> moves it there from a legacy <code>.host</code>. <code>UPGRADING.md</code> is the ledger of actions, one <code>[upgrade "&lt;revision&gt;"]</code>
 stanza each, ordered by file position; a stanza may declare <code>independent</code> or
 <code>depends = &lt;id&gt; …</code> (logical prerequisites, distinct from the <code>requires</code> tool-version
 floor) and a <code>verify</code> post-condition.</p>
@@ -1167,6 +1168,12 @@ action   = Bump your pinned host-lifecycle to v0.22.0, which adds <code>host-lif
 requires = host-lifecycle v0.22.0
 independent = true
 verify   = grep -rqs "host-lifecycle prose" host-template/lifecycle.manifest</p>
+<p>[upgrade "ac32d1c"]
+title    = Re-home the receipts family, tool-driven
+action   = Bump your pinned host-lifecycle to v0.23.0 and run <code>host-lifecycle migrate-receipts .</code> (one command, never hand-edited). It moves the applied-set out of <code>.host</code> into <code>.host-receipts</code> and splits the operational receipts (classify, embed, remap, verify, publish, release) out to <code>.host-lifecycle-receipts</code>; adopt and upgrade stay in <code>.host-receipts</code>. The binary auto-migrates on read, so the gate stays green across the boundary and an un-migrated project is still read correctly. A receipt is methodology-version (<code>.host-receipts</code>) only for adopt and upgrade; every other phase host-lifecycle runs is operational (<code>.host-lifecycle-receipts</code>). The old-layout reader is permanent backward compatibility, not a one-time shim.
+requires = host-lifecycle v0.23.0
+independent = true
+verify   = test -f .host-lifecycle-receipts</p>
 
                     </main>
 
