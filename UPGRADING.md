@@ -187,3 +187,10 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.22.0
     independent = true
     verify   = grep -rqs "host-lifecycle prose" host-template/lifecycle.manifest
+
+[upgrade "ac32d1c"]
+    title    = Re-home the receipts family, tool-driven
+    action   = Bump your pinned host-lifecycle to v0.23.0 and run `host-lifecycle migrate-receipts .` (one command, never hand-edited). It moves the applied-set out of `.host` into `.host-receipts` and splits the operational receipts (classify, embed, remap, verify, publish, release) out to `.host-lifecycle-receipts`; adopt and upgrade stay in `.host-receipts`. The binary auto-migrates on read, so the gate stays green across the boundary and an un-migrated project is still read correctly. A receipt is methodology-version (`.host-receipts`) only for adopt and upgrade; every other phase host-lifecycle runs is operational (`.host-lifecycle-receipts`). The old-layout reader is permanent backward compatibility, not a one-time shim.
+    requires = host-lifecycle v0.23.0
+    independent = true
+    verify   = test -f .host-lifecycle-receipts
