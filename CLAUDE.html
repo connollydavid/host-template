@@ -408,24 +408,32 @@ boxed. A graduation that proves to over-flag is narrowed by a later grammar rele
 the same as any behaviour fix.</p>
 <p><strong>The second arm, reconcile, looks backward at the project's own restatements.</strong>
 Copy-at-version keeps the verbatim spine current, but a project also <em>restates</em>
-methodology in its own prose: its room map, its tool family, its verification model,
-its recorded Where layout. When a spine change moves a concept, that restatement
-silently drifts, because the upgrade propagates the spine yet never re-reads the
-paraphrase. <strong>Prefer pointing over paraphrasing</strong>: an instance doc should point at the
-spine, not restate it, and a restatement that remains is a reconciliation liability the
-project chooses to carry, which reconcile maintains. <strong>Scope is machine-checkable and
-annotation-backed, not a judgment</strong>: a restatement that must stay carries an inline
-<code>&lt;!-- host-reconcile: KIND --&gt;</code> annotation declaring an assertion the tool checks
-against a source of truth (the host-* family list and the verification-ladder drivers
-the lifecycle manifest records, the fixed <code>software/</code> and <code>plan/</code> layout), so the check
-is operable at the weak-agent bar. <code>host-lifecycle reconcile</code> runs it over the
-annotated set; the kinds are <code>family</code>, <code>verification</code>, <code>where-root</code>, and <code>spec-path</code>.
-<strong>The trigger is conditional and host-aware.</strong> A <code>restates =</code> field on an <code>UPGRADING</code>
-entry marks a drift-capable spine move and names the kinds it stales, so the <code>upgrade</code>
-skill re-reads them; <strong>adoption</strong> runs the full reconcile once. For a <strong>development
-host</strong> that authors its spine changes with no upgrade record, the <strong>verify gate</strong> is the
-binding trigger: <code>software --check</code> runs reconcile in its recheck. <strong>Disposition is
-three-way</strong>, as for a flagged tell: reword a live restatement to match the spine, box a
+methodology in its own prose: its room map, its components, its verifiers, its
+recorded layout. When a spine change moves a concept, that restatement silently
+drifts, because the upgrade propagates the spine yet never re-reads the paraphrase.
+<strong>Prefer pointing over paraphrasing</strong>: define each methodology concept once, at a
+stable <code>{#id}</code> anchor on a heading in an authored doc (its home), and <em>point</em> at it from elsewhere
+with a <code>[text](FILE#id)</code> link rather than restating it. For example, a home is the
+heading <code>## Components {#components}</code> (the <code>{#id}</code> sits at the end of the heading) and a
+pointer is <code>[components](STRUCTURE.md#components)</code>. The concepts are <code>components</code>,
+<code>verifiers</code>, <code>software-root</code>, and <code>spec-home</code>, and their values are the project's own,
+read from its <code>.host-software</code>: the <code>[software]</code> members are the <code>components</code> (a project
+<em>with</em> a single-file front door sets it apart by <code>front-door = true</code>; most have none),
+and the <code>[verification]</code> drivers are the <code>verifiers</code>. The lifecycle manifest is phases only, so no adopter
+inherits another project's facts; <code>manifest --check</code> rejects a project-fact stanza.
+<code>host-lifecycle reconcile</code> runs three checks over the tracked docs, operable at the
+weak-agent bar: <strong>link-integrity</strong> (every concept link resolves to its home),
+<strong>declared-anchor</strong> (the link names a real concept), and <strong>coverage</strong> (each
+project-local home names its full <code>.host-software</code> set, so a dropped tool fails by
+absence, the bite). Coverage guards the home and a pointer cannot drift; an enumeration
+left un-pointed is the author's choice and is not guarded. The earlier inline
+<code>&lt;!-- host-reconcile: KIND --&gt;</code> annotation is
+<strong>deprecated</strong>: it is kept checking during the transition and a surviving annotation is
+warned, and the form retires a spine revision later, never silently inert.
+<strong>The trigger is conditional and host-aware.</strong> <strong>Adoption</strong> runs the full reconcile
+once; for a <strong>development host</strong> that authors its spine changes, the <strong>verify gate</strong> is
+the binding trigger: <code>software --check</code> runs reconcile in its recheck. <strong>Disposition is
+three-way</strong>, as for a flagged tell: convert a live restatement to a pointer, box a
 frozen citation, forward-correct an immutable record (a <code>call/</code> body, a <code>Status: done</code>
 doc, <code>MEMORY.md</code>). A reconcile fix stays <strong>local</strong> and never propagates, the mirror of a
 gathered tell graduating <strong>upstream</strong>. A sibling check closes decision-status drift:
