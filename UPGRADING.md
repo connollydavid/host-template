@@ -216,7 +216,7 @@ keyed by the template revision at which its action became required.
     independent = true
     verify   = grep -rqs "in-plan tasks are receipted nodes" host-template/CLAUDE.md
 
-[upgrade "2dbcfd7"]
+[upgrade "ba86125"]
     title    = The entrance check holds a self-contained document to the spine
     action   = Bump your pinned host-lifecycle to v0.29.0 and move to this host-template revision together. A document read out of context cannot point at a definition, so the entrance check holds it by coverage and generation, reconcile's standalone sibling. Declare one entrance, a global singleton, in an `[entrance]` stanza in `.host-software` naming the `member` it belongs to (set apart from `components`), the `document` within that member (default `README.md`), and the concepts it `restates` (`true` for every concept, or a named subset of `phases`, `tools`, `stamp`). `host-lifecycle entrance --check` then holds that document complete against the declared concepts. If you marked a single-file front door with the legacy `front-door = true` or `entrance = true` on its `[software]` member, replace it with an `[entrance]` stanza naming that member; the legacy marker is still accepted, warned, until a later revision retires it.
     requires = host-lifecycle v0.29.0
