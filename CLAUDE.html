@@ -618,6 +618,56 @@ old entry; if one was wrong, add a new entry that corrects it and points back.</
 <p>The test for both: a new session with no memory of this conversation should be
 able to read <code>plan/</code>, <code>call/</code>, and <code>MEMORY.md</code> and continue without repeating a
 past mistake.</p>
+<h2 id="the-task-graph-in-plan-tasks-are-receipted-nodes"><a class="header" href="#the-task-graph-in-plan-tasks-are-receipted-nodes">The task graph: in-plan tasks are receipted nodes</a></h2>
+<p>A milestone's <code>## Build sequence</code> is not loose prose. Each step is a <strong>task</strong>: an
+anchored <code>### </code> heading under that section, ending in <code>{#anchor}</code> (the placement
+stock mdBook honors), for example <code>### Gather the data {#gather-data}</code>. Its
+identity is global, <code>plan/NNNN#anchor</code>, so a receipt and a dependency hang on a
+stable anchor, never a position that renumbers when a plan is re-cut. An anchored
+<code>### </code> heading belongs only under <code>## Build sequence</code>, and a build-sequence <code>### </code>
+without an anchor is refused, so a task is never confused with an ordinary
+subsection.</p>
+<p>A few bullets under each task heading carry its fields:</p>
+<pre><code>## Build sequence
+
+### Gather the data {#gather-data}
+
+- verify: cargo test gather
+- inputs: src/gather.rs
+
+### Ship it {#ship-it}
+
+- depends: #gather-data
+- verify: attested call/0007
+</code></pre>
+<ul>
+<li><strong><code>depends</code></strong> names the prerequisites: a local <code>#anchor</code>, or a cross-milestone
+<code>plan/NNNN#anchor</code>. A task with no <code>depends</code> takes the previous task in the
+section (the linear default), and the first task is a root. The project's tasks
+form <strong>one graph</strong> across milestones, and <code>host-lifecycle tasks</code> derives the
+<strong>ready frontier</strong> (the tasks whose prerequisites all carry a done receipt),
+which a coordinator may run in parallel.</li>
+<li><strong><code>verify</code></strong> is a command the gate re-runs (mechanical), or <code>attested &lt;call/NNNN | operator&gt;</code> (a decision the gate resolves, or an operator confirmation).</li>
+<li><strong><code>inputs</code></strong> names the files a mechanical verify covers, fingerprinted so the
+gate flags a done as stale once they drift (<code>call/0018</code>'s input-digest
+staleness, one level down).</li>
+</ul>
+<p><strong>Declare prerequisites; the tool derives parallelism.</strong> State for each task only
+what must finish before it. The needs-question is local and conservative, and a
+missing edge merely over-serializes (safe), while a guessed "independent" edge
+races two workers (a corruption), so the author never answers "what can run at
+once?" A coordinator fans a frontier out to parallel workers <strong>only when they are
+resource-isolated</strong> (separate worktrees), since <code>depends</code> orders work, it does not
+lock a shared resource.</p>
+<p><strong>Every task emits a receipt, and the gate is mandatory.</strong> <code>host-lifecycle tasks --record</code> writes a receipt into <code>.host-task-receipts</code> (it reads the task's own
+<code>verify</code>/<code>inputs</code>, so you never re-type them), a tool-written ledger you never
+hand-edit. <code>software --check</code> HAZARDs a task with no receipt, a <code>done</code> whose
+mechanical inputs drifted or whose citation does not resolve, a <code>skip</code> without a
+resolvable <code>call/NNNN</code>, and an orphan receipt whose task was renamed or removed. A
+<code>done</code> is re-derivable, never self-asserted: the cheap gate checks the input
+digest, and <code>tasks --rederive</code> re-runs the command and refreshes it. These task
+receipts are a third receipt kind beside the methodology-version and operational
+ledgers.</p>
 <h2 id="software-and-submodule-discipline"><a class="header" href="#software-and-submodule-discipline">Software and submodule discipline</a></h2>
 <p>The <strong>tools</strong> are submodules; the <strong>software</strong> is a bare store with worktrees.
 Both follow a commit-upstream-first rule:</p>

@@ -349,6 +349,12 @@ action   = Bump your pinned host-lifecycle to v0.25.0 and move to this host-temp
 requires = host-lifecycle v0.25.0
 independent = true
 verify   = grep -rqs "rejects a project-fact stanza" host-template/CLAUDE.md</p>
+<p>[upgrade "2229dbb"]
+title    = In-plan tasks are a receipted dependency graph
+action   = Bump your pinned host-lifecycle to v0.26.0 and move to this host-template revision together. Each entry under a milestone's <code>## Build sequence</code> becomes a task: an anchored <code>### </code> heading ending in <code>{#anchor}</code>, keyed <code>plan/NNNN#anchor</code>. A task declares its prerequisites with <code>- depends: #anchor</code> (or a cross-milestone <code>plan/NNNN#anchor</code>; omit the line for the previous task, the linear default), its check with <code>- verify: &lt;command&gt;</code> (mechanical) or <code>- verify: attested &lt;call/NNNN | operator&gt;</code>, and the files a mechanical verify covers with <code>- inputs: &lt;paths&gt;</code>. Record a receipt for each task with <code>host-lifecycle tasks --record &lt;plan/NNNN#anchor&gt; --disposition done|skip</code> (the tool reads the task's own <code>verify</code>/<code>inputs</code>, so you never re-type them); <code>software --check</code> then HAZARDs a task with no receipt, a <code>done</code> whose inputs drifted or whose citation does not resolve, a <code>skip</code> without a resolvable <code>call/NNNN</code>, and an orphan receipt whose task was renamed or removed. Declare only what must finish first; the tool derives what runs in parallel, and a coordinator parallelizes only resource-isolated workers. Migrate gradually: a plan with no anchored <code>### </code> task is untouched. See the task-graph section in <code>CLAUDE.md</code>.
+requires = host-lifecycle v0.26.0
+independent = true
+verify   = grep -rqs "in-plan tasks are receipted nodes" host-template/CLAUDE.md</p>
 
                     </main>
 
