@@ -452,7 +452,8 @@ path), and the concepts it <code>restates</code> (<code>true</code> for every co
 <code>host-lifecycle entrance --check</code> then holds the document complete against the declared
 concepts: it generates the <code>.host</code> stamp and covers the rest. A document that restates only
 home-less doctrine declares no checkable concept, and the tool says so rather than claim a
-coverage it cannot deliver.</p>
+coverage it cannot deliver.
+The legacy per-member marker is retired: a surviving <code>front-door = true</code> or <code>entrance = true</code> on a <code>[software]</code> member is a loud error, not the entrance, so declare the stanza.</p>
 </li>
 <li>
 <p><strong>Requirements</strong>: <code>tools/allium</code> (MIT, by JUXT). Does the software meet the

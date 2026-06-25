@@ -657,7 +657,8 @@ path), and the concepts it <code>restates</code> (<code>true</code> for every co
 <code>host-lifecycle entrance --check</code> then holds the document complete against the declared
 concepts: it generates the <code>.host</code> stamp and covers the rest. A document that restates only
 home-less doctrine declares no checkable concept, and the tool says so rather than claim a
-coverage it cannot deliver.</p>
+coverage it cannot deliver.
+The legacy per-member marker is retired: a surviving <code>front-door = true</code> or <code>entrance = true</code> on a <code>[software]</code> member is a loud error, not the entrance, so declare the stanza.</p>
 </li>
 <li>
 <p><strong>Requirements</strong>: <code>tools/allium</code> (MIT, by JUXT). Does the software meet the
@@ -1299,6 +1300,12 @@ title    = The entrance check holds a self-contained document to the spine
 action   = Bump your pinned host-lifecycle to v0.29.0 and move to this host-template revision together. A document read out of context cannot point at a definition, so the entrance check holds it by coverage and generation, reconcile's standalone sibling. Declare one entrance, a global singleton, in an <code>[entrance]</code> stanza in <code>.host-software</code> naming the <code>member</code> it belongs to (set apart from <code>components</code>), the <code>document</code> within that member (default <code>README.md</code>), and the concepts it <code>restates</code> (<code>true</code> for every concept, or a named subset of <code>phases</code>, <code>tools</code>, <code>stamp</code>). <code>host-lifecycle entrance --check</code> then holds that document complete against the declared concepts. If you marked a single-file front door with the legacy <code>front-door = true</code> or <code>entrance = true</code> on its <code>[software]</code> member, replace it with an <code>[entrance]</code> stanza naming that member; the legacy marker is still accepted, warned, until a later revision retires it.
 requires = host-lifecycle v0.29.0</p>
 <pre><code>verify   = grep -rqs "entrance check is reconcile's standalone sibling" host-template/CLAUDE.md
+</code></pre>
+<p>[upgrade "PENDING"]
+title    = The legacy per-member entrance marker is retired
+action   = Bump your pinned host-lifecycle to v0.30.0 and move to this host-template revision together. The legacy per-member entrance marker is retired: a <code>front-door = true</code> or <code>entrance = true</code> on a <code>[software]</code> member is now a loud error, not silently accepted. Replace any such marker with an <code>[entrance]</code> stanza naming that member (the <code>member</code>, an optional <code>document</code> with default <code>README.md</code>, and <code>restates</code>); see the entrance section in <code>CLAUDE.md</code>. A project with no single-file entrance carries no such marker and needs no change.
+requires = host-lifecycle v0.30.0</p>
+<pre><code>verify   = grep -rqs "The legacy per-member marker is retired" host-template/CLAUDE.md
 </code></pre>
 
                     </main>
