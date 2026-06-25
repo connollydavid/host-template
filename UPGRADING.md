@@ -208,3 +208,10 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.25.0
     independent = true
     verify   = grep -rqs "rejects a project-fact stanza" host-template/CLAUDE.md
+
+[upgrade "2229dbb"]
+    title    = In-plan tasks are a receipted dependency graph
+    action   = Bump your pinned host-lifecycle to v0.26.0 and move to this host-template revision together. Each entry under a milestone's `## Build sequence` becomes a task: an anchored `### ` heading ending in `{#anchor}`, keyed `plan/NNNN#anchor`. A task declares its prerequisites with `- depends: #anchor` (or a cross-milestone `plan/NNNN#anchor`; omit the line for the previous task, the linear default), its check with `- verify: <command>` (mechanical) or `- verify: attested <call/NNNN | operator>`, and the files a mechanical verify covers with `- inputs: <paths>`. Record a receipt for each task with `host-lifecycle tasks --record <plan/NNNN#anchor> --disposition done|skip` (the tool reads the task's own `verify`/`inputs`, so you never re-type them); `software --check` then HAZARDs a task with no receipt, a `done` whose inputs drifted or whose citation does not resolve, a `skip` without a resolvable `call/NNNN`, and an orphan receipt whose task was renamed or removed. Declare only what must finish first; the tool derives what runs in parallel, and a coordinator parallelizes only resource-isolated workers. Migrate gradually: a plan with no anchored `### ` task is untouched. See the task-graph section in `CLAUDE.md`.
+    requires = host-lifecycle v0.26.0
+    independent = true
+    verify   = grep -rqs "in-plan tasks are receipted nodes" host-template/CLAUDE.md
