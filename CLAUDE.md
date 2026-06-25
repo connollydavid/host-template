@@ -276,10 +276,12 @@ lanes:
    with a `[text](FILE#id)` link rather than restating it. For example, a home is the
    heading `## Components {#components}` (the `{#id}` sits at the end of the heading) and a
    pointer is `[components](STRUCTURE.md#components)`. The concepts are `components`,
-   `verifiers`, `software-root`, and `spec-home`, and their values are the project's own,
-   read from its `.host-software`: the `[software]` members are the `components` (a project
-   *with* a single-file front door sets it apart by `front-door = true`; most have none),
-   and the `[verification]` drivers are the `verifiers`. The lifecycle manifest is phases only, so no adopter
+   `verifiers`, `software-root`, and `spec-home`. The first two are project-local, read from
+   its `.host-software`: the `[software]` members are the `components` (a project *with* a
+   single-file front door sets it apart by `front-door = true`; most have none), and the
+   `[verification]` drivers are the `verifiers`. The last two are the fixed layout:
+   `software-root` is where the project's software lives (`software/`) and `spec-home` is
+   where its specs live, with the software. The lifecycle manifest is phases only, so no adopter
    inherits another project's facts; `manifest --check` rejects a project-fact stanza.
    `host-lifecycle reconcile` runs three checks over the tracked docs, operable at the
    weak-agent bar: **link-integrity** (every concept link resolves to its home),

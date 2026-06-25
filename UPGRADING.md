@@ -201,3 +201,10 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.24.2
     independent = true
     verify   = grep -rqs "Two arms run under this one principle" host-template/CLAUDE.md
+
+[upgrade "7be692f"]
+    title    = Reconcile evolves to concept-as-URI; the lifecycle manifest is phases-only
+    action   = Bump your pinned host-lifecycle to v0.25.0 and move to this host-template revision together (a partial bump leaves the old manifest stanzas under the hardened `manifest --check`). The lifecycle manifest is now phases only; a project's own facts live in its `.host-software`. Define each methodology concept once at a `{#id}` anchor on a heading (for example `## Components {#components}`) in a doc of your choice, and point at it elsewhere with `[text](FILE#id)`; reconcile runs link-integrity, declared-anchor, and coverage over your docs. The concepts: `components` (your host-* tools, the `[software]` members of `.host-software` minus a single-file front door marked `front-door = true` if you have one), `verifiers` (your verification drivers, named on a `drivers = ...` line under a `[verification]` stanza you add to `.host-software`, for example a `[verification]` stanza whose line is `drivers = host-lint allium specula host-prove`), `software-root` (where your software lives, `software/`), and `spec-home` (where your specs live, with the software). Each home that lists a set must name the whole set; coverage flags an omission. Convert each surviving inline `<!-- host-reconcile: KIND -->` annotation by replacing its enumeration and comment with a single such link. You may migrate gradually: the inline annotations keep working, warned, until a later revision retires them. See the reconcile section in `CLAUDE.md` for the full rules.
+    requires = host-lifecycle v0.25.0
+    independent = true
+    verify   = grep -rqs "rejects a project-fact stanza" host-template/CLAUDE.md
