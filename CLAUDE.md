@@ -493,6 +493,64 @@ The test for both: a new session with no memory of this conversation should be
 able to read `plan/`, `call/`, and `MEMORY.md` and continue without repeating a
 past mistake.
 
+## The task graph: in-plan tasks are receipted nodes
+
+A milestone's `## Build sequence` is not loose prose. Each step is a **task**: an
+anchored `### ` heading under that section, ending in `{#anchor}` (the placement
+stock mdBook honors), for example `### Gather the data {#gather-data}`. Its
+identity is global, `plan/NNNN#anchor`, so a receipt and a dependency hang on a
+stable anchor, never a position that renumbers when a plan is re-cut. An anchored
+`### ` heading belongs only under `## Build sequence`, and a build-sequence `### `
+without an anchor is refused, so a task is never confused with an ordinary
+subsection.
+
+A few bullets under each task heading carry its fields:
+
+```
+## Build sequence
+
+### Gather the data {#gather-data}
+
+- verify: cargo test gather
+- inputs: src/gather.rs
+
+### Ship it {#ship-it}
+
+- depends: #gather-data
+- verify: attested call/0007
+```
+
+- **`depends`** names the prerequisites: a local `#anchor`, or a cross-milestone
+  `plan/NNNN#anchor`. A task with no `depends` takes the previous task in the
+  section (the linear default), and the first task is a root. The project's tasks
+  form **one graph** across milestones, and `host-lifecycle tasks` derives the
+  **ready frontier** (the tasks whose prerequisites all carry a done receipt),
+  which a coordinator may run in parallel.
+- **`verify`** is a command the gate re-runs (mechanical), or `attested <call/NNNN
+  | operator>` (a decision the gate resolves, or an operator confirmation).
+- **`inputs`** names the files a mechanical verify covers, fingerprinted so the
+  gate flags a done as stale once they drift (`call/0018`'s input-digest
+  staleness, one level down).
+
+**Declare prerequisites; the tool derives parallelism.** State for each task only
+what must finish before it. The needs-question is local and conservative, and a
+missing edge merely over-serializes (safe), while a guessed "independent" edge
+races two workers (a corruption), so the author never answers "what can run at
+once?" A coordinator fans a frontier out to parallel workers **only when they are
+resource-isolated** (separate worktrees), since `depends` orders work, it does not
+lock a shared resource.
+
+**Every task emits a receipt, and the gate is mandatory.** `host-lifecycle tasks
+--record` writes a receipt into `.host-task-receipts` (it reads the task's own
+`verify`/`inputs`, so you never re-type them), a tool-written ledger you never
+hand-edit. `software --check` HAZARDs a task with no receipt, a `done` whose
+mechanical inputs drifted or whose citation does not resolve, a `skip` without a
+resolvable `call/NNNN`, and an orphan receipt whose task was renamed or removed. A
+`done` is re-derivable, never self-asserted: the cheap gate checks the input
+digest, and `tasks --rederive` re-runs the command and refreshes it. These task
+receipts are a third receipt kind beside the methodology-version and operational
+ledgers.
+
 ## Software and submodule discipline
 
 The **tools** are submodules; the **software** is a bare store with worktrees.
