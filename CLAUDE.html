@@ -506,11 +506,17 @@ HAZARD when a materialized component carries a <code>.allium</code> with no <cod
 <code>allium analyse</code> CI workflow, or a <code>.tla</code> with no TLC lane.</p>
 <p>The deeper rungs work the same way, one level up: they are <strong>opt-in and inert until a
 project declares a rung</strong> by dispositioning an obligation <code>kani:</code>/<code>apalache:</code>/<code>tlaps:</code>
-(below). A declaration then obliges that rung's CI lane. <code>software --check</code> HAZARDs an
-obligation that declares <code>kani:</code> with no <code>cargo kani</code> lane, <code>apalache:</code> with no
-<code>apalache-mc</code> lane, or <code>tlaps:</code> with no <code>tlapm</code> lane. The mere presence of a <code>.tla</code> or a
-crate never activates a rung; only the declaration does, so a project pays for a heavier
-verifier exactly when, and only when, it chooses to.</p>
+(below). A declaration then obliges that rung's CI lane and a re-deriver that runs.
+<code>software --check</code> HAZARDs an obligation that declares <code>kani:</code> with no <code>cargo kani</code> lane,
+<code>apalache:</code> with no <code>apalache-mc</code> lane, or <code>tlaps:</code> with no <code>tlapm</code> lane, and it HAZARDs a
+declared rung whose shared re-deriver, host-prove, does not run, since a re-derivation that
+cannot run leaves the rung undischarged however complete the CI config reads. So install the
+re-deriver where the gate runs, the same way the verifier itself is installed. The digest a
+rung records is <strong>earned</strong> through <code>obligations --rederive --record-digests</code>, which re-runs the
+proof and records only on a pass, in place of a hand edit, so a fresh digest stands for a
+passing re-derivation on the current inputs. The mere presence of a <code>.tla</code> or a crate never
+activates a rung; only the declaration does, so a project pays for a heavier verifier exactly
+when, and only when, it chooses to.</p>
 <p><strong>Obligations are discharged, not just emitted.</strong> <code>allium plan</code> derives a test
 obligation for every config default, entity, enum, invariant, rule and transition.
 Each obligation MUST be <strong>dispositioned</strong> in a sibling <code>&lt;spec&gt;.obligations</code> manifest
