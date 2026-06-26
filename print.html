@@ -1309,7 +1309,7 @@ action   = Bump your pinned host-lifecycle to v0.30.0 and move to this host-temp
 requires = host-lifecycle v0.30.0</p>
 <pre><code>verify   = grep -rqs "The legacy per-member marker is retired" host-template/CLAUDE.md
 </code></pre>
-<p>[upgrade "41425ca"]
+<p>[upgrade "e068828"]
 title    = The generated book moves under mdBook/, freeing docs/
 action   = Bump your pinned host-lifecycle to v0.30.2 and move to this host-template revision together. <code>host-lifecycle book</code> now writes its generated mdBook source to <code>mdBook/src/</code> and the built HTML to <code>mdBook/out/</code>, with <code>book.toml</code> kept at the repo root, so <code>mdbook build</code> still runs from the root. This frees <code>docs/</code> for your own authored documentation. Update your <code>.gitignore</code>: replace the <code>/docs/</code> and <code>/book/</code> lines with a single <code>/mdBook/</code> line, keeping <code>/book.toml</code>. Regenerate the site with <code>host-lifecycle book .</code>, then remove the stale generated <code>docs/</code> and <code>book/</code> trees, which held only generated output under the old layout (<code>git clean -fd docs book</code> reaches them once they are no longer ignored). If your <code>.github/workflows/</code> publishes the site, point the publish step at <code>mdBook/out</code> in place of <code>book</code>. A project that has not yet published a site carries no generated <code>docs/</code>, so it needs only the gitignore and workflow change before it first runs <code>book</code>.
 requires = host-lifecycle v0.30.2
