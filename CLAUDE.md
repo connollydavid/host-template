@@ -365,11 +365,17 @@ HAZARD when a materialized component carries a `.allium` with no `allium check` 
 
 The deeper rungs work the same way, one level up: they are **opt-in and inert until a
 project declares a rung** by dispositioning an obligation `kani:`/`apalache:`/`tlaps:`
-(below). A declaration then obliges that rung's CI lane. `software --check` HAZARDs an
-obligation that declares `kani:` with no `cargo kani` lane, `apalache:` with no
-`apalache-mc` lane, or `tlaps:` with no `tlapm` lane. The mere presence of a `.tla` or a
-crate never activates a rung; only the declaration does, so a project pays for a heavier
-verifier exactly when, and only when, it chooses to.
+(below). A declaration then obliges that rung's CI lane and a re-deriver that runs.
+`software --check` HAZARDs an obligation that declares `kani:` with no `cargo kani` lane,
+`apalache:` with no `apalache-mc` lane, or `tlaps:` with no `tlapm` lane, and it HAZARDs a
+declared rung whose shared re-deriver, host-prove, does not run, since a re-derivation that
+cannot run leaves the rung undischarged however complete the CI config reads. So install the
+re-deriver where the gate runs, the same way the verifier itself is installed. The digest a
+rung records is **earned** through `obligations --rederive --record-digests`, which re-runs the
+proof and records only on a pass, in place of a hand edit, so a fresh digest stands for a
+passing re-derivation on the current inputs. The mere presence of a `.tla` or a crate never
+activates a rung; only the declaration does, so a project pays for a heavier verifier exactly
+when, and only when, it chooses to.
 
 **Obligations are discharged, not just emitted.** `allium plan` derives a test
 obligation for every config default, entity, enum, invariant, rule and transition.

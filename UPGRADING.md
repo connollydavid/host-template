@@ -236,3 +236,10 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.30.2
     independent = true
     verify   = grep -rqs "mdBook/src" host-template/STRUCTURE.md
+
+[upgrade "RUNNABLEREDERIVER"]
+    title    = A declared rung obliges a runnable re-deriver, not just a present CI lane
+    action   = Bump your pinned host-lifecycle to v0.31.0 and move to this host-template revision together. `software --check` now HAZARDs a declared deeper rung (`kani:`/`apalache:`/`tlaps:`) whose shared re-deriver, host-prove, does not run, beside the existing no-CI-lane HAZARD, because a re-derivation that cannot run leaves the rung undischarged however complete the CI config reads. So install host-prove on PATH wherever the gate runs: your local setup and the CI that runs `software --check` (`cargo install --git https://github.com/connollydavid/host-prove --rev <its pin>`). A project that declares no deeper rung carries no host-prove requirement and needs no change. And earn the digest a rung records through `host-lifecycle obligations <spec> --rederive <crate-root> --record-digests`, which re-runs the proof and records only on a pass, in place of a hand edit, so a fresh digest stands for a passing re-derivation on the current inputs.
+    requires = host-lifecycle v0.31.0
+    independent = true
+    verify   = grep -rqs "a re-deriver that runs" host-template/CLAUDE.md
