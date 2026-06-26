@@ -73,16 +73,18 @@ methodology instead, follow the `host` repo (`github.com/connollydavid/host`).
 
 To publish docs with mdBook, run **`host-lifecycle book .`**, the canonical
 publisher, so you do not hand-roll a generator that drops a room or re-derives the
-src-scoping wrong. It writes a `book.toml` scoped to a generated `docs/` (never
-`src = "."`, which would walk the tool submodules and the un-materialized software
-worktree and trip over whatever is not present) and a `SUMMARY.md` in
+src-scoping wrong. It writes a `book.toml` at the repo root scoped to a generated
+`mdBook/src/` (never `src = "."`, which would walk the tool submodules and the
+un-materialized software worktree and trip over whatever is not present), with the
+built HTML in `mdBook/out/`, and a `SUMMARY.md` in
 **lifecycle order**: Cast (Who), then Plan (When), then Software/Where (the What specs live
 with the code, read as a stub from `.host-software`), then Call (Why), then
 Reference/CLAUDE (How), then Memory. Then
 `host-lifecycle book --check .` fails the build unless every room with source
-renders a page, so a half-room site cannot ship. `book.toml` and `docs/` are
-generated output (gitignored); the reference Site workflow under
-`.github/workflows/` runs both before `mdbook build`.
+renders a page, so a half-room site cannot ship. `book.toml` and the whole `mdBook/`
+tree are generated output (gitignored), so a project keeps `docs/` for its own
+authored documentation; the reference Site workflow under `.github/workflows/` runs
+both before `mdbook build`, which still runs from the repo root.
 
 A migrated or instantiated repo carries a `.host` stamp at its root
 recording the template revision it adopted (`template`/`revision`/`adopted`),

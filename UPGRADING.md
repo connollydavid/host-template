@@ -229,3 +229,10 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.30.0
 
     verify   = grep -rqs "The legacy per-member marker is retired" host-template/CLAUDE.md
+
+[upgrade "41425ca"]
+    title    = The generated book moves under mdBook/, freeing docs/
+    action   = Bump your pinned host-lifecycle to v0.30.2 and move to this host-template revision together. `host-lifecycle book` now writes its generated mdBook source to `mdBook/src/` and the built HTML to `mdBook/out/`, with `book.toml` kept at the repo root, so `mdbook build` still runs from the root. This frees `docs/` for your own authored documentation. Update your `.gitignore`: replace the `/docs/` and `/book/` lines with a single `/mdBook/` line, keeping `/book.toml`. Regenerate the site with `host-lifecycle book .`, then remove the stale generated `docs/` and `book/` trees, which held only generated output under the old layout (`git clean -fd docs book` reaches them once they are no longer ignored). If your `.github/workflows/` publishes the site, point the publish step at `mdBook/out` in place of `book`. A project that has not yet published a site carries no generated `docs/`, so it needs only the gitignore and workflow change before it first runs `book`.
+    requires = host-lifecycle v0.30.2
+    independent = true
+    verify   = grep -rqs "mdBook/src" host-template/STRUCTURE.md
