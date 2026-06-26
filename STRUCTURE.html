@@ -241,16 +241,18 @@ bare store with worktrees (above). For bringing an <em>existing</em> repo under 
 methodology instead, follow the <code>host</code> repo (<code>github.com/connollydavid/host</code>).</p>
 <p>To publish docs with mdBook, run <strong><code>host-lifecycle book .</code></strong>, the canonical
 publisher, so you do not hand-roll a generator that drops a room or re-derives the
-src-scoping wrong. It writes a <code>book.toml</code> scoped to a generated <code>docs/</code> (never
-<code>src = "."</code>, which would walk the tool submodules and the un-materialized software
-worktree and trip over whatever is not present) and a <code>SUMMARY.md</code> in
+src-scoping wrong. It writes a <code>book.toml</code> at the repo root scoped to a generated
+<code>mdBook/src/</code> (never <code>src = "."</code>, which would walk the tool submodules and the
+un-materialized software worktree and trip over whatever is not present), with the
+built HTML in <code>mdBook/out/</code>, and a <code>SUMMARY.md</code> in
 <strong>lifecycle order</strong>: Cast (Who), then Plan (When), then Software/Where (the What specs live
 with the code, read as a stub from <code>.host-software</code>), then Call (Why), then
 Reference/CLAUDE (How), then Memory. Then
 <code>host-lifecycle book --check .</code> fails the build unless every room with source
-renders a page, so a half-room site cannot ship. <code>book.toml</code> and <code>docs/</code> are
-generated output (gitignored); the reference Site workflow under
-<code>.github/workflows/</code> runs both before <code>mdbook build</code>.</p>
+renders a page, so a half-room site cannot ship. <code>book.toml</code> and the whole <code>mdBook/</code>
+tree are generated output (gitignored), so a project keeps <code>docs/</code> for its own
+authored documentation; the reference Site workflow under <code>.github/workflows/</code> runs
+both before <code>mdbook build</code>, which still runs from the repo root.</p>
 <p>A migrated or instantiated repo carries a <code>.host</code> stamp at its root
 recording the template revision it adopted (<code>template</code>/<code>revision</code>/<code>adopted</code>),
 written by <code>host-lifecycle adopt</code>. It is what a later upgrade diffs from. An

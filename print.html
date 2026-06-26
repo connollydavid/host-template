@@ -1096,16 +1096,18 @@ bare store with worktrees (above). For bringing an <em>existing</em> repo under 
 methodology instead, follow the <code>host</code> repo (<code>github.com/connollydavid/host</code>).</p>
 <p>To publish docs with mdBook, run <strong><code>host-lifecycle book .</code></strong>, the canonical
 publisher, so you do not hand-roll a generator that drops a room or re-derives the
-src-scoping wrong. It writes a <code>book.toml</code> scoped to a generated <code>docs/</code> (never
-<code>src = "."</code>, which would walk the tool submodules and the un-materialized software
-worktree and trip over whatever is not present) and a <code>SUMMARY.md</code> in
+src-scoping wrong. It writes a <code>book.toml</code> at the repo root scoped to a generated
+<code>mdBook/src/</code> (never <code>src = "."</code>, which would walk the tool submodules and the
+un-materialized software worktree and trip over whatever is not present), with the
+built HTML in <code>mdBook/out/</code>, and a <code>SUMMARY.md</code> in
 <strong>lifecycle order</strong>: Cast (Who), then Plan (When), then Software/Where (the What specs live
 with the code, read as a stub from <code>.host-software</code>), then Call (Why), then
 Reference/CLAUDE (How), then Memory. Then
 <code>host-lifecycle book --check .</code> fails the build unless every room with source
-renders a page, so a half-room site cannot ship. <code>book.toml</code> and <code>docs/</code> are
-generated output (gitignored); the reference Site workflow under
-<code>.github/workflows/</code> runs both before <code>mdbook build</code>.</p>
+renders a page, so a half-room site cannot ship. <code>book.toml</code> and the whole <code>mdBook/</code>
+tree are generated output (gitignored), so a project keeps <code>docs/</code> for its own
+authored documentation; the reference Site workflow under <code>.github/workflows/</code> runs
+both before <code>mdbook build</code>, which still runs from the repo root.</p>
 <p>A migrated or instantiated repo carries a <code>.host</code> stamp at its root
 recording the template revision it adopted (<code>template</code>/<code>revision</code>/<code>adopted</code>),
 written by <code>host-lifecycle adopt</code>. It is what a later upgrade diffs from. An
@@ -1307,6 +1309,12 @@ action   = Bump your pinned host-lifecycle to v0.30.0 and move to this host-temp
 requires = host-lifecycle v0.30.0</p>
 <pre><code>verify   = grep -rqs "The legacy per-member marker is retired" host-template/CLAUDE.md
 </code></pre>
+<p>[upgrade "41425ca"]
+title    = The generated book moves under mdBook/, freeing docs/
+action   = Bump your pinned host-lifecycle to v0.30.2 and move to this host-template revision together. <code>host-lifecycle book</code> now writes its generated mdBook source to <code>mdBook/src/</code> and the built HTML to <code>mdBook/out/</code>, with <code>book.toml</code> kept at the repo root, so <code>mdbook build</code> still runs from the root. This frees <code>docs/</code> for your own authored documentation. Update your <code>.gitignore</code>: replace the <code>/docs/</code> and <code>/book/</code> lines with a single <code>/mdBook/</code> line, keeping <code>/book.toml</code>. Regenerate the site with <code>host-lifecycle book .</code>, then remove the stale generated <code>docs/</code> and <code>book/</code> trees, which held only generated output under the old layout (<code>git clean -fd docs book</code> reaches them once they are no longer ignored). If your <code>.github/workflows/</code> publishes the site, point the publish step at <code>mdBook/out</code> in place of <code>book</code>. A project that has not yet published a site carries no generated <code>docs/</code>, so it needs only the gitignore and workflow change before it first runs <code>book</code>.
+requires = host-lifecycle v0.30.2
+independent = true
+verify   = grep -rqs "mdBook/src" host-template/STRUCTURE.md</p>
 
                     </main>
 
