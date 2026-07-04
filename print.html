@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">host-template</a></li><li class="chapter-item expanded affix "><li class="part-title">Cast — who</li><li class="chapter-item expanded "><a href="cast/index.html"><strong aria-hidden="true">1.</strong> Cast: the project's Who</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cast/applying-personas.html"><strong aria-hidden="true">1.1.</strong> Applying personas during planning</a></li><li class="chapter-item expanded "><a href="cast/mara.html"><strong aria-hidden="true">1.2.</strong> Mara: the Human Operator</a></li><li class="chapter-item expanded "><a href="cast/wren.html"><strong aria-hidden="true">1.3.</strong> Wren: the Agentic LLM Developer</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Plan — what & when</li><li class="chapter-item expanded "><a href="plan-index.html"><strong aria-hidden="true">2.</strong> Plan</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="plan/0001-example-milestone/index.html"><strong aria-hidden="true">2.1.</strong> 0001 example milestone</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Software — where</li><li class="chapter-item expanded affix "><li class="part-title">Call — why</li><li class="chapter-item expanded "><a href="call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">3.</strong> Use Markdown decision records (MADR)</a></li><li class="chapter-item expanded affix "><li class="part-title">Reference — how</li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">4.</strong> CLAUDE.md: operating manual for an agentic project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="MIGRATION.html"><strong aria-hidden="true">4.1.</strong> MIGRATION.md: the process moved to the host repo</a></li><li class="chapter-item expanded "><a href="STRUCTURE.html"><strong aria-hidden="true">4.2.</strong> Structure</a></li><li class="chapter-item expanded "><a href="UPGRADING.html"><strong aria-hidden="true">4.3.</strong> UPGRADING.md: the version-to-version upgrade ledger</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Memory</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">host-template</a></li><li class="chapter-item expanded affix "><li class="part-title">Cast: who</li><li class="chapter-item expanded "><a href="cast/index.html"><strong aria-hidden="true">1.</strong> Cast: the project's Who</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cast/applying-personas.html"><strong aria-hidden="true">1.1.</strong> Applying personas during planning</a></li><li class="chapter-item expanded "><a href="cast/mara.html"><strong aria-hidden="true">1.2.</strong> Mara: the Human Operator</a></li><li class="chapter-item expanded "><a href="cast/wren.html"><strong aria-hidden="true">1.3.</strong> Wren: the Agentic LLM Developer</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Plan: what & when</li><li class="chapter-item expanded "><a href="plan-index.html"><strong aria-hidden="true">2.</strong> Plan</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="plan/0001-example-milestone/index.html"><strong aria-hidden="true">2.1.</strong> 0001 example milestone</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Software: where</li><li class="chapter-item expanded affix "><li class="part-title">Call: why</li><li class="chapter-item expanded "><a href="call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">3.</strong> Use Markdown decision records (MADR)</a></li><li class="chapter-item expanded affix "><li class="part-title">Reference: how</li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">4.</strong> CLAUDE.md: operating manual for an agentic project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="MIGRATION.html"><strong aria-hidden="true">4.1.</strong> MIGRATION.md: the process moved to the host repo</a></li><li class="chapter-item expanded "><a href="STRUCTURE.html"><strong aria-hidden="true">4.2.</strong> Structure</a></li><li class="chapter-item expanded "><a href="UPGRADING.html"><strong aria-hidden="true">4.3.</strong> UPGRADING.md: the version-to-version upgrade ledger</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Memory</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -332,7 +332,7 @@ trusted where it should be checked.</li>
 commands, holding the whole problem in view, but only as long as the window
 holds.</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="plan--what--when"><a class="header" href="#plan--what--when">Plan — what &amp; when</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="plan-what--when"><a class="header" href="#plan-what--when">Plan: what &amp; when</a></h1>
 <p>Milestones in this project.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="0001-example-milestone"><a class="header" href="#0001-example-milestone">0001 example milestone</a></h1>
 <p>(Example.) A milestone names the persona it serves, holds its specs under
@@ -762,17 +762,35 @@ operator running the verify phase; the methodology prescribes the re-derivation 
 the re-deriver, and never bakes in a CI.</p>
 <p>Two rules govern the tools:</p>
 <ul>
-<li><strong>Reference, don't vendor.</strong> Each tool is a git submodule pinned to a commit.
+<li>
+<p><strong>Reference, don't vendor.</strong> Each tool is a git submodule pinned to a commit.
 Keep its code out of this repository. This governs an <strong>adopter</strong> consuming
 the tools. A <strong>development host</strong> that <em>authors</em> a host-* tool is the exception:
 it develops that tool as a Where-room software component of its own (materialized
 and released through the lifecycle like any software it builds) and consumes the
 built result (binary + worktree-sourced skills) from that worktree, rather than
 referencing its own source as a foreign submodule. Reference is for the consumer;
-the producer of a tool embeds it.</li>
-<li><strong>Instruct, don't patch.</strong> Drive the tools through this manual and their own
+the producer of a tool embeds it.</p>
+<p>Almost every project references the host-* tools and releases none of its
+own, and for such a project this release-side complement of the carve-out is
+a no-op, so a first read stops here. The rule binds only where two facts
+about your own repository both hold: your repository releases a host-* tool
+of its own, and it carries host-template as a submodule whose pins include
+that tool. If the first is false, as it is for a project that only consumes
+the tools, the rule does not apply and you change nothing, with no template
+pin to look for. Where both hold, the producer carries that tool's pin twice,
+once in its own Where room and again inside the vendored template, so a
+release is unfinished until every carried-template pin surface for that tool
+is bumped to the released commit, and <code>host-lifecycle software --check</code>
+HAZARDs any carried-template pin left behind.
+The producer re-pins the carried template when it releases the tool, just as
+it embeds the tool when it develops it.</p>
+</li>
+<li>
+<p><strong>Instruct, don't patch.</strong> Drive the tools through this manual and their own
 interfaces. Do not edit a tool's source to make it fit. If a tool needs a
-change, raise it upstream.</li>
+change, raise it upstream.</p>
+</li>
 </ul>
 <p>The <em>output</em> a tool produces about your project (a report, a counterexample, a
 generated check) belongs to your project, not to the tool's license, the same
@@ -1082,7 +1100,8 @@ tool, and the rule is <strong>every phase emits a receipt</strong> (<code>done</
 <code>software --check</code> HAZARD (<code>CLAUDE.md</code>).</p>
 <p>The <em>Where</em> room is the software under test, <strong>one or more</strong> components, each
 embedded as a <strong>bare store with worktrees</strong> under <code>software/&lt;name&gt;/</code>: the shared
-object store is <code>software/&lt;name&gt;/.git</code>, and each worktree is keyed by branch at
+object store is <code>software/&lt;name&gt;/.bare</code>, with a <code>.git</code> gitdir-link file beside
+it (call/0039), and each worktree is keyed by branch at
 <code>software/&lt;name&gt;/&lt;branch&gt;/</code> (the branch keeps its slashes, so <code>feature/login</code>
 nests). The canonical worktree (the audited state, where CI runs) is the
 component's recorded <code>branch</code> (default <code>main</code>) checked out at the <code>pin</code>; the rest are
@@ -1345,6 +1364,18 @@ action   = Bump your pinned host-lifecycle to v0.32.0 and move to this host-temp
 requires = host-lifecycle v0.32.0
 independent = true
 verify   = grep -rqs "reports clean only after it performs its check" host-template/CLAUDE.md</p>
+<p>[upgrade "1682d62"]
+title    = A release reconciles every carried-template pin of a tool you release
+action   = For almost every project this entry is a no-op: a project that releases none of the host-* tools records it done and changes nothing, with no template pin to look for. It binds only where two facts about your own repository both hold: your repository releases a host-* tool of its own, and it carries host-template as a submodule whose pins include that tool. Where both hold, bump your pinned host-lifecycle to v0.36.0; from that release on, a release of that tool bumps every carried-template pin surface for it to the released commit, and <code>host-lifecycle software --check</code> HAZARDs a carried-template pin left behind.
+requires = host-lifecycle v0.36.0
+independent = true
+verify   = grep -rqs "re-pins the carried template" host-template/CLAUDE.md</p>
+<p>[upgrade "7127dc4"]
+title    = The hosted bare store is <code>.bare</code> with a <code>.git</code> gitdir-link, not a bare repo named <code>.git</code>
+action   = Bump your pinned host-lifecycle to v0.36.0 and move to this host-template revision together. The materialisation layout changed (call/0039): a component's bare object store is now <code>software/&lt;name&gt;/.bare</code> with a <code>.git</code> file (<code>gitdir: ./.bare</code>) beside it. This layout supersedes the bare repo named <code>software/&lt;name&gt;/.git</code>. For each already-materialized component, re-run <code>host-lifecycle software --materialize</code>; it renames <code>.git</code> to <code>.bare</code> in place, writes the gitdir-link, and runs <code>git worktree repair</code>, so no fetch or teardown is needed and local state is preserved. A project with no materialized software needs no change.
+requires = host-lifecycle v0.36.0
+independent = true
+verify   = grep -rqs "gitdir-link" host-template/STRUCTURE.md</p>
 
                     </main>
 
