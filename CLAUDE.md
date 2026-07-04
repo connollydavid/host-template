@@ -441,9 +441,9 @@ Two rules govern the tools:
   once in its own Where room and again inside the vendored template, so a
   release is unfinished until every carried-template pin surface for that tool
   is bumped to the released commit, and `host-lifecycle software --check`
-  HAZARDs any carried-template pin left behind. The producer of a tool embeds
-  it when it develops the tool and re-pins the carried template when it
-  releases the tool.
+  HAZARDs any carried-template pin left behind.
+  The producer re-pins the carried template when it releases the tool, just as
+  it embeds the tool when it develops it.
 - **Instruct, don't patch.** Drive the tools through this manual and their own
   interfaces. Do not edit a tool's source to make it fit. If a tool needs a
   change, raise it upstream.
