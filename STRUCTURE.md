@@ -39,7 +39,8 @@ tool, and the rule is **every phase emits a receipt** (`done`/`skip`/`n-a` in
 
 The *Where* room is the software under test, **one or more** components, each
 embedded as a **bare store with worktrees** under `software/<name>/`: the shared
-object store is `software/<name>/.git`, and each worktree is keyed by branch at
+object store is `software/<name>/.bare`, with a `.git` gitdir-link file beside
+it (call/0039), and each worktree is keyed by branch at
 `software/<name>/<branch>/` (the branch keeps its slashes, so `feature/login`
 nests). The canonical worktree (the audited state, where CI runs) is the
 component's recorded `branch` (default `main`) checked out at the `pin`; the rest are
