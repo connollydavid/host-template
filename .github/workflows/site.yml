@@ -23,7 +23,7 @@ jobs:
       - name: Build the publisher
         run: cargo build --release --manifest-path tools/host-lifecycle/Cargo.toml
       - name: Generate the book (lifecycle order; every room)
-        # `book` writes book.toml (src = "docs") + docs/; `--check` fails the build
+        # `book` writes book.toml (src = "mdBook/src", build-dir = "mdBook/out"); `--check` fails the build
         # unless every room with source renders a page (call/0005-safe: it reads the
         # committed .host-software, never the un-materialized worktrees).
         run: |
@@ -36,4 +36,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./book
+          publish_dir: ./mdBook/out
