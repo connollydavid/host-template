@@ -14,7 +14,7 @@ jobs:
   verify-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       # Every step below is gated on a `.host-software` existing. The bare template
       # has no software to verify, so this job no-ops (success) on the template itself
       # and runs fully once a project records a component. `hashFiles` is empty when
