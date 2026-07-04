@@ -250,3 +250,10 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.32.0
     independent = true
     verify   = grep -rqs "reports clean only after it performs its check" host-template/CLAUDE.md
+
+[upgrade "1682d62"]
+    title    = A release reconciles every carried-template pin of a tool you release
+    action   = For almost every project this entry is a no-op: a project that releases none of the host-* tools records it done and changes nothing, with no template pin to look for. It binds only where two facts about your own repository both hold: your repository releases a host-* tool of its own, and it carries host-template as a submodule whose pins include that tool. Where both hold, bump your pinned host-lifecycle to v0.36.0; from that release on, a release of that tool bumps every carried-template pin surface for it to the released commit, and `host-lifecycle software --check` HAZARDs a carried-template pin left behind.
+    requires = host-lifecycle v0.36.0
+    independent = true
+    verify   = grep -rqs "re-pins the carried template" host-template/CLAUDE.md
