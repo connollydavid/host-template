@@ -429,6 +429,21 @@ Two rules govern the tools:
   built result (binary + worktree-sourced skills) from that worktree, rather than
   referencing its own source as a foreign submodule. Reference is for the consumer;
   the producer of a tool embeds it.
+
+  Almost every project references the host-* tools and releases none of its
+  own, and for such a project this release-side complement of the carve-out is
+  a no-op, so a first read stops here. The rule binds only where two facts
+  about your own repository both hold: your repository releases a host-* tool
+  of its own, and it carries host-template as a submodule whose pins include
+  that tool. If the first is false, as it is for a project that only consumes
+  the tools, the rule does not apply and you change nothing, with no template
+  pin to look for. Where both hold, the producer carries that tool's pin twice,
+  once in its own Where room and again inside the vendored template, so a
+  release is unfinished until every carried-template pin surface for that tool
+  is bumped to the released commit, and `host-lifecycle software --check`
+  HAZARDs any carried-template pin left behind. The producer of a tool embeds
+  it when it develops the tool and re-pins the carried template when it
+  releases the tool.
 - **Instruct, don't patch.** Drive the tools through this manual and their own
   interfaces. Do not edit a tool's source to make it fit. If a tool needs a
   change, raise it upstream.
