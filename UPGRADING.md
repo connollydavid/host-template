@@ -257,3 +257,10 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.36.0
     independent = true
     verify   = grep -rqs "re-pins the carried template" host-template/CLAUDE.md
+
+[upgrade "7127dc4"]
+    title    = The hosted bare store is `.bare` with a `.git` gitdir-link, not a bare repo named `.git`
+    action   = Bump your pinned host-lifecycle to v0.36.0 and move to this host-template revision together. The materialisation layout changed (call/0039): a component's bare object store is now `software/<name>/.bare` with a `.git` file (`gitdir: ./.bare`) beside it. This layout supersedes the bare repo named `software/<name>/.git`. For each already-materialized component, re-run `host-lifecycle software --materialize`; it renames `.git` to `.bare` in place, writes the gitdir-link, and runs `git worktree repair`, so no fetch or teardown is needed and local state is preserved. A project with no materialized software needs no change.
+    requires = host-lifecycle v0.36.0
+    independent = true
+    verify   = grep -rqs "gitdir-link" host-template/STRUCTURE.md
