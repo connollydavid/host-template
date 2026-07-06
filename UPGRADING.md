@@ -264,3 +264,17 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.36.0
     independent = true
     verify   = grep -rqs "gitdir-link" host-template/STRUCTURE.md
+
+[upgrade "67d63e9"]
+    title    = A band groups build-sequence tasks without an ordinal name
+    action   = Bump your pinned host-lifecycle to v0.38.0 and move to this host-template revision together. The task graph gains a band: a `### ` heading under `## Build sequence` marked with a single `- band` bullet is a content-named divider over the tasks that follow, not a task node. A band carries no receipt or edge and does not reset the linear default, so task-to-task chaining runs straight across it and ordering stays in the `depends` edges. Use it in place of an ordinal group name, which the milestone-naming rule forbids and the naming gate (host-lint v0.14.0) now blocks in both its numeric and its spelled form. An existing plan with no `- band` marker parses unchanged, so a project that groups nothing needs no change.
+    requires = host-lifecycle v0.38.0
+    independent = true
+    verify   = grep -rqs "content-named divider" host-template/CLAUDE.md
+
+[upgrade "962630c"]
+    title    = The generated book can publish under a sub-path of an existing site
+    action   = Bump your pinned host-lifecycle to v0.38.0 and move to this host-template revision together. An optional flat `book-mount` key in your `.host` stamp (default `/`) publishes the generated book under a sub-path of an existing site instead of at its root: `host-lifecycle book` emits mdBook's `site-url` only for a non-default mount, so a root-published `book.toml` stays byte-identical. Adopt the mount-aware reference Site workflow: it reads `host-lifecycle book --print-mount` from the tool and publishes under the sub-path with the surrounding site kept. A project that publishes its book at the site root sets no key and sees byte-identical output, adopting the mount-aware workflow only so a later sub-path becomes a config change rather than a workflow rewrite.
+    requires = host-lifecycle v0.38.0
+    independent = true
+    verify   = grep -rqs "book-mount" host-template/STRUCTURE.md
