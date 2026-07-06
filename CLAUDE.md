@@ -588,6 +588,17 @@ once?" A coordinator fans a frontier out to parallel workers **only when they ar
 resource-isolated** (separate worktrees), since `depends` orders work, it does not
 lock a shared resource.
 
+**Group a long sequence with a band, never an ordinal.** To divide a build
+sequence into named groups, mark a `### ` heading with a single `- band` bullet:
+it is a **band**, a content-named divider over the tasks that follow, not a task
+node. A band carries no receipt or edge and does not reset the linear default, so
+task-to-task chaining runs straight across it, and ordering stays in the `depends`
+edges rather than in a band's name or position. Give a band a content name and its
+own `{#anchor}`, so it reads as a referenceable divider in the book. Never name a
+group by ordinal position (a work-unit noun ahead of an ordinal); that is the
+position-naming the milestone-naming rule forbids, and the naming gate blocks it
+in both its numeric and its spelled forms.
+
 **Every task emits a receipt, and the gate is mandatory.** `host-lifecycle tasks
 --record` writes a receipt into `.host-task-receipts` (it reads the task's own
 `verify`/`inputs`, so you never re-type them), a tool-written ledger you never
