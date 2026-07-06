@@ -258,7 +258,12 @@ both before <code>mdbook build</code>, which still runs from the repo root.</p>
 recording the template revision it adopted (<code>template</code>/<code>revision</code>/<code>adopted</code>),
 written by <code>host-lifecycle adopt</code>. It is what a later upgrade diffs from. An
 optional <code>name</code> line pins the published book's title, so <code>host-lifecycle book</code>
-does not derive it from the checkout directory.</p>
+does not derive it from the checkout directory. An optional <code>book-mount</code> line
+(default <code>/</code>) publishes the generated book under a sub-path of an existing site
+instead of at its root: <code>host-lifecycle book</code> emits mdBook's <code>site-url</code> only for a
+non-default mount, so a root-published <code>book.toml</code> stays byte-identical,
+<code>book --print-mount</code> prints the normalized value, and the reference Site workflow
+reads it from the tool to publish under the sub-path with the surrounding site kept.</p>
 <p>The methodology lives in <code>CLAUDE.md</code>. Read it first. The whole template is
 released into the public domain (Unlicense); see <code>README.md</code> for provenance.</p>
 

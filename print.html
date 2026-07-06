@@ -913,6 +913,16 @@ races two workers (a corruption), so the author never answers "what can run at
 once?" A coordinator fans a frontier out to parallel workers <strong>only when they are
 resource-isolated</strong> (separate worktrees), since <code>depends</code> orders work, it does not
 lock a shared resource.</p>
+<p><strong>Group a long sequence with a band, never an ordinal.</strong> To divide a build
+sequence into named groups, mark a <code>### </code> heading with a single <code>- band</code> bullet:
+it is a <strong>band</strong>, a content-named divider over the tasks that follow, not a task
+node. A band carries no receipt or edge and does not reset the linear default, so
+task-to-task chaining runs straight across it, and ordering stays in the <code>depends</code>
+edges rather than in a band's name or position. Give a band a content name and its
+own <code>{#anchor}</code>, so it reads as a referenceable divider in the book. Never name a
+group by ordinal position (a work-unit noun ahead of an ordinal); that is the
+position-naming the milestone-naming rule forbids, and the naming gate blocks it
+in both its numeric and its spelled forms.</p>
 <p><strong>Every task emits a receipt, and the gate is mandatory.</strong> <code>host-lifecycle tasks --record</code> writes a receipt into <code>.host-task-receipts</code> (it reads the task's own
 <code>verify</code>/<code>inputs</code>, so you never re-type them), a tool-written ledger you never
 hand-edit. <code>software --check</code> HAZARDs a task with no receipt, a <code>done</code> whose
@@ -1149,7 +1159,12 @@ both before <code>mdbook build</code>, which still runs from the repo root.</p>
 recording the template revision it adopted (<code>template</code>/<code>revision</code>/<code>adopted</code>),
 written by <code>host-lifecycle adopt</code>. It is what a later upgrade diffs from. An
 optional <code>name</code> line pins the published book's title, so <code>host-lifecycle book</code>
-does not derive it from the checkout directory.</p>
+does not derive it from the checkout directory. An optional <code>book-mount</code> line
+(default <code>/</code>) publishes the generated book under a sub-path of an existing site
+instead of at its root: <code>host-lifecycle book</code> emits mdBook's <code>site-url</code> only for a
+non-default mount, so a root-published <code>book.toml</code> stays byte-identical,
+<code>book --print-mount</code> prints the normalized value, and the reference Site workflow
+reads it from the tool to publish under the sub-path with the surrounding site kept.</p>
 <p>The methodology lives in <code>CLAUDE.md</code>. Read it first. The whole template is
 released into the public domain (Unlicense); see <code>README.md</code> for provenance.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="upgradingmd-the-version-to-version-upgrade-ledger"><a class="header" href="#upgradingmd-the-version-to-version-upgrade-ledger">UPGRADING.md: the version-to-version upgrade ledger</a></h1>

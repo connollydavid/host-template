@@ -708,6 +708,16 @@ races two workers (a corruption), so the author never answers "what can run at
 once?" A coordinator fans a frontier out to parallel workers <strong>only when they are
 resource-isolated</strong> (separate worktrees), since <code>depends</code> orders work, it does not
 lock a shared resource.</p>
+<p><strong>Group a long sequence with a band, never an ordinal.</strong> To divide a build
+sequence into named groups, mark a <code>### </code> heading with a single <code>- band</code> bullet:
+it is a <strong>band</strong>, a content-named divider over the tasks that follow, not a task
+node. A band carries no receipt or edge and does not reset the linear default, so
+task-to-task chaining runs straight across it, and ordering stays in the <code>depends</code>
+edges rather than in a band's name or position. Give a band a content name and its
+own <code>{#anchor}</code>, so it reads as a referenceable divider in the book. Never name a
+group by ordinal position (a work-unit noun ahead of an ordinal); that is the
+position-naming the milestone-naming rule forbids, and the naming gate blocks it
+in both its numeric and its spelled forms.</p>
 <p><strong>Every task emits a receipt, and the gate is mandatory.</strong> <code>host-lifecycle tasks --record</code> writes a receipt into <code>.host-task-receipts</code> (it reads the task's own
 <code>verify</code>/<code>inputs</code>, so you never re-type them), a tool-written ledger you never
 hand-edit. <code>software --check</code> HAZARDs a task with no receipt, a <code>done</code> whose
