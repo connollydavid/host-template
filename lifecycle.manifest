@@ -66,7 +66,7 @@
 	command  = host-lifecycle book
 	skill    = publish
 	evidence = generated mdBook site; doc-site CI lane wired
-	recheck  = test -f .github/workflows/mdbook.yml
+	recheck  = host-lifecycle book --print-mount .
 
 [phase "upgrade"]
 	order    = 7

@@ -32,8 +32,27 @@ jobs:
           "$HL" book --check .
       - name: Build site
         run: mdbook build
+      - name: Assert the built layout
+        run: test -f mdBook/out/index.html
+      - name: Resolve the book mount
+        id: mount
+        # A non-default `book-mount` publishes the book under a sub-path and keeps the
+        # surrounding site; the root default replaces the whole site. The tool owns the
+        # normalisation, so the workflow reads the value rather than parsing the stamp.
+        run: |
+          HL=tools/host-lifecycle/target/release/host-lifecycle
+          MOUNT="$("$HL" book --print-mount .)"
+          if [ "$MOUNT" = "/" ]; then
+            echo "dir=" >> "$GITHUB_OUTPUT"
+            echo "keep=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "dir=${MOUNT#/}" >> "$GITHUB_OUTPUT"
+            echo "keep=true" >> "$GITHUB_OUTPUT"
+          fi
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./mdBook/out
+          destination_dir: ${{ steps.mount.outputs.dir }}
+          keep_files: ${{ steps.mount.outputs.keep }}
