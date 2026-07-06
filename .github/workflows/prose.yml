@@ -19,6 +19,6 @@ jobs:
       # prose verdict matches every adopter's verify audit; v0.37.0 embeds the
       # host-lint engine that honors the per-repo LEXICON in the prose lane (host-lifecycle#2).
       - name: Install host-lifecycle (pinned)
-        run: cargo install --git https://github.com/connollydavid/host-lifecycle --rev bf0eacdd522f78c5b6977c2838c7e74d0c0e105a --root "$HOME/.local"
+        run: cargo install --git https://github.com/connollydavid/host-lifecycle --rev 776e1b1a22e5c77064ea267d17ad8f00a4f85bf3 --root "$HOME/.local"
       - name: Prose gate (zero tropes in authored docs)
         run: "$HOME/.local/bin/host-lifecycle prose ."
