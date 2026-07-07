@@ -522,6 +522,32 @@ there, then add the software as the Where room with a `[software "<name>"]`
 stanza in the host's `.host-software` (the repo's URL, a pinned SHA, the worktree
 set) and `software --materialize`. The classify refusal prints these exact steps.
 
+### Onboarding a project: init, adopt, and the two shims
+
+Starting a project is one engine with two purpose-named faces. `host-lifecycle init
+<name>` creates a fresh `agentic-<name>` in a new folder. `host-lifecycle adopt`
+brings a folder under the methodology by one of three routes: a software repository
+is refused in place (above), an empty `agentic-<name>` folder is adopted in place,
+and any other folder is arbitrary, so the tool elicits a name, creates the host at
+`../agentic-<name>`, and leaves the source folder untouched. `host-init` and
+`host-adopt` are the same binary under those two names, the human-facing commands over
+the `init` and `adopt` verbs.
+
+Three invariants hold across the onboarding surface. The **source is read-only** on
+the arbitrary-folder route: the new host lands elsewhere, and the source, even a home
+directory, is never written. A **present, non-empty target refuses** rather than
+overwrite, unless forced. The **name is the one field elicited**, because it carries
+operator intent a folder cannot supply: the verb accepts it by flag or the `HOST_NAME`
+environment variable, else prompts on a controlling terminal, else exits with a
+distinct code and a machine-parseable line naming the missing field, so a scripted or
+agent caller re-invokes with the name supplied. Never invent the name.
+
+The scaffold-and-stamp primitive is `host-lifecycle scaffold <dir> <revision>`, the
+adopt phase's command, which `adopt` and `init` build on. A spawned MCP surface
+(`host-lifecycle mcp`) exposes `init` and `adopt` as tools over stdio, eliciting the
+name through the client when it declares the capability and falling back to the verb's
+backstop otherwise; the MCP tools are an enhancement, never mandatory.
+
 ## Audited plans and append-only memory
 
 Two disciplines keep the host trustworthy across sessions.

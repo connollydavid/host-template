@@ -29,7 +29,7 @@
 [phase "adopt"]
 	order    = 2
 	modality = unconditional
-	command  = host-lifecycle adopt
+	command  = host-lifecycle scaffold
 	skill    = adopt
 	evidence = .host stamp (template + revision adopted)
 	recheck  = test -f .host
