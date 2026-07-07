@@ -278,3 +278,10 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.38.0
     independent = true
     verify   = grep -rqs "book-mount" host-template/STRUCTURE.md
+
+[upgrade "ff04a94"]
+    title    = The scaffold-and-stamp primitive is `scaffold`; `adopt` becomes onboarding
+    action   = Bump your pinned host-lifecycle to v0.39.0 and move to this host-template revision together. The scaffold-and-stamp primitive `host-lifecycle adopt <dir> <revision>` is renamed `host-lifecycle scaffold <dir> <revision>`, and the `adopt` verb becomes the three-route onboarding (init and adopt, with the host-init and host-adopt shims, call/0041). Migrate every script or skill that invokes `adopt <dir> <revision>` to `scaffold <dir> <revision>`, and set your lifecycle manifest's adopt phase command to `host-lifecycle scaffold`. The two-positional `adopt <dir> <revision>` form no longer forwards; it errors with guidance naming `scaffold`, because the onboarding grammar cannot safely distinguish it from a mistaken onboarding call that would write into the source. A project that never scripts the bare command reads the new onboarding doctrine and changes nothing else.
+    requires = host-lifecycle v0.39.0
+    independent = true
+    verify   = grep -rqs "host-lifecycle scaffold" host-template/CLAUDE.md
