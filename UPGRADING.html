@@ -405,10 +405,16 @@ independent = true
 verify   = grep -rqs "content-named divider" host-template/CLAUDE.md</p>
 <p>[upgrade "962630c"]
 title    = The generated book can publish under a sub-path of an existing site
-action   = Bump your pinned host-lifecycle to v0.38.0 and move to this host-template revision together. An optional flat <code>book-mount</code> key in your <code>.host</code> stamp (default <code>/</code>) publishes the generated book under a sub-path of an existing site instead of at its root: <code>host-lifecycle book</code> emits mdBook's <code>site-url</code> only for a non-default mount, so a root-published <code>book.toml</code> stays byte-identical. Adopt the mount-aware reference Site workflow: it reads <code>host-lifecycle book --print-mount</code> from the tool and publishes under the sub-path with the surrounding site kept. A project that publishes its book at the site root sets no key and sees byte-identical output, adopting the mount-aware workflow only so a later sub-path becomes a config change rather than a workflow rewrite.
+action   = Bump your pinned host-lifecycle to v0.38.0 and move to this host-template revision together. An optional flat <code>book-mount</code> key in your <code>.host</code> stamp (default <code>/</code>) publishes the generated book under a sub-path of an existing site instead of at its root: <code>host-lifecycle book</code> emits mdBook's <code>site-url</code> only for a non-default mount, so a root-published <code>book.toml</code> stays byte-identical. Adopt the mount-aware reference Site workflow: it reads <code>host-lifecycle book --print-mount</code> from the tool and publishes under the sub-path with the surrounding site kept. A project that publishes its book at the site root sets no key and sees byte-identical output; it adopts the mount-aware workflow only so a later sub-path becomes a config change rather than a workflow rewrite.
 requires = host-lifecycle v0.38.0
 independent = true
 verify   = grep -rqs "book-mount" host-template/STRUCTURE.md</p>
+<p>[upgrade "ff04a94"]
+title    = The scaffold-and-stamp primitive is <code>scaffold</code>; <code>adopt</code> becomes onboarding
+action   = Bump your pinned host-lifecycle to v0.39.0 and move to this host-template revision together. The scaffold-and-stamp primitive <code>host-lifecycle adopt &lt;dir&gt; &lt;revision&gt;</code> is renamed <code>host-lifecycle scaffold &lt;dir&gt; &lt;revision&gt;</code>, and the <code>adopt</code> verb becomes the three-route onboarding (init and adopt, with the host-init and host-adopt shims, call/0041). Migrate every script or skill that invokes <code>adopt &lt;dir&gt; &lt;revision&gt;</code> to <code>scaffold &lt;dir&gt; &lt;revision&gt;</code>, and set your lifecycle manifest's adopt phase command to <code>host-lifecycle scaffold</code>. The two-positional <code>adopt &lt;dir&gt; &lt;revision&gt;</code> form no longer forwards; it errors with guidance naming <code>scaffold</code>, because the onboarding grammar cannot safely distinguish it from a mistaken onboarding call that would write into the source. A project that never scripts the bare command reads the new onboarding doctrine and changes nothing else.
+requires = host-lifecycle v0.39.0
+independent = true
+verify   = grep -rqs "host-lifecycle scaffold" host-template/CLAUDE.md</p>
 
                     </main>
 

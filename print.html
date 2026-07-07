@@ -855,6 +855,27 @@ create or choose an empty host repository (e.g. <code>agentic-&lt;name&gt;</code
 there, then add the software as the Where room with a <code>[software "&lt;name&gt;"]</code>
 stanza in the host's <code>.host-software</code> (the repo's URL, a pinned SHA, the worktree
 set) and <code>software --materialize</code>. The classify refusal prints these exact steps.</p>
+<h3 id="onboarding-a-project-init-adopt-and-the-two-shims"><a class="header" href="#onboarding-a-project-init-adopt-and-the-two-shims">Onboarding a project: init, adopt, and the two shims</a></h3>
+<p>Starting a project is one engine with two purpose-named faces. <code>host-lifecycle init &lt;name&gt;</code> creates a fresh <code>agentic-&lt;name&gt;</code> in a new folder. <code>host-lifecycle adopt</code>
+brings a folder under the methodology by one of three routes: a software repository
+is refused in place (above), an empty <code>agentic-&lt;name&gt;</code> folder is adopted in place,
+and any other folder is arbitrary, so the tool elicits a name, creates the host at
+<code>../agentic-&lt;name&gt;</code>, and leaves the source folder untouched. <code>host-init</code> and
+<code>host-adopt</code> are the same binary under those two names, the human-facing commands over
+the <code>init</code> and <code>adopt</code> verbs.</p>
+<p>Three invariants hold across the onboarding surface. The <strong>source is read-only</strong> on
+the arbitrary-folder route: the new host lands elsewhere, and the source, even a home
+directory, is never written. A <strong>present, non-empty target refuses</strong> rather than
+overwrite, unless forced. The <strong>name is the one field elicited</strong>, because it carries
+operator intent a folder cannot supply: the verb accepts it by flag or the <code>HOST_NAME</code>
+environment variable, else prompts on a controlling terminal, else exits with a
+distinct code and a machine-parseable line naming the missing field, so a scripted or
+agent caller re-invokes with the name supplied. Never invent the name.</p>
+<p>The scaffold-and-stamp primitive is <code>host-lifecycle scaffold &lt;dir&gt; &lt;revision&gt;</code>, the
+adopt phase's command, which <code>adopt</code> and <code>init</code> build on. A spawned MCP surface
+(<code>host-lifecycle mcp</code>) exposes <code>init</code> and <code>adopt</code> as tools over stdio, eliciting the
+name through the client when it declares the capability and falling back to the verb's
+backstop otherwise; the MCP tools are an enhancement, never mandatory.</p>
 <h2 id="audited-plans-and-append-only-memory"><a class="header" href="#audited-plans-and-append-only-memory">Audited plans and append-only memory</a></h2>
 <p>Two disciplines keep the host trustworthy across sessions.</p>
 <ul>
@@ -1399,10 +1420,16 @@ independent = true
 verify   = grep -rqs "content-named divider" host-template/CLAUDE.md</p>
 <p>[upgrade "962630c"]
 title    = The generated book can publish under a sub-path of an existing site
-action   = Bump your pinned host-lifecycle to v0.38.0 and move to this host-template revision together. An optional flat <code>book-mount</code> key in your <code>.host</code> stamp (default <code>/</code>) publishes the generated book under a sub-path of an existing site instead of at its root: <code>host-lifecycle book</code> emits mdBook's <code>site-url</code> only for a non-default mount, so a root-published <code>book.toml</code> stays byte-identical. Adopt the mount-aware reference Site workflow: it reads <code>host-lifecycle book --print-mount</code> from the tool and publishes under the sub-path with the surrounding site kept. A project that publishes its book at the site root sets no key and sees byte-identical output, adopting the mount-aware workflow only so a later sub-path becomes a config change rather than a workflow rewrite.
+action   = Bump your pinned host-lifecycle to v0.38.0 and move to this host-template revision together. An optional flat <code>book-mount</code> key in your <code>.host</code> stamp (default <code>/</code>) publishes the generated book under a sub-path of an existing site instead of at its root: <code>host-lifecycle book</code> emits mdBook's <code>site-url</code> only for a non-default mount, so a root-published <code>book.toml</code> stays byte-identical. Adopt the mount-aware reference Site workflow: it reads <code>host-lifecycle book --print-mount</code> from the tool and publishes under the sub-path with the surrounding site kept. A project that publishes its book at the site root sets no key and sees byte-identical output; it adopts the mount-aware workflow only so a later sub-path becomes a config change rather than a workflow rewrite.
 requires = host-lifecycle v0.38.0
 independent = true
 verify   = grep -rqs "book-mount" host-template/STRUCTURE.md</p>
+<p>[upgrade "ff04a94"]
+title    = The scaffold-and-stamp primitive is <code>scaffold</code>; <code>adopt</code> becomes onboarding
+action   = Bump your pinned host-lifecycle to v0.39.0 and move to this host-template revision together. The scaffold-and-stamp primitive <code>host-lifecycle adopt &lt;dir&gt; &lt;revision&gt;</code> is renamed <code>host-lifecycle scaffold &lt;dir&gt; &lt;revision&gt;</code>, and the <code>adopt</code> verb becomes the three-route onboarding (init and adopt, with the host-init and host-adopt shims, call/0041). Migrate every script or skill that invokes <code>adopt &lt;dir&gt; &lt;revision&gt;</code> to <code>scaffold &lt;dir&gt; &lt;revision&gt;</code>, and set your lifecycle manifest's adopt phase command to <code>host-lifecycle scaffold</code>. The two-positional <code>adopt &lt;dir&gt; &lt;revision&gt;</code> form no longer forwards; it errors with guidance naming <code>scaffold</code>, because the onboarding grammar cannot safely distinguish it from a mistaken onboarding call that would write into the source. A project that never scripts the bare command reads the new onboarding doctrine and changes nothing else.
+requires = host-lifecycle v0.39.0
+independent = true
+verify   = grep -rqs "host-lifecycle scaffold" host-template/CLAUDE.md</p>
 
                     </main>
 
