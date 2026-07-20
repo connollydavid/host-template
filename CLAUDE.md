@@ -567,6 +567,56 @@ The test for both: a new session with no memory of this conversation should be
 able to read `plan/`, `call/`, and `MEMORY.md` and continue without repeating a
 past mistake.
 
+### The two-tier memory store and the dream audit
+
+Memory has two tiers with opposite rules, and one audit that holds both.
+
+- **The repo tier: `MEMORY.md`, append-only.** The project memory log above is
+  the shared, committed, audited tier. Never rewrite or delete an old entry; a
+  correction is a new entry that points back.
+- **The per-user tier: the host-* store, editable.** An operator may carry a
+  private, local, uncommitted store at `~/.host-memory/<project>/`, where
+  `<project>` is the project's working directory with each `/` replaced by
+  `-`. One markdown file per entry: YAML frontmatter (`description:`, the one
+  line recall keys on; `type:`, one of `feedback`, `fact`, `workaround`,
+  `state`; `created:` and `last_edited:` dates; `superseded_by:`, a slug or
+  empty) plus a free-form body with optional `[[slug]]` cross-references, and
+  a `MEMORY.md` index carrying one bullet per entry that mirrors its
+  `description:` line. This tier is editable in place: entries may be
+  rewritten, pruned, and relinked as understanding improves.
+
+The asymmetry is load-bearing: the repo log is the project's immutable record,
+the per-user store is the operator's working memory. `host-lifecycle dream
+<dir>` is the advisory audit over both. It flags staleness, contradictions,
+drift, dangling links, and append-only violations on the repo tier, then
+routes each finding by store: a repo-tier finding suggests an append (the
+correction text and the forward link to add, printed verbatim); a per-user
+finding suggests an in-place edit. `dream` never writes. `--fix` refuses the
+repo store outright, and on the per-user store it applies only mechanical,
+structure-only classes (index/description reconciliation, dangling-link
+repair), a set that grows one class at a time, each class landing only with
+cast-review sign-off; at this revision no class is auto-applied yet. The
+detectors are heuristic and advisory by design: a finding is a prompt for
+operator judgment, not a proof of staleness.
+
+**Cadence.** Run `dream` at the start of a session that will rely on recall,
+and again after a session that superseded a decision. It is advisory, never a
+gate: findings inform, they do not block.
+
+**Boundary.** `dream` audits memory content only. It never proposes a
+methodology-version migration (that is the `upgrade` ledger's job), and a
+finding that touches a `call/` or `plan/` record routes to the MADR path by
+naming the room and the record, never by editing them.
+
+**Scope.** The host-* per-user store is the reference tier; vendor harness
+memory stores are not read. An operator on a harness without the store gets
+the repo tier alone. The store is per-machine: it does not sync across
+machines, and moving or renaming the project directory starts a fresh store,
+since the encoded path changes. The memory tools ride the `host-lifecycle
+mcp` stdio server as `memory_list`, `memory_read`, `memory_write`, and
+`memory_consolidate`; `memory_write` writes only to the per-user store, never
+the repo tier.
+
 ## The task graph: in-plan tasks are receipted nodes
 
 A milestone's `## Build sequence` is not loose prose. Each step is a **task**: an
