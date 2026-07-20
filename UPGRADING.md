@@ -285,3 +285,10 @@ keyed by the template revision at which its action became required.
     requires = host-lifecycle v0.39.0
     independent = true
     verify   = grep -rqs "host-lifecycle scaffold" host-template/CLAUDE.md
+
+[upgrade "32994e4"]
+    title    = The two-tier memory store and the dream audit
+    action   = Bump your pinned host-lifecycle to v0.41.0, which ships `host-lifecycle dream` and the MCP memory tools (`memory_list`/`memory_read`/`memory_write`/`memory_consolidate` on `host-lifecycle mcp`), and move to this host-template revision together. Adopt the two-tier memory doctrine: the repo `MEMORY.md` stays append-only (shared, committed, audited); the optional host-* per-user store at `~/.host-memory/<encoded-cwd>/` (markdown per entry, a `MEMORY.md` index, `[[slug]]` cross-references) is editable, local, and uncommitted. Run `host-lifecycle dream .` at the cadence the spine names (the start of a session that will rely on recall, and after a session that superseded a decision); it routes findings (an append suggestion for the repo tier, an edit suggestion for the per-user tier) and never writes, and `--fix` refuses the repo store (no class is auto-applied yet; the safe set grows one class at a time). Vendor harness memory stores are out of scope; an operator on a harness without the store carries only the repo tier and needs no structural change. Sync the memory section of your operating manual: a verbatim-copy adopter re-copies the spine section, a merged manual (a development host's) folds the two-tier note into its own memory rules.
+    requires = host-lifecycle v0.41.0
+    independent = true
+    verify   = grep -rqs "The two-tier memory store" host-template/CLAUDE.md
