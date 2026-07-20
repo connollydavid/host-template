@@ -688,6 +688,50 @@ old entry; if one was wrong, add a new entry that corrects it and points back.</
 <p>The test for both: a new session with no memory of this conversation should be
 able to read <code>plan/</code>, <code>call/</code>, and <code>MEMORY.md</code> and continue without repeating a
 past mistake.</p>
+<h3 id="the-two-tier-memory-store-and-the-dream-audit"><a class="header" href="#the-two-tier-memory-store-and-the-dream-audit">The two-tier memory store and the dream audit</a></h3>
+<p>Memory has two tiers with opposite rules, and one audit that holds both.</p>
+<ul>
+<li><strong>The repo tier: <code>MEMORY.md</code>, append-only.</strong> The project memory log above is
+the shared, committed, audited tier. Never rewrite or delete an old entry; a
+correction is a new entry that points back.</li>
+<li><em><em>The per-user tier: the host-</em> store, editable.</em>* An operator may carry a
+private, local, uncommitted store at <code>~/.host-memory/&lt;project&gt;/</code>, where
+<code>&lt;project&gt;</code> is the project's working directory with each <code>/</code> replaced by
+<code>-</code>. One markdown file per entry: YAML frontmatter (<code>description:</code>, the one
+line recall keys on; <code>type:</code>, one of <code>feedback</code>, <code>fact</code>, <code>workaround</code>,
+<code>state</code>; <code>created:</code> and <code>last_edited:</code> dates; <code>superseded_by:</code>, a slug or
+empty) plus a free-form body with optional <code>[[slug]]</code> cross-references, and
+a <code>MEMORY.md</code> index carrying one bullet per entry that mirrors its
+<code>description:</code> line. This tier is editable in place: entries may be
+rewritten, pruned, and relinked as understanding improves.</li>
+</ul>
+<p>The asymmetry is load-bearing: the repo log is the project's immutable record,
+the per-user store is the operator's working memory. `host-lifecycle dream</p>
+<dir>` is the advisory audit over both. It flags staleness, contradictions,
+drift, dangling links, and append-only violations on the repo tier, then
+routes each finding by store: a repo-tier finding suggests an append (the
+correction text and the forward link to add, printed verbatim); a per-user
+finding suggests an in-place edit. `dream` never writes. `--fix` refuses the
+repo store outright, and on the per-user store it applies only mechanical,
+structure-only classes (index/description reconciliation, dangling-link
+repair), a set that grows one class at a time, each class landing only with
+cast-review sign-off; at this revision no class is auto-applied yet. The
+detectors are heuristic and advisory by design: a finding is a prompt for
+operator judgment, not a proof of staleness.
+<p><strong>Cadence.</strong> Run <code>dream</code> at the start of a session that will rely on recall,
+and again after a session that superseded a decision. It is advisory, never a
+gate: findings inform, they do not block.</p>
+<p><strong>Boundary.</strong> <code>dream</code> audits memory content only. It never proposes a
+methodology-version migration (that is the <code>upgrade</code> ledger's job), and a
+finding that touches a <code>call/</code> or <code>plan/</code> record routes to the MADR path by
+naming the room and the record, never by editing them.</p>
+<p><strong>Scope.</strong> The host-* per-user store is the reference tier; vendor harness
+memory stores are not read. An operator on a harness without the store gets
+the repo tier alone. The store is per-machine: it does not sync across
+machines, and moving or renaming the project directory starts a fresh store,
+since the encoded path changes. The memory tools ride the <code>host-lifecycle mcp</code> stdio server as <code>memory_list</code>, <code>memory_read</code>, <code>memory_write</code>, and
+<code>memory_consolidate</code>; <code>memory_write</code> writes only to the per-user store, never
+the repo tier.</p>
 <h2 id="the-task-graph-in-plan-tasks-are-receipted-nodes"><a class="header" href="#the-task-graph-in-plan-tasks-are-receipted-nodes">The task graph: in-plan tasks are receipted nodes</a></h2>
 <p>A milestone's <code>## Build sequence</code> is not loose prose. Each step is a <strong>task</strong>: an
 anchored <code>### </code> heading under that section, ending in <code>{#anchor}</code> (the placement
