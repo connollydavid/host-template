@@ -591,13 +591,31 @@ the per-user store is the operator's working memory. `host-lifecycle dream
 drift, dangling links, and append-only violations on the repo tier, then
 routes each finding by store: a repo-tier finding suggests an append (the
 correction text and the forward link to add, printed verbatim); a per-user
-finding suggests an in-place edit. `dream` never writes. `--fix` refuses the
-repo store outright, and on the per-user store it applies only mechanical,
-structure-only classes (index/description reconciliation, dangling-link
-repair), a set that grows one class at a time, each class landing only with
-cast-review sign-off; at this revision no class is auto-applied yet. The
-detectors are heuristic and advisory by design: a finding is a prompt for
-operator judgment, not a proof of staleness.
+finding suggests an in-place edit. `dream` writes nothing in the memory
+stores; its one sanctioned repo-side write is the tier-marker stamp below.
+`--fix` refuses the repo store outright, and on the per-user store it applies
+only mechanical, structure-only classes (index/description reconciliation,
+dangling-link repair), a set that grows one class at a time, each class
+landing only with cast-review sign-off; at this revision no class is
+auto-applied yet. The detectors are heuristic and advisory by design: a
+finding is a prompt for operator judgment, not a proof of staleness.
+
+**The tier marker and finding confidence.** The per-user tier's in-use status
+is declared state: a tracked `.host-memory-tier` marker, written by `dream`
+when it first observes an initialized store on a machine (commit the stamp;
+it carries a date-and-author provenance line), retired only by the operator
+with `dream --retire-marker` and recorded as an appended MEMORY.md
+correction. The marker never flips on one machine's evidence alone, and a
+store observed after retirement is a contradiction finding, never a silent
+re-stamp. `[[links]]` resolve against the union of both tiers. With no
+marker, an unresolved link is a confirmed finding whose remedy leads with the
+operator's initialization fork; with the marker and no store on the machine
+at hand it is advisory (leave the link in place; never drop it on that
+machine's evidence); with marker and store present it is advisory
+create-or-correct. Every finding carries its confidence in prose, confirmed
+or review-prompt, and `dream` exits 0 clean, 3 advisory-only, 1 on any
+confirmed finding, 2 on input errors; per-tier coverage lines state what ran,
+what was inapplicable and why, and the marker's provenance.
 
 **Cadence.** Run `dream` at the start of a session that will rely on recall,
 and again after a session that superseded a decision. It is advisory, never a
