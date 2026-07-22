@@ -916,13 +916,30 @@ the per-user store is the operator's working memory. `host-lifecycle dream</p>
 drift, dangling links, and append-only violations on the repo tier, then
 routes each finding by store: a repo-tier finding suggests an append (the
 correction text and the forward link to add, printed verbatim); a per-user
-finding suggests an in-place edit. `dream` never writes. `--fix` refuses the
-repo store outright, and on the per-user store it applies only mechanical,
-structure-only classes (index/description reconciliation, dangling-link
-repair), a set that grows one class at a time, each class landing only with
-cast-review sign-off; at this revision no class is auto-applied yet. The
-detectors are heuristic and advisory by design: a finding is a prompt for
-operator judgment, not a proof of staleness.
+finding suggests an in-place edit. `dream` writes nothing in the memory
+stores; its one sanctioned repo-side write is the tier-marker stamp below.
+`--fix` refuses the repo store outright, and on the per-user store it applies
+only mechanical, structure-only classes (index/description reconciliation,
+dangling-link repair), a set that grows one class at a time, each class
+landing only with cast-review sign-off; at this revision no class is
+auto-applied yet. The detectors are heuristic and advisory by design: a
+finding is a prompt for operator judgment, not a proof of staleness.
+<p><strong>The tier marker and finding confidence.</strong> The per-user tier's in-use status
+is declared state: a tracked <code>.host-memory-tier</code> marker, written by <code>dream</code>
+when it first observes an initialized store on a machine (commit the stamp;
+it carries a date-and-author provenance line), retired only by the operator
+with <code>dream --retire-marker</code> and recorded as an appended MEMORY.md
+correction. The marker never flips on one machine's evidence alone, and a
+store observed after retirement is a contradiction finding, never a silent
+re-stamp. <code>[[links]]</code> resolve against the union of both tiers. With no
+marker, an unresolved link is a confirmed finding whose remedy leads with the
+operator's initialization fork; with the marker and no store on the machine
+at hand it is advisory (leave the link in place; never drop it on that
+machine's evidence); with marker and store present it is advisory
+create-or-correct. Every finding carries its confidence in prose, confirmed
+or review-prompt, and <code>dream</code> exits 0 clean, 3 advisory-only, 1 on any
+confirmed finding, 2 on input errors; per-tier coverage lines state what ran,
+what was inapplicable and why, and the marker's provenance.</p>
 <p><strong>Cadence.</strong> Run <code>dream</code> at the start of a session that will rely on recall,
 and again after a session that superseded a decision. It is advisory, never a
 gate: findings inform, they do not block.</p>
@@ -1480,6 +1497,12 @@ action   = Bump your pinned host-lifecycle to v0.41.0, which ships <code>host-li
 requires = host-lifecycle v0.41.0
 independent = true
 verify   = grep -rqs "The two-tier memory store" host-template/CLAUDE.md</p>
+<p>[upgrade "514aaa2"]
+title    = The dream store model: the tier marker, finding confidence, and the exit split
+action   = Bump your pinned host-lifecycle to v0.42.0 and move to this host-template revision together. The dream audit gains the store model (agentic-host call/0045): detectors declare the store formats they fit, <code>[[links]]</code> resolve against the union of both memory tiers, findings carry a confidence (confirmed or review-prompt) with the exit split clean 0 / advisory-only 3 / any-confirmed 1, <code>--json</code> becomes an object (findings plus coverage; the bare-array shape is retired), and the per-user tier's in-use status becomes a tracked <code>.host-memory-tier</code> marker: <code>dream</code> stamps it when it first observes an initialized store on a machine (commit the stamp), and the operator retires it with <code>dream --retire-marker</code>, recorded as an appended MEMORY.md correction. Expect the day-one wall: a repo log with cross-store <code>[[links]]</code> and no marker reports them as confirmed dangling (exit 1) on the first post-upgrade run, by construction, not as a memory regression. The disposition fork: initialize and seed the per-user store where it is real (dream stamps the marker and the findings re-tier advisory), or retire intended-but-unrealized links by appended corrections. Dropping links merely to clear the wall is prohibited; run dream once on the store-carrying machine and commit the stamp before storeless checkouts or CI gate on the new exits. Room-touching findings become labelled review prompts whose lead remedy is a review note; the applied-receipts cross-check is owed as host-lifecycle#23. A project with no cross-store links and no per-user store sees only the new coverage lines and exit vocabulary.
+requires = host-lifecycle v0.42.0
+independent = true
+verify   = grep -rqs ".host-memory-tier" host-template/CLAUDE.md</p>
 
                     </main>
 
