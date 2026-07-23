@@ -841,9 +841,10 @@ vendored sources, and build under `--network none` (the egress half). The gate i
 specific and enforceable: a component recording a `deps-bundle` MUST build offline, its staged
 bundle sha MUST match the recorded one, and `software --check` HAZARDs a `deps-bundle` pin that
 has drifted from the producer's committed `deps-bundle.lock`. A component that genuinely cannot
-vendor offline, such as one with a network-fetching `build.rs` or a non-Rust toolchain, may
-carry `hermetic-exempt = call/NNNN` citing a software-scoped case decision, the same escape
-shape as `repro-exempt`; the exemption is never available where offline vendoring is feasible.
+vendor offline, such as one with a network-fetching `build.rs` or a non-Rust toolchain,
+records that case with `repro-exempt = call/NNNN`, citing a software-scoped decision;
+hermeticity is a facet of reproducibility rather than a second property with its own key,
+and the exemption is never available where offline vendoring is feasible.
 
 **Multi-platform builds.** A component whose *one* source pin ships on several platforms
 records one `[build "<name>" "<platform>"]` subsection per platform under its
