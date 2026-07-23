@@ -532,7 +532,7 @@ fingerprint refresh run every time (both idempotent in effect).
 reads the recipe and the live tree and hazards on every required local artifact
 that is absent, naming the command that installs it. Read its clean line
 precisely: it means *every artifact the recipe requires OF THIS HOST is present*,
-where required is role-aware twice over — an artifact is required locally only
+where required is role-aware twice over. An artifact is required locally only
 when something local consumes it (today, the component that declares `hooks`
 supplies the gate binary) and only when this host is the one the recipe expects
 to build it. It checks presence and currency, not correctness: a hook must be
