@@ -227,7 +227,7 @@ single submodule tree could not. Software initiated under the methodology has
 <strong>reproducible builds</strong>: the stanza also records the <code>build</code>/<code>toolchain</code> recipe and
 the deployed <code>artifact</code> hash, so <code>host-lifecycle software --verify-build</code> can rebuild
 from the pin and prove the deployed binary; migrated software not yet reproducible
-carries a <code>repro-exempt = call/NNNN</code> case decision (see <code>CLAUDE.md</code>). A component that
+carries a <code>repro-waiver = call/NNNN</code> case decision (see <code>CLAUDE.md</code>). A component that
 ships static or self-contained binaries also records a <code>deps-bundle = &lt;url&gt; &lt;sha256&gt;</code>, a
 pinned vendored-dependency bundle it downloads, verifies, and builds offline against under
 <code>--network none</code>, so the build is hermetic (see <code>CLAUDE.md</code>). A component that

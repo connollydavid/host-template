@@ -1138,9 +1138,11 @@ specific and enforceable: a component recording a <code>deps-bundle</code> MUST 
 bundle sha MUST match the recorded one, and <code>software --check</code> HAZARDs a <code>deps-bundle</code> pin that
 has drifted from the producer's committed <code>deps-bundle.lock</code>. A component that genuinely cannot
 vendor offline, such as one with a network-fetching <code>build.rs</code> or a non-Rust toolchain,
-records that case with <code>repro-exempt = call/NNNN</code>, citing a software-scoped decision;
-hermeticity is a facet of reproducibility rather than a second property with its own key,
-and the exemption is never available where offline vendoring is feasible.</p>
+records the case in <code>repro-waiver = call/NNNN</code>, whose value names a software-scoped
+decision. Hermeticity is a facet of reproducibility rather than a second property with its
+own key, so one waiver carries both cases: a migrated build that does not reproduce byte
+for byte yet, and a component that cannot vendor offline. Where offline vendoring is
+feasible, the waiver does not apply.</p>
 <p><strong>Multi-platform builds.</strong> A component whose <em>one</em> source pin ships on several platforms
 records one <code>[build "&lt;name&gt;" "&lt;platform&gt;"]</code> subsection per platform under its
 <code>[software "&lt;name&gt;"]</code> stanza, each carrying its own <code>build</code>/<code>toolchain</code>/<code>artifact</code>/<code>deploy</code>
@@ -1149,10 +1151,12 @@ records one <code>[build "&lt;name&gt;" "&lt;platform&gt;"]</code> subsection pe
 each only on its <code>attest-host</code>. A build whose host is not the current one is skipped, and
 the run does not fail (a Linux runner cannot reproduce the Windows artifact, and is not asked to).
 The flat single-build fields remain the form for a single-platform component.</p>
-<p><strong>Escape clause (migrated software only).</strong> Pre-existing software brought under the
-methodology may not be reproducible yet. It may carry <code>repro-exempt = call/NNNN</code> citing a
+<p><strong>The waiver (migrated software only).</strong> Pre-existing software brought under the
+methodology may not be reproducible yet. It may carry <code>repro-waiver = call/NNNN</code> naming a
 recorded <strong>case decision</strong>, a software-scoped <code>call/</code> decision documenting why it is not
-yet reproducible and the interim provenance. <code>--verify-build</code> then warns and skips the
+yet reproducible and the interim provenance. The key is named for what it records, the
+citation, rather than for the state it excuses; the retired spelling <code>repro-exempt</code> still
+parses and reports itself, and is removed at a later revision. <code>--verify-build</code> then warns and skips the
 rebuild comparison; <code>--check</code> still requires the citation to resolve. The exemption is
 meant to be retired as the component converges on reproducibility, and is <strong>never</strong>
 available to greenfield software.</p>
@@ -1258,7 +1262,7 @@ single submodule tree could not. Software initiated under the methodology has
 <strong>reproducible builds</strong>: the stanza also records the <code>build</code>/<code>toolchain</code> recipe and
 the deployed <code>artifact</code> hash, so <code>host-lifecycle software --verify-build</code> can rebuild
 from the pin and prove the deployed binary; migrated software not yet reproducible
-carries a <code>repro-exempt = call/NNNN</code> case decision (see <code>CLAUDE.md</code>). A component that
+carries a <code>repro-waiver = call/NNNN</code> case decision (see <code>CLAUDE.md</code>). A component that
 ships static or self-contained binaries also records a <code>deps-bundle = &lt;url&gt; &lt;sha256&gt;</code>, a
 pinned vendored-dependency bundle it downloads, verifies, and builds offline against under
 <code>--network none</code>, so the build is hermetic (see <code>CLAUDE.md</code>). A component that
@@ -1439,7 +1443,7 @@ independent = true
 verify   = grep -rqs "Prose hygiene is the same lane" host-template/CLAUDE.md</p>
 <p>[upgrade "ecce498"]
 title    = Hermetic builds via a pinned dependency bundle
-action   = Bump your pinned host-lifecycle to the v0.20.0 build that ships the <code>deps-bundle</code> recipe field and the offline <code>--network none</code> build. A component that ships static or self-contained release binaries MUST be able to reproduce them offline from pinned inputs, never from a network fetch at build time. Vendor the dependency layer once and publish it as a reusable, versioned, hash-pinned downloadable release bundle (the pattern <code>pgs-release</code> uses for its prebuilt sysroot), then record it per component as <code>deps-bundle = &lt;url&gt; &lt;sha256&gt;</code> in <code>.host-software</code>. <code>host-lifecycle software --verify-build</code> and <code>release</code> perform the one controlled, pinned download, verify the sha (provenance), stage the vendored sources, and build under <code>--network none</code> (egress). The producer commits a <code>deps-bundle.lock</code> as the single source of truth, and <code>software --check</code> HAZARDs a <code>deps-bundle</code> pin that has drifted from it. A component that genuinely cannot vendor offline (a network-fetching <code>build.rs</code>, a non-Rust toolchain) records the case in <code>repro-exempt = call/NNNN</code>, whose value cites a software-scoped decision. Where offline vendoring is feasible, that exemption does not apply. (This clause originally named a <code>hermetic-exempt</code> key that no release parsed; see the retirement entry at the end of this file.)
+action   = Bump your pinned host-lifecycle to the v0.20.0 build that ships the <code>deps-bundle</code> recipe field and the offline <code>--network none</code> build. A component that ships static or self-contained release binaries MUST be able to reproduce them offline from pinned inputs, never from a network fetch at build time. Vendor the dependency layer once and publish it as a reusable, versioned, hash-pinned downloadable release bundle (the pattern <code>pgs-release</code> uses for its prebuilt sysroot), then record it per component as <code>deps-bundle = &lt;url&gt; &lt;sha256&gt;</code> in <code>.host-software</code>. <code>host-lifecycle software --verify-build</code> and <code>release</code> perform the one controlled, pinned download, verify the sha (provenance), stage the vendored sources, and build under <code>--network none</code> (egress). The producer commits a <code>deps-bundle.lock</code> as the single source of truth, and <code>software --check</code> HAZARDs a <code>deps-bundle</code> pin that has drifted from it. A component that genuinely cannot vendor offline (a network-fetching <code>build.rs</code>, a non-Rust toolchain) records the case in <code>repro-waiver = call/NNNN</code>, whose value cites a software-scoped decision. Where offline vendoring is feasible, that exemption does not apply. (This clause originally named a <code>hermetic-exempt</code> key that no release parsed; see the retirement entry at the end of this file.)
 requires = host-lifecycle v0.20.0
 independent = true
 verify   = grep -rqs "reproduce them offline from pinned inputs" host-template/CLAUDE.md</p>
@@ -1563,6 +1567,12 @@ action   = Entry <code>ecce498</code> told you that a component which cannot ven
 requires = host-lifecycle v0.20.0
 independent = true
 verify   = ! grep -rqs "hermetic-exempt" .host-software</p>
+<p>[upgrade "RENAME-repro-waiver"]
+title    = The reproducibility escape is <code>repro-waiver</code>, named for the citation it records
+action   = Rename <code>repro-exempt</code> to <code>repro-waiver</code> in your <code>.host-software</code>. The key records the name of a decision, so it is named for that record rather than for the state it excuses; the new spelling was settled by the same rotation-proof weak-agent probe that named <code>bootstrap</code> and <code>--verify-setup</code>. Both spellings parse, and the retired one reports itself on every read, so a recipe keeps working while you migrate and tells you it moved. One waiver carries two cases: a migrated build that does not reproduce byte for byte yet, and a component that cannot vendor its dependencies offline (the second folded in when the unimplemented hermeticity key was retired). A project with no waiver on any component renames nothing. Recorded as agentic-host call/0047; the retired spelling is removed at a later revision on its own entry.
+requires = host-lifecycle v0.44.0
+independent = true
+verify   = ! grep -rqs "repro-exempt" .host-software</p>
 
                     </main>
 
