@@ -503,6 +503,57 @@ core (`verify`, `skippable = false`) refuses a skip outright. Operating a phase
 ad-hoc (hand-scaffolding rooms, hand-renaming files, hand-rolling the site or a
 release) leaves no receipt, and so is a defect by construction.
 
+### The fresh clone is bootstrapped, and its completeness is gated
+
+A clone is not a set-up project. The pins can be perfect, every receipt in place
+and `software --check` green, while this machine has no commit hooks installed,
+no re-deriver on PATH and no skill links: the recorded state and the local setup
+are different facts. Two capabilities close that, and a third records it.
+
+**`host-lifecycle bootstrap <dir>` runs the fresh-clone sequence** instead of
+describing it: submodules, materialize, skill links, the gating artifact, the
+commit hooks, the declared PATH re-deriver, then the completeness gate. Every
+step is derived from `.host-software` and every step is read against the live
+tree immediately before it runs, so a step whose precondition already holds is
+skipped and a re-run after a hand-fix picks up where the tree now stands. Know
+what it does on your machine before you run it on a recipe you did not write: it
+runs `git submodule update --init`, clones and checks out worktrees, writes
+symlinks under `.claude/skills/`, `cargo install`s the re-deriver, and copies the
+commit gate into the host repository **and every materialized worktree**. It does
+**not** build the gating artifact: that build belongs in its recorded toolchain,
+and an orchestrator that shelled it into whatever compiler is on the machine
+would install a binary nobody attested. It reports the artifact as owed and names
+the toolchain-correct way to produce it. Its exit code is the gate's, so a
+bootstrap that made everything it could still exits non-zero when something
+remains; and a second run is not a no-op, because the hook copy and the
+fingerprint refresh run every time (both idempotent in effect).
+
+**`host-lifecycle software --verify-setup <dir>` is the completeness gate.** It
+reads the recipe and the live tree and hazards on every required local artifact
+that is absent, naming the command that installs it. Read its clean line
+precisely: it means *every artifact the recipe requires OF THIS HOST is present*,
+where required is role-aware twice over — an artifact is required locally only
+when something local consumes it (today, the component that declares `hooks`
+supplies the gate binary) and only when this host is the one the recipe expects
+to build it. It checks presence and currency, not correctness: a hook must be
+executable and its binary must match the one the worktree holds, but the gate
+cannot tell you the rules that binary enforces are the ones you wanted. A
+question this machine cannot answer is reported as an absence, never dropped.
+
+**The materialize receipt is ungated provenance.** `software --materialize`
+appends `[receipt "materialize" "<component>"]` to `.host-lifecycle-receipts` for
+each component it realized, recording the event: what was realized, the pin by
+reference, the toolchain image reference, and when. It is *not* a phase receipt:
+the lifecycle manifest does not declare that phase, so `software --check` neither
+re-verifies it nor hazards on its absence, and a materialize whose receipt could
+not be written still succeeds. Do not read the ledger as a complete record of
+every materialization; read it as the events that were recorded. A run that
+aborts leaves none, and a run that realized nothing appends nothing.
+
+The local environment fingerprint (`.host-envhash`, read by `host-lifecycle env
+--check`) is tooling, not doctrine: it is gitignored, machine-local, advisory,
+and it never gates. Nothing in the spine depends on it.
+
 ### Never adopt a software repository in place
 
 A host is a *separate meta-repo*; the software it governs lives beneath it as the
