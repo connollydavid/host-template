@@ -842,9 +842,11 @@ specific and enforceable: a component recording a `deps-bundle` MUST build offli
 bundle sha MUST match the recorded one, and `software --check` HAZARDs a `deps-bundle` pin that
 has drifted from the producer's committed `deps-bundle.lock`. A component that genuinely cannot
 vendor offline, such as one with a network-fetching `build.rs` or a non-Rust toolchain,
-records that case with `repro-exempt = call/NNNN`, citing a software-scoped decision;
-hermeticity is a facet of reproducibility rather than a second property with its own key,
-and the exemption is never available where offline vendoring is feasible.
+records the case in `repro-waiver = call/NNNN`, whose value names a software-scoped
+decision. Hermeticity is a facet of reproducibility rather than a second property with its
+own key, so one waiver carries both cases: a migrated build that does not reproduce byte
+for byte yet, and a component that cannot vendor offline. Where offline vendoring is
+feasible, the waiver does not apply.
 
 **Multi-platform builds.** A component whose *one* source pin ships on several platforms
 records one `[build "<name>" "<platform>"]` subsection per platform under its
@@ -855,10 +857,12 @@ each only on its `attest-host`. A build whose host is not the current one is ski
 the run does not fail (a Linux runner cannot reproduce the Windows artifact, and is not asked to).
 The flat single-build fields remain the form for a single-platform component.
 
-**Escape clause (migrated software only).** Pre-existing software brought under the
-methodology may not be reproducible yet. It may carry `repro-exempt = call/NNNN` citing a
+**The waiver (migrated software only).** Pre-existing software brought under the
+methodology may not be reproducible yet. It may carry `repro-waiver = call/NNNN` naming a
 recorded **case decision**, a software-scoped `call/` decision documenting why it is not
-yet reproducible and the interim provenance. `--verify-build` then warns and skips the
+yet reproducible and the interim provenance. The key is named for what it records, the
+citation, rather than for the state it excuses; the retired spelling `repro-exempt` still
+parses and reports itself, and is removed at a later revision. `--verify-build` then warns and skips the
 rebuild comparison; `--check` still requires the citation to resolve. The exemption is
 meant to be retired as the component converges on reproducibility, and is **never**
 available to greenfield software.
