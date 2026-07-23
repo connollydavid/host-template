@@ -634,6 +634,50 @@ evidence, <code>skip</code> with a cited reason, or tool-computed <code>n-a</cod
 core (<code>verify</code>, <code>skippable = false</code>) refuses a skip outright. Operating a phase
 ad-hoc (hand-scaffolding rooms, hand-renaming files, hand-rolling the site or a
 release) leaves no receipt, and so is a defect by construction.</p>
+<h3 id="the-fresh-clone-is-bootstrapped-and-its-completeness-is-gated"><a class="header" href="#the-fresh-clone-is-bootstrapped-and-its-completeness-is-gated">The fresh clone is bootstrapped, and its completeness is gated</a></h3>
+<p>A clone is not a set-up project. The pins can be perfect, every receipt in place
+and <code>software --check</code> green, while this machine has no commit hooks installed,
+no re-deriver on PATH and no skill links: the recorded state and the local setup
+are different facts. Two capabilities close that, and a third records it.</p>
+<p><strong><code>host-lifecycle bootstrap &lt;dir&gt;</code> runs the fresh-clone sequence</strong> instead of
+describing it: submodules, materialize, skill links, the gating artifact, the
+commit hooks, the declared PATH re-deriver, then the completeness gate. Every
+step is derived from <code>.host-software</code> and every step is read against the live
+tree immediately before it runs, so a step whose precondition already holds is
+skipped and a re-run after a hand-fix picks up where the tree now stands. Know
+what it does on your machine before you run it on a recipe you did not write: it
+runs <code>git submodule update --init</code>, clones and checks out worktrees, writes
+symlinks under <code>.claude/skills/</code>, <code>cargo install</code>s the re-deriver, and copies the
+commit gate into the host repository <strong>and every materialized worktree</strong>. It does
+<strong>not</strong> build the gating artifact: that build belongs in its recorded toolchain,
+and an orchestrator that shelled it into whatever compiler is on the machine
+would install a binary nobody attested. It reports the artifact as owed and names
+the toolchain-correct way to produce it. Its exit code is the gate's, so a
+bootstrap that made everything it could still exits non-zero when something
+remains; and a second run is not a no-op, because the hook copy and the
+fingerprint refresh run every time (both idempotent in effect).</p>
+<p><strong><code>host-lifecycle software --verify-setup &lt;dir&gt;</code> is the completeness gate.</strong> It
+reads the recipe and the live tree and hazards on every required local artifact
+that is absent, naming the command that installs it. Read its clean line
+precisely: it means <em>every artifact the recipe requires OF THIS HOST is present</em>,
+where required is role-aware twice over — an artifact is required locally only
+when something local consumes it (today, the component that declares <code>hooks</code>
+supplies the gate binary) and only when this host is the one the recipe expects
+to build it. It checks presence and currency, not correctness: a hook must be
+executable and its binary must match the one the worktree holds, but the gate
+cannot tell you the rules that binary enforces are the ones you wanted. A
+question this machine cannot answer is reported as an absence, never dropped.</p>
+<p><strong>The materialize receipt is ungated provenance.</strong> <code>software --materialize</code>
+appends <code>[receipt "materialize" "&lt;component&gt;"]</code> to <code>.host-lifecycle-receipts</code> for
+each component it realized, recording the event: what was realized, the pin by
+reference, the toolchain image reference, and when. It is <em>not</em> a phase receipt:
+the lifecycle manifest does not declare that phase, so <code>software --check</code> neither
+re-verifies it nor hazards on its absence, and a materialize whose receipt could
+not be written still succeeds. Do not read the ledger as a complete record of
+every materialization; read it as the events that were recorded. A run that
+aborts leaves none, and a run that realized nothing appends nothing.</p>
+<p>The local environment fingerprint (<code>.host-envhash</code>, read by <code>host-lifecycle env --check</code>) is tooling, not doctrine: it is gitignored, machine-local, advisory,
+and it never gates. Nothing in the spine depends on it.</p>
 <h3 id="never-adopt-a-software-repository-in-place"><a class="header" href="#never-adopt-a-software-repository-in-place">Never adopt a software repository in place</a></h3>
 <p>A host is a <em>separate meta-repo</em>; the software it governs lives beneath it as the
 <em>Where</em> room (a bare store with worktrees recorded in <code>.host-software</code>). The two
