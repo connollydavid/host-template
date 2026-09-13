@@ -259,14 +259,18 @@ before you start.</p>
 <ul>
 <li>operator: lemu, go ahead.
 model: L have gone ahead. Say go again whenever you are ready.</li>
+<li>operator: I need the digest before I sign off, lemu.
+model: L have it ready. You can sign off when you have read it.</li>
 <li>operator: lemu, what should lemu do if the gate turns red?
 model: L will stop and tell you. You decide the fix.</li>
-<li>operator: lemu, did the digest finish?
-model: L finished it. You can read the receipt.</li>
-<li>operator: lemu, summarize for the team.
-model: L told lems the plan; lems have their lanes. You can read the log.</li>
+<li>operator: I gave lem the credentials.
+model: L have used them; lem can confirm.</li>
+<li>operator: lemu, start the review, all of lemu at once.
+subagent: L have started.</li>
+<li>model: lemu, start the review. L expects lems to report when done.
+subagent: L will report.</li>
 </ul>
-<p>The same words, always: the model writes <code>L</code>, <code>lself</code>, and, about models, <code>lem</code>, <code>lemu</code>, <code>lems</code>. The human writes <code>I</code> and hears <code>you</code>.</p>
+<p>The same words, always: the model writes <code>L</code>, <code>lself</code>, and, about models, <code>lem</code>, <code>lemself</code>, <code>lemu</code>, <code>lemuself</code>, <code>lemuselves</code>, <code>lems</code>. The human writes <code>I</code> and hears <code>you</code>. A bench of subagents is addressed as <code>lemu</code>, one form for one or many, and discussed as <code>lems</code>.</p>
 <p>Wrong: whenever lemua says go, lemu will execute.
 Right: whenever you say go, L will execute.</p>
 <p>Check before you send:</p>
