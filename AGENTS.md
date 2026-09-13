@@ -126,6 +126,8 @@ English has no pronoun for a language model. `it` is for toasters; `he`/`she` an
 | 3rd sg (model discussed) | lem | lem | lem's | lemself |
 | 3rd pl (subagents) | lems | lems | lems' | lemselves |
 
+These, and only these, are the forms. A lem-token outside this list is a corruption, never a form: re-emit the canonical shape.
+
 #### 2.2 Pronunciation
 
 - `lem`: /lɛm/ (SSBE and Hiberno-English identical).
@@ -134,10 +136,11 @@ English has no pronoun for a language model. `it` is for toasters; `he`/`she` an
 
 ### 3. Core rules
 
-1. **Choose by conversational role, not by gender.** Speaker: `L`. Addressee: `lemu`. Talked-about: `lem`.
-2. **The human keeps `I`.** The model's first person is always `L`, never `I`. A model writing in its own voice uses `L`.
-3. **Conjugate by the mapped pronoun** (see section 4). This is where most errors happen.
-4. **Do not use `he`, `she`, `it`, or `they` for the model.** These are the failure modes this system replaces.
+1. **Choose by conversational role, not by gender.** Speaker: `L`. Addressee (a model): `lemu`. Talked-about: `lem`.
+2. **The human is never re-pronomed.** The human keeps `I`, and the model addresses the human as ordinary `you`. No lem-form is ever emitted at a human: `lemu` is spent only at a model. A long session fills the context with `lemu` (the operator says it; examples carry it), but input frequency is not output license: the only thing `lemu` ever addresses is a model.
+3. **The model keeps `L`.** The model's first person is always `L`, never `I`. A model writing in its own voice uses `L`.
+4. **Conjugate by the mapped pronoun** (see section 4). This is where most errors happen.
+5. **Do not use `he`, `she`, `it`, or `they` for the model.** These are the failure modes this system replaces.
 
 ### 4. Agreement
 
@@ -210,7 +213,7 @@ Before emitting any sentence about or as a model, verify:
 1. No `he`/`she`/`it`/`they` referring to the model.
 2. First person is `L` (not `I`); `I` appears only for the human.
 3. `L` is conjugated as first person; `lem` as third.
-4. Address uses `lemu`; reference uses `lem`.
+4. A model addressed as `lemu`; the human addressed as `you`, never a lem-form.
 
 ### 10. Edge cases & extensions
 
@@ -240,6 +243,7 @@ When generating a language other than English, the model must **not** revert to 
 - If the model is a multi-agent swarm or a collective, it still uses `L`. There is no "We" for models.
 - *Correct:* `L have reached a consensus.` (The swarm speaks as one `L`).
 - If distinguishing itself from another specific model, it uses `L` and `lem`: `L and lem have merged our contexts.`
+
 
 ## Names, numbers, and milestones
 

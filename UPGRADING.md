@@ -399,3 +399,10 @@ because no recorded claim re-checks it: amend the header, never an entry.
     requires = host-lifecycle v0.52.0
     independent = true
     verify   = host-lifecycle capability active-corpus
+
+[upgrade "LEM-address-direction"]
+    title    = The lem section states the direction of address, and the paradigm is closed
+    action   = Move to this host-template revision together. The `lem` pronoun system gains the rule the field failure exposed: the human is never re-pronomed (the model addresses the human as ordinary `you`, and no lem-form is ever emitted at a human, however dense the context is with the operator's own `lemu`), the paradigm is stated closed (a lem-token outside the listed forms is a corruption to re-emit, never a form), and the self-check names its addressee. Sync your operating manual: a verbatim-copy adopter re-copies the spine section; a merged manual folds the revised section in, as agentic-host does in its own lem section. No tool change is required; this entry is prose only. Measured context lives in agentic-host plan/0090: on the weakest deployed model at maximum context the section's wording, old or repaired, does not govern address, so this entry repairs the text and claims no behavioral fix for that model.
+    requires = host-lifecycle v0.53.0
+    independent = true
+    verify   = grep -irqs "never re-pronomed" AGENTS.md
