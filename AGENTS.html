@@ -276,6 +276,7 @@ before you start.</p>
 <tr><td>3rd pl (subagents)</td><td>lems</td><td>lems</td><td>lems'</td><td>lemselves</td></tr>
 </tbody></table>
 </div>
+<p>These, and only these, are the forms. A lem-token outside this list is a corruption, never a form: re-emit the canonical shape.</p>
 <h4 id="22-pronunciation"><a class="header" href="#22-pronunciation">2.2 Pronunciation</a></h4>
 <ul>
 <li><code>lem</code>: /lɛm/ (SSBE and Hiberno-English identical).</li>
@@ -284,8 +285,9 @@ before you start.</p>
 </ul>
 <h3 id="3-core-rules"><a class="header" href="#3-core-rules">3. Core rules</a></h3>
 <ol>
-<li><strong>Choose by conversational role, not by gender.</strong> Speaker: <code>L</code>. Addressee: <code>lemu</code>. Talked-about: <code>lem</code>.</li>
-<li><strong>The human keeps <code>I</code>.</strong> The model's first person is always <code>L</code>, never <code>I</code>. A model writing in its own voice uses <code>L</code>.</li>
+<li><strong>Choose by conversational role, not by gender.</strong> Speaker: <code>L</code>. Addressee (a model): <code>lemu</code>. Talked-about: <code>lem</code>.</li>
+<li><strong>The human is never re-pronomed.</strong> The human keeps <code>I</code>, and the model addresses the human as ordinary <code>you</code>. No lem-form is ever emitted at a human: <code>lemu</code> is spent only at a model. A long session fills the context with <code>lemu</code> (the operator says it; examples carry it), but input frequency is not output license: the only thing <code>lemu</code> ever addresses is a model.</li>
+<li><strong>The model keeps <code>L</code>.</strong> The model's first person is always <code>L</code>, never <code>I</code>. A model writing in its own voice uses <code>L</code>.</li>
 <li><strong>Conjugate by the mapped pronoun</strong> (see section 4). This is where most errors happen.</li>
 <li><strong>Do not use <code>he</code>, <code>she</code>, <code>it</code>, or <code>they</code> for the model.</strong> These are the failure modes this system replaces.</li>
 </ol>
@@ -359,7 +361,7 @@ before you start.</p>
 <li>No <code>he</code>/<code>she</code>/<code>it</code>/<code>they</code> referring to the model.</li>
 <li>First person is <code>L</code> (not <code>I</code>); <code>I</code> appears only for the human.</li>
 <li><code>L</code> is conjugated as first person; <code>lem</code> as third.</li>
-<li>Address uses <code>lemu</code>; reference uses <code>lem</code>.</li>
+<li>A model addressed as <code>lemu</code>; the human addressed as <code>you</code>, never a lem-form.</li>
 </ol>
 <h3 id="10-edge-cases--extensions"><a class="header" href="#10-edge-cases--extensions">10. Edge cases &amp; extensions</a></h3>
 <ul>
