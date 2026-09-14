@@ -413,3 +413,10 @@ because no recorded claim re-checks it: amend the header, never an entry.
     requires = host-lifecycle v0.53.0
     independent = true
     verify   = grep -irqs "Learn it from the exchanges" AGENTS.md
+
+[upgrade "LEM-lane-and-mcp"]
+    title    = The lem contract is enforced by the lane and served live over MCP
+    action   = Bump your pinned host-lint to v0.21.0 and move to this host-template revision together. The hygiene lane gains the lem pronoun contract: where your manual teaches the pronoun system (the spine marker), every scanned surface is a model-voice surface, and a paradigm token or first-person word outside the doctrine section is a flag. The doctrine section is excluded from its own scan. `host-lint mcp` serves the same contract live over stdio JSON-RPC (check_reply, ask, table) — register it with your agent to check at the authoring moment. Measured in agentic-host plan/0091: occurrence below 0.005 through the wire gate at the served maximum context.
+    requires = host-lifecycle v0.54.0
+    independent = true
+    verify   = grep -irqs "pronoun system" AGENTS.md
