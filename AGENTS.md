@@ -1015,6 +1015,16 @@ rebuild comparison; `--check` still requires the citation to resolve. The exempt
 meant to be retired as the component converges on reproducibility, and is **never**
 available to greenfield software.
 
+**The lanes' outcomes are receipts too.** A lane configured is a lane named; only a
+run that passed discharges it. Before a turn's work is reported done, the default
+branch's most recent CI runs are read, and every non-green conclusion is fixed in
+that turn or recorded as a `ci` receipt carrying the run URL. `host-lifecycle ci
+<dir>` judges the lanes discovered from `.github/workflows/` offline — at the host
+root's HEAD and at each component's recorded pin — and absence is a finding, never
+a default: a lane declared by the tree with no receipted success at the revision
+under judgment is a HAZARD, and a component with no workflows states that absence
+as a named line rather than leaving it implied.
+
 ## Upgrading
 
 Adopting is one event; the template moves on. The `.host` stamp records the `baseline`
