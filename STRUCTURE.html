@@ -224,8 +224,9 @@ with <code>--item &lt;name&gt;[@&lt;branch&gt;]</code>.
 The recorded pin replaces a submodule gitlink as the
 reproducibility anchor, so several branches stay materialized at once where a
 single submodule tree could not. Software initiated under the methodology has
-<strong>reproducible builds</strong>: the stanza also records the <code>build</code>/<code>toolchain</code> recipe and
-the deployed <code>artifact</code> hash, so <code>host-lifecycle software --verify-build</code> can rebuild
+<strong>reproducible builds</strong>: the stanza also records the <code>build</code> recipe, the <code>toolchain</code> — a <strong>digest-pinned
+container image</strong>, not a target triple (the natural misreading, and the cost is a
+lane that never runs) — and the deployed <code>artifact</code> hash, so <code>host-lifecycle software --verify-build</code> can rebuild
 from the pin and prove the deployed binary; migrated software not yet reproducible
 carries a <code>repro-waiver = call/NNNN</code> case decision (see <code>AGENTS.md</code>). A component that
 ships static or self-contained binaries also records a <code>deps-bundle = &lt;url&gt; &lt;sha256&gt;</code>, a

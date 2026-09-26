@@ -1293,6 +1293,15 @@ parses and reports itself, and is removed at a later revision. <code>--verify-bu
 rebuild comparison; <code>--check</code> still requires the citation to resolve. The exemption is
 meant to be retired as the component converges on reproducibility, and is <strong>never</strong>
 available to greenfield software.</p>
+<p><strong>The lanes' outcomes are receipts too.</strong> A lane configured is a lane named; only a
+run that passed discharges it. Before a turn's work is reported done, the default
+branch's most recent CI runs are read, and every non-green conclusion is fixed in
+that turn or recorded as a <code>ci</code> receipt carrying the run URL. `host-lifecycle ci</p>
+<dir>` judges the lanes discovered from `.github/workflows/` offline — at the host
+root's HEAD and at each component's recorded pin — and absence is a finding, never
+a default: a lane declared by the tree with no receipted success at the revision
+under judgment is a HAZARD, and a component with no workflows states that absence
+as a named line rather than leaving it implied.
 <h2 id="upgrading"><a class="header" href="#upgrading">Upgrading</a></h2>
 <p>Adopting is one event; the template moves on. The <code>.host</code> stamp records the <code>baseline</code>
 ledger entry (every entry at or before its position in <code>UPGRADING.md</code> counts as applied).
@@ -1393,8 +1402,9 @@ with <code>--item &lt;name&gt;[@&lt;branch&gt;]</code>.
 The recorded pin replaces a submodule gitlink as the
 reproducibility anchor, so several branches stay materialized at once where a
 single submodule tree could not. Software initiated under the methodology has
-<strong>reproducible builds</strong>: the stanza also records the <code>build</code>/<code>toolchain</code> recipe and
-the deployed <code>artifact</code> hash, so <code>host-lifecycle software --verify-build</code> can rebuild
+<strong>reproducible builds</strong>: the stanza also records the <code>build</code> recipe, the <code>toolchain</code> — a <strong>digest-pinned
+container image</strong>, not a target triple (the natural misreading, and the cost is a
+lane that never runs) — and the deployed <code>artifact</code> hash, so <code>host-lifecycle software --verify-build</code> can rebuild
 from the pin and prove the deployed binary; migrated software not yet reproducible
 carries a <code>repro-waiver = call/NNNN</code> case decision (see <code>AGENTS.md</code>). A component that
 ships static or self-contained binaries also records a <code>deps-bundle = &lt;url&gt; &lt;sha256&gt;</code>, a
@@ -1794,6 +1804,11 @@ action   = Bump your pinned host-lint to v0.21.0 and move to this host-template 
 requires = host-lifecycle v0.54.0
 independent = true
 verify   = grep -irqs "pronoun system" AGENTS.md</p>
+<p>[upgrade "fbdb176"]
+title    = The lanes' outcomes are receipts: the per-turn duty and the CI clause
+action   = Before a turn's work is reported done, read the default branch's most recent CI runs, and fix or receipt every non-green conclusion with its run URL (<code>host-lifecycle ci &lt;dir&gt; --record &lt;label&gt;/&lt;lane&gt; --run &lt;url&gt;</code>). <code>software --check</code> gains the CI clause: lanes discovered from <code>.github/workflows/</code> are judged offline against <code>ci</code> receipts at the revision under judgment (the host root at HEAD, each component at its recorded pin), absence is a HAZARD rather than a vacuous pass, and a component with no workflows states its absence as a named line. The <code>[software]</code> <code>toolchain</code> key is documented as a digest-pinned container image, not a target triple. Measured in agentic-host plan/0095: two releases shipped with red CI while every receipt recorded done.
+requires = host-lifecycle v0.55.0
+verify   = grep -qs "outcomes are receipts" AGENTS.md</p>
 
                     </main>
 
