@@ -420,3 +420,9 @@ because no recorded claim re-checks it: amend the header, never an entry.
     requires = host-lifecycle v0.54.0
     independent = true
     verify   = grep -irqs "pronoun system" AGENTS.md
+
+[upgrade "fbdb176"]
+title    = The lanes' outcomes are receipts: the per-turn duty and the CI clause
+action   = Before a turn's work is reported done, read the default branch's most recent CI runs, and fix or receipt every non-green conclusion with its run URL (`host-lifecycle ci <dir> --record <label>/<lane> --run <url>`). `software --check` gains the CI clause: lanes discovered from `.github/workflows/` are judged offline against `ci` receipts at the revision under judgment (the host root at HEAD, each component at its recorded pin), absence is a HAZARD rather than a vacuous pass, and a component with no workflows states its absence as a named line. The `[software]` `toolchain` key is documented as a digest-pinned container image, not a target triple. Measured in agentic-host plan/0095: two releases shipped with red CI while every receipt recorded done.
+requires = host-lifecycle v0.55.0
+verify   = grep -qs "outcomes are receipts" AGENTS.md
