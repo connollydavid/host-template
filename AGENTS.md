@@ -1025,6 +1025,13 @@ a default: a lane declared by the tree with no receipted success at the revision
 under judgment is a HAZARD, and a component with no workflows states that absence
 as a named line rather than leaving it implied.
 
+**Fan-out workers share one index.** While a bench works in one tree, each
+worker stages explicit paths (`git add <paths>`) and never `-A`: a sweep that
+stages a colleague's in-progress files folds their half-done state into a commit
+whose message names none of it, and every suite run inside that window reads a
+moving tree. A commit whose message names fewer paths than it touches is a
+finding to read, not a style note.
+
 ## Upgrading
 
 Adopting is one event; the template moves on. The `.host` stamp records the `baseline`
