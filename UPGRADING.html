@@ -537,6 +537,11 @@ title    = The lanes' outcomes are receipts: the per-turn duty and the CI clause
 action   = Before a turn's work is reported done, read the default branch's most recent CI runs, and fix or receipt every non-green conclusion with its run URL (<code>host-lifecycle ci &lt;dir&gt; --record &lt;label&gt;/&lt;lane&gt; --run &lt;url&gt;</code>). <code>software --check</code> gains the CI clause: lanes discovered from <code>.github/workflows/</code> are judged offline against <code>ci</code> receipts at the revision under judgment (the host root at HEAD, each component at its recorded pin), absence is a HAZARD rather than a vacuous pass, and a component with no workflows states its absence as a named line. The <code>[software]</code> <code>toolchain</code> key is documented as a digest-pinned container image, not a target triple. Measured in agentic-host plan/0095: two releases shipped with red CI while every receipt recorded done.
 requires = host-lifecycle v0.55.0
 verify   = grep -qs "outcomes are receipts" AGENTS.md</p>
+<p>[upgrade "1202877"]
+title    = The check lane runs in CI: the naming sweep, the cfg scan, and the derived inventory block at the push boundary
+action   = Add <code>.github/workflows/check.yml</code> (the reference lane under <code>.github/workflows/</code>) so every push runs <code>host-lifecycle software --check .</code>: the naming sweep's recheck, the cfg scan (a component carrying <code>#[cfg(kani)]</code> code with no <code>kani:</code> disposition in its obligations manifest), and the derived inventory (a source file of a materialized component in no task's <code>inputs</code> and no reasoned exclusion in <code>.host-inventory</code>) then block in CI instead of waiting for a human to invoke the gate. The lane no-ops on a tree with no <code>.host-software</code>. Bump your pinned host-lifecycle to v0.60.3 with this revision, because the cfg and inventory scans ship there. Measured in agentic-host plan/0099: the forge's first inventory sweep found thirteen source files across six components in no task's inputs, and the first cfg sweep found kani harnesses in two components that no gate compiled.
+requires = host-lifecycle v0.60.3
+verify   = test -f .github/workflows/check.yml</p>
 
                     </main>
 

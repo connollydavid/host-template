@@ -1097,6 +1097,13 @@ root's HEAD and at each component's recorded pin — and absence is a finding, n
 a default: a lane declared by the tree with no receipted success at the revision
 under judgment is a HAZARD, and a component with no workflows states that absence
 as a named line rather than leaving it implied.
+<p><strong>The check lane runs in CI too.</strong> The reference <code>.github/workflows/check.yml</code>
+runs <code>host-lifecycle software --check .</code> on every push, so the naming sweep's
+recheck, the cfg scan, and the derived inventory block at the push boundary
+instead of waiting for a human to invoke the gate. The lane no-ops on a tree
+with no <code>.host-software</code>, and the tool it builds is the <code>tools/host-lifecycle</code>
+submodule the template ships, so the verdict comes from the spine revision the
+project carries (host#24).</p>
 <p><strong>Fan-out workers share one index.</strong> While a bench works in one tree, each
 worker stages explicit paths (<code>git add &lt;paths&gt;</code>) and never <code>-A</code>: a sweep that
 stages a colleague's in-progress files folds their half-done state into a commit
