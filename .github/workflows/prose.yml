@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      # Pinned to the same host-lifecycle the host gates on (v0.60.4), so the spine's
+      # Pinned to the same host-lifecycle the host gates on (v0.60.5), so the spine's
       # prose verdict matches every adopter's verify audit; v0.49.0 embeds the
       # reconciled word-choice rules, under which this repository's own text is clean
       # with no LEXICON at all (call/0051). This is an equality claim and gates as
@@ -23,6 +23,6 @@ jobs:
       # --root $HOME/.local so the binary lands where the gate step reads it
       # (cargo install's default root is the toolchain bin dir, not this path).
       - name: Install host-lifecycle (pinned)
-        run: cargo install --locked --root "$HOME/.local" --git https://github.com/connollydavid/host-lifecycle --rev c140ea265d2ea13252fef59d9e20dc28e324c9e5 # host-lifecycle, bumped by the release cascade
+        run: cargo install --locked --root "$HOME/.local" --git https://github.com/connollydavid/host-lifecycle --rev 4ad90ae90e79c899ab8d114ecf0bb9f98f4bfdfc # host-lifecycle, bumped by the release cascade
       - name: Prose gate (zero tropes in authored docs)
         run: "$HOME/.local/bin/host-lifecycle prose ."
