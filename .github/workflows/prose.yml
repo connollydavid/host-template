@@ -23,6 +23,6 @@ jobs:
       # --root $HOME/.local so the binary lands where the gate step reads it
       # (cargo install's default root is the toolchain bin dir, not this path).
       - name: Install host-lifecycle (pinned)
-        run: cargo install --locked --root "$HOME/.local" --git https://github.com/connollydavid/host-lifecycle --rev c262a2b5a7351e6ed55b3d488564192d4ddc9bf4 # host-lifecycle, bumped by the release cascade
+        run: cargo install --locked --root "$HOME/.local" --git https://github.com/connollydavid/host-lifecycle --rev 727be0df74e0f4998c37b221e36780c6103be536 # host-lifecycle v0.60.7, bumped by the release cascade
       - name: Prose gate (zero tropes in authored docs)
         run: "$HOME/.local/bin/host-lifecycle prose ."
