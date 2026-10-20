@@ -1148,7 +1148,32 @@ stable anchor, never a position that renumbers when a plan is re-cut. An anchore
 without an anchor is refused, so a task is never confused with an ordinary
 subsection.</p>
 <p>A few bullets under each task heading carry its fields:</p>
-<pre><code>## Build sequence
+<pre><code>## The goal loop: one goal, oriented turns
+
+A goal is a `plan/NNNN` milestone. `host-lifecycle goal set` declares the
+active goal (one per repo; the audited commit of the declaration is the
+authority), `goal propose` prints the command for the operator and writes
+nothing, and `goal show` orients: purpose, position, needs-you, CI,
+frontier, tree, and the suggested next move on the last line. Work the
+NEXT line. If it is a command, run it as printed. If it says `work &lt;key&gt;`,
+start that task. If the tool refuses to emit, run the last line. Never
+invent a command or a flag.
+
+`goal park` re-queues a blocked goal (a reversible block), `goal unpark`
+resumes it, `goal abandon` exits with an OWED row in the plan index, and
+`goal repair` reconciles state toward the tracked record: the receipt
+stanzas over the Status line over the gitignored `.host-goal` sidecar,
+which holds only this worktree's claim. Every mutator also rewrites the
+tracked `GOAL.md`; declared in the corpus, it loads the active-goal
+declaration in every session with no plugin. `goal complete` composes the
+full verify sweep as subprocesses (the software gate, the ci judge, book,
+refs, obligations) with the task receipts, the plan row, and a clean
+pushed tree; a refusal banks nothing, and every hazard names its remedy.
+The harness doors are installed, never hand-written: `host-lifecycle
+install` emits the flat `host-&lt;verb&gt;` command family for each harness,
+and `install --check` guards the files against drift.
+
+## Build sequence
 
 ### Gather the data {#gather-data}
 
