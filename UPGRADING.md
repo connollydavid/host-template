@@ -450,3 +450,9 @@ title    = The recipe gains the regen key: a release carries the artifacts its v
 action   = The software recipe section gains "Version-derived artifacts": a component whose release regenerates files that embed the crate version (a man page, a help snapshot) records `regen = <command>` in .host-software, and host-lifecycle v0.61.3's release runs it in the canonical worktree between the version bump and the release commit, before the artifact build, so bump and derived artifacts share one commit and the canonical hash covers them. Components declaring nothing keep the bump-only behavior, so the key is optional and needs no migration. Measured in agentic-host plan/0103 (host-lifecycle#31: a tagged release whose man page still read the previous version was the reporting shape).
 requires = host-lifecycle v0.61.3
 verify   = grep -qs "regen = " AGENTS.md
+
+[upgrade "7ef379e"]
+title    = Actions is a reference lane: the inapplicability claim turns a platform-impossible verify into a disclosed fact
+action   = The check-lane clause states plainly that GitHub Actions is a reference lane, never a requirement: a host whose forge carries no runner states the absence rather than leaving it implied. An applied upgrade whose verify can never hold on such a host (a GitHub-specific post-condition on a gitweb grain, say) claims it where it is recorded: `host-lifecycle upgrade --record <id> --inapplicable "<reason>"`, which needs no verify run, and the recheck reports the entry as not applicable with its reason instead of hazarding forever. Requires host-lifecycle v0.61.5 (the disposition and the recheck's disclosure ship there). Measured in agentic-host plan/0103 (host-lifecycle#33: the reporting host's check was permanently red on entry 1202877's `test -f .github/workflows/check.yml`).
+requires = host-lifecycle v0.61.5
+verify   = grep -qsF "**reference** lane" AGENTS.md
