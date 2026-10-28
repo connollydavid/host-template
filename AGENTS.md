@@ -1025,6 +1025,14 @@ own key, so one waiver carries both cases: a migrated build that does not reprod
 for byte yet, and a component that cannot vendor offline. Where offline vendoring is
 feasible, the waiver does not apply.
 
+**Version-derived artifacts.** A component whose release regenerates files that embed the
+crate version (a man page, a help snapshot) records `regen = <command>` in `.host-software`:
+the command `release` runs in the canonical worktree between the version bump and the
+release commit, so bump and derived artifacts share one commit and the tag never names a
+version its artifacts disown (host-lifecycle#31). The command runs before the artifact
+build, so the canonical hash covers the regenerated files. A component declaring nothing
+keeps the bump-only behavior.
+
 **Multi-platform builds.** A component whose *one* source pin ships on several platforms
 records one `[build "<name>" "<platform>"]` subsection per platform under its
 `[software "<name>"]` stanza, each carrying its own `build`/`toolchain`/`artifact`/`deploy`
