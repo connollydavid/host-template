@@ -1305,6 +1305,13 @@ decision. Hermeticity is a facet of reproducibility rather than a second propert
 own key, so one waiver carries both cases: a migrated build that does not reproduce byte
 for byte yet, and a component that cannot vendor offline. Where offline vendoring is
 feasible, the waiver does not apply.</p>
+<p><strong>Version-derived artifacts.</strong> A component whose release regenerates files that embed the
+crate version (a man page, a help snapshot) records <code>regen = &lt;command&gt;</code> in <code>.host-software</code>:
+the command <code>release</code> runs in the canonical worktree between the version bump and the
+release commit, so bump and derived artifacts share one commit and the tag never names a
+version its artifacts disown (host-lifecycle#31). The command runs before the artifact
+build, so the canonical hash covers the regenerated files. A component declaring nothing
+keeps the bump-only behavior.</p>
 <p><strong>Multi-platform builds.</strong> A component whose <em>one</em> source pin ships on several platforms
 records one <code>[build "&lt;name&gt;" "&lt;platform&gt;"]</code> subsection per platform under its
 <code>[software "&lt;name&gt;"]</code> stanza, each carrying its own <code>build</code>/<code>toolchain</code>/<code>artifact</code>/<code>deploy</code>
