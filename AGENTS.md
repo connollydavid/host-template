@@ -1068,7 +1068,11 @@ recheck, the cfg scan, and the derived inventory block at the push boundary
 instead of waiting for a human to invoke the gate. The lane no-ops on a tree
 with no `.host-software`, and the tool it builds is the `tools/host-lifecycle`
 submodule the template ships, so the verdict comes from the spine revision the
-project carries (host#24).
+project carries (host#24). GitHub Actions is a **reference** lane, never a
+requirement: a host whose forge carries no Actions runner states the absence,
+and a recorded upgrade whose verify cannot apply there claims it with
+`upgrade --record <id> --inapplicable "<reason>"`, which the recheck reads as a
+disclosed fact, not a permanent alarm (host#33).
 
 **Fan-out workers share one index.** While a bench works in one tree, each
 worker stages explicit paths (`git add <paths>`) and never `-A`: a sweep that
