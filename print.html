@@ -1873,6 +1873,11 @@ title    = The goal loop: one active goal, oriented turns, installed doors
 action   = The manual gains the goal-loop section (a goal is a plan/NNNN milestone; goal show orients with the next move on the last line; park is re-queuing; complete composes the verify sweep; GOAL.md is the corpus surface, rewritten by every mutator; install emits the harness doors). Adopters declare GOAL.md in their corpus when they first set a goal: add the line to .host-corpus and the tool maintains the file from goal set onward. The .host-goal sidecar is gitignored machine state, this worktree claim only, re-derivable by goal repair; old tools neither read nor erase it, and no stamp key is added, so there is no stamp migration. Degraded mode is legible without the verbs: standing reads from the plan rooms, the receipts, and the Status lines. host-lifecycle v0.61.0 ships the verbs and the install; adopters below it gain the section text only until they bump (the verify is doc-only).
 requires = host-lifecycle (none; the verify is doc-only)
 verify   = grep -qs "goal show" AGENTS.md</p>
+<p>[upgrade "9a0f7d0"]
+title    = The recipe gains the regen key: a release carries the artifacts its version bump regenerates
+action   = The software recipe section gains "Version-derived artifacts": a component whose release regenerates files that embed the crate version (a man page, a help snapshot) records <code>regen = &lt;command&gt;</code> in .host-software, and host-lifecycle v0.61.3's release runs it in the canonical worktree between the version bump and the release commit, before the artifact build, so bump and derived artifacts share one commit and the canonical hash covers them. Components declaring nothing keep the bump-only behavior, so the key is optional and needs no migration. Measured in agentic-host plan/0103 (host-lifecycle#31: a tagged release whose man page still read the previous version was the reporting shape).
+requires = host-lifecycle v0.61.3
+verify   = grep -qs "regen = " AGENTS.md</p>
 
                     </main>
 
