@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">host-template</a></li><li class="chapter-item expanded affix "><li class="part-title">Cast: who</li><li class="chapter-item expanded "><a href="cast/index.html"><strong aria-hidden="true">1.</strong> Cast: the project's Who</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cast/applying-personas.html"><strong aria-hidden="true">1.1.</strong> Applying personas during planning</a></li><li class="chapter-item expanded "><a href="cast/mara.html"><strong aria-hidden="true">1.2.</strong> Mara: the Human Operator</a></li><li class="chapter-item expanded "><a href="cast/wren.html"><strong aria-hidden="true">1.3.</strong> Wren: the Agentic LLM Developer</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Plan: what & when</li><li class="chapter-item expanded "><a href="plan-index.html"><strong aria-hidden="true">2.</strong> Plan</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="plan/0001-example-milestone/index.html"><strong aria-hidden="true">2.1.</strong> 0001 example milestone</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Software: where</li><li class="chapter-item expanded affix "><li class="part-title">Call: why</li><li class="chapter-item expanded "><a href="call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">3.</strong> Use Markdown decision records (MADR)</a></li><li class="chapter-item expanded affix "><li class="part-title">Reference: how</li><li class="chapter-item expanded "><a href="AGENTS.html"><strong aria-hidden="true">4.</strong> AGENTS.md: operating manual for an agentic project</a></li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">5.</strong> CLAUDE</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="MIGRATION.html"><strong aria-hidden="true">5.1.</strong> MIGRATION.md: the process moved to the host repo</a></li><li class="chapter-item expanded "><a href="STRUCTURE.html"><strong aria-hidden="true">5.2.</strong> Structure</a></li><li class="chapter-item expanded "><a href="UPGRADING.html"><strong aria-hidden="true">5.3.</strong> UPGRADING.md: the version-to-version upgrade ledger</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Memory</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">host-template</a></li><li class="chapter-item expanded affix "><li class="part-title">Cast: who</li><li class="chapter-item expanded "><a href="cast/index.html"><strong aria-hidden="true">1.</strong> Cast: the project's Who</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cast/applying-personas.html"><strong aria-hidden="true">1.1.</strong> Applying personas during planning</a></li><li class="chapter-item expanded "><a href="cast/mara.html"><strong aria-hidden="true">1.2.</strong> Mara: the Human Operator</a></li><li class="chapter-item expanded "><a href="cast/wren.html"><strong aria-hidden="true">1.3.</strong> Wren: the Agentic LLM Developer</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Plan: what & when</li><li class="chapter-item expanded "><a href="PLAN.html"><strong aria-hidden="true">2.</strong> PLAN: milestone index</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="plan/0001-example-milestone/index.html"><strong aria-hidden="true">2.1.</strong> 0001 example milestone</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Software: where</li><li class="chapter-item expanded affix "><li class="part-title">Call: why</li><li class="chapter-item expanded "><a href="call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">3.</strong> Use Markdown decision records (MADR)</a></li><li class="chapter-item expanded affix "><li class="part-title">Reference: how</li><li class="chapter-item expanded "><a href="AGENTS.html"><strong aria-hidden="true">4.</strong> AGENTS.md: operating manual for an agentic project</a></li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">5.</strong> CLAUDE</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="MIGRATION.html"><strong aria-hidden="true">5.1.</strong> MIGRATION.md: the process moved to the host repo</a></li><li class="chapter-item expanded "><a href="STRUCTURE.html"><strong aria-hidden="true">5.2.</strong> Structure</a></li><li class="chapter-item expanded "><a href="UPGRADING.html"><strong aria-hidden="true">5.3.</strong> UPGRADING.md: the version-to-version upgrade ledger</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Memory</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -332,8 +332,13 @@ trusted where it should be checked.</li>
 commands, holding the whole problem in view, but only as long as the window
 holds.</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="plan-what--when"><a class="header" href="#plan-what--when">Plan: what &amp; when</a></h1>
-<p>Milestones in this project.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="plan-milestone-index"><a class="header" href="#plan-milestone-index">PLAN: milestone index</a></h1>
+<p>The ordering authority. Milestones are listed here in the order they are worked;
+their folders are named <code>NNNN-slug</code> (zero-padded, and the number is identity, not a
+sort key; see <code>call/0000</code>). A milestone is a thin, persona-serving increment.</p>
+<ul>
+<li><a href="0001-example-milestone/README.html">0001 example milestone</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="0001-example-milestone"><a class="header" href="#0001-example-milestone">0001 example milestone</a></h1>
 <p>(Example.) A milestone names the persona it serves, holds its specs under
 <code>spec/</code>, and is shaped by decisions recorded in the top-level <code>call/</code> log.</p>
@@ -1308,8 +1313,8 @@ feasible, the waiver does not apply.</p>
 <p><strong>Version-derived artifacts.</strong> A component whose release regenerates files that embed the
 crate version (a man page, a help snapshot) records <code>regen = &lt;command&gt;</code> in <code>.host-software</code>:
 the command <code>release</code> runs in the canonical worktree between the version bump and the
-release commit, so bump and derived artifacts share one commit and the tag never names a
-version its artifacts disown (host-lifecycle#31). The command runs before the artifact
+release commit, so bump and derived artifacts share one commit and the tag names the
+same version its artifacts carry (host-lifecycle#31). The command runs before the artifact
 build, so the canonical hash covers the regenerated files. A component declaring nothing
 keeps the bump-only behavior.</p>
 <p><strong>Multi-platform builds.</strong> A component whose <em>one</em> source pin ships on several platforms
@@ -1344,7 +1349,11 @@ recheck, the cfg scan, and the derived inventory block at the push boundary
 instead of waiting for a human to invoke the gate. The lane no-ops on a tree
 with no <code>.host-software</code>, and the tool it builds is the <code>tools/host-lifecycle</code>
 submodule the template ships, so the verdict comes from the spine revision the
-project carries (host#24).</p>
+project carries (host#24). GitHub Actions is a <strong>reference</strong> lane, never a
+requirement: a host whose forge carries no Actions runner states the absence,
+and a recorded upgrade whose verify cannot apply there claims it with
+<code>upgrade --record &lt;id&gt; --inapplicable "&lt;reason&gt;"</code>, which the recheck reads as a
+disclosed fact, not a permanent alarm (host#33).</p>
 <p><strong>Fan-out workers share one index.</strong> While a bench works in one tree, each
 worker stages explicit paths (<code>git add &lt;paths&gt;</code>) and never <code>-A</code>: a sweep that
 stages a colleague's in-progress files folds their half-done state into a commit
@@ -1878,6 +1887,11 @@ title    = The recipe gains the regen key: a release carries the artifacts its v
 action   = The software recipe section gains "Version-derived artifacts": a component whose release regenerates files that embed the crate version (a man page, a help snapshot) records <code>regen = &lt;command&gt;</code> in .host-software, and host-lifecycle v0.61.3's release runs it in the canonical worktree between the version bump and the release commit, before the artifact build, so bump and derived artifacts share one commit and the canonical hash covers them. Components declaring nothing keep the bump-only behavior, so the key is optional and needs no migration. Measured in agentic-host plan/0103 (host-lifecycle#31: a tagged release whose man page still read the previous version was the reporting shape).
 requires = host-lifecycle v0.61.3
 verify   = grep -qs "regen = " AGENTS.md</p>
+<p>[upgrade "7ef379e"]
+title    = Actions is a reference lane: the inapplicability claim turns a platform-impossible verify into a disclosed fact
+action   = The check-lane clause states plainly that GitHub Actions is a reference lane, never a requirement: a host whose forge carries no runner states the absence rather than leaving it implied. An applied upgrade whose verify can never hold on such a host (a GitHub-specific post-condition on a gitweb grain, say) claims it where it is recorded: <code>host-lifecycle upgrade --record &lt;id&gt; --inapplicable "&lt;reason&gt;"</code>, which needs no verify run, and the recheck reports the entry as not applicable with its reason instead of hazarding forever. Requires host-lifecycle v0.61.5 (the disposition and the recheck's disclosure ship there). Measured in agentic-host plan/0103 (host-lifecycle#33: the reporting host's check was permanently red on entry 1202877's <code>test -f .github/workflows/check.yml</code>).
+requires = host-lifecycle v0.61.5
+verify   = grep -qsF "<strong>reference</strong> lane" AGENTS.md</p>
 
                     </main>
 
