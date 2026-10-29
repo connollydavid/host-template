@@ -1028,8 +1028,8 @@ feasible, the waiver does not apply.
 **Version-derived artifacts.** A component whose release regenerates files that embed the
 crate version (a man page, a help snapshot) records `regen = <command>` in `.host-software`:
 the command `release` runs in the canonical worktree between the version bump and the
-release commit, so bump and derived artifacts share one commit and the tag never names a
-version its artifacts disown (host-lifecycle#31). The command runs before the artifact
+release commit, so bump and derived artifacts share one commit and the tag names the
+same version its artifacts carry (host-lifecycle#31). The command runs before the artifact
 build, so the canonical hash covers the regenerated files. A component declaring nothing
 keeps the bump-only behavior.
 
